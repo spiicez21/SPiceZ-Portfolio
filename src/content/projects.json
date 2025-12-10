@@ -1,0 +1,38 @@
+[
+    {
+        "id": "project-1",
+        "title": "Project Alpha",
+        "subtitle": "Full-stack app · 2024",
+        "description": "A full-stack application built with React and Node.js featuring real-time updates and modern UI.",
+        "tech": [
+            "React",
+            "Node.js",
+            "MongoDB",
+            "Socket.io"
+        ],
+        "role": "Full Stack Developer",
+        "links": {
+            "demo": "https://example.com",
+            "repo": "https://github.com/SPiceZ/project-alpha"
+        },
+        "thumbnailPublicId": "portfolio/project-1"
+    },
+    {
+        "id": "project-2",
+        "title": "Design System",
+        "subtitle": "UI Library · 2024",
+        "description": "A comprehensive design system and component library built with React and TypeScript.",
+        "tech": [
+            "React",
+            "TypeScript",
+            "Storybook",
+            "Tailwind"
+        ],
+        "role": "UI/UX Designer & Developer",
+        "links": {
+            "demo": "https://example.com",
+            "repo": "https://github.com/SPiceZ/design-system"
+        },
+        "thumbnailPublicId": "portfolio/project-2"
+    }
+]

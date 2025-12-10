@@ -1,0 +1,125 @@
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-heading {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    color: var(--accent);
+    margin: 0;
+}
+
+.contact-description {
+    font-size: 1.125rem;
+    color: var(--ink);
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--border-ink);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    border-color: var(--accent);
+    background: var(--bg-alt);
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+.email-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--accent);
+    background: var(--bg-alt);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+}
+
+.email-box a {
+    color: var(--accent);
+}
+
+.contact-right {
+    border: var(--border-width) solid var(--border-ink);
+    padding: 2rem;
+    background: var(--bg);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.form-input,
+.form-textarea {
+    padding: 0.75rem;
+    border: 2px solid var(--border-ink);
+    background: var(--bg-alt);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-right {
+        padding: 1.5rem;
+    }
+}

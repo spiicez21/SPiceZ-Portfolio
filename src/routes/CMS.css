@@ -1,0 +1,139 @@
+.cms-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+}
+
+.login-box {
+    width: 90%;
+    max-width: 400px;
+    border: var(--border-width) solid var(--border-ink);
+    padding: 2rem;
+    background: var(--bg-alt);
+}
+
+.login-title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.login-input {
+    padding: 1rem;
+    border: 2px solid var(--border-ink);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.login-button {
+    padding: 1rem;
+    border: var(--border-width) solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-button:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.cms-dashboard {
+    min-height: 100vh;
+    background: var(--bg);
+    padding: 2rem;
+}
+
+.cms-header {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: var(--border-width) solid var(--border-ink);
+}
+
+.cms-title {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin: 0;
+}
+
+.cms-back-link {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border-ink);
+}
+
+.cms-back-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.cms-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cms-info {
+    border: var(--border-width) solid var(--border-ink);
+    padding: 2rem;
+    background: var(--bg-alt);
+}
+
+.cms-info h2 {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.cms-info p,
+.cms-info li {
+    color: var(--ink);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.cms-info ul {
+    margin-left: 2rem;
+}
+
+.cms-note {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+}
+
+.cms-note code {
+    color: var(--accent);
+}

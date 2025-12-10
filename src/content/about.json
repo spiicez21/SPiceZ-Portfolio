@@ -1,0 +1,13 @@
+{
+    "intro": "Hey there! I'm Yugabharathi J, but you can call me SPiceZ.",
+    "paragraphs": [
+        "I'm a Computer Science student who loves building things that live on the internet. When I'm not debugging code at 3 AM, you'll find me designing graphics for clients or competing in hackathons.",
+        "I believe in learning by doing, breaking things to understand them, and that the best code is written with good coffee and great music."
+    ],
+    "stats": {
+        "location": "India",
+        "status": "Student & Freelancer",
+        "focus": "Full-Stack Dev + Design",
+        "coffee": "∞"
+    }
+}

@@ -1,0 +1,47 @@
+.section-frame {
+    padding: var(--section-padding) 2rem;
+    position: relative;
+}
+
+.section-border {
+    border-top: var(--border-width) solid var(--border);
+    padding: 3rem 0;
+    position: relative;
+}
+
+.section-label {
+    position: absolute;
+    top: -0.6rem;
+    left: 0;
+    background: var(--bg);
+    padding: 0 1rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.section-content {
+    position: relative;
+    z-index: 1;
+}
+
+.scanline-overlay {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .section-frame {
+        padding: var(--section-padding) 1rem;
+    }
+
+    .section-border {
+        padding: 2rem 0;
+    }
+
+    .section-label {
+        font-size: 0.65rem;
+    }
+}

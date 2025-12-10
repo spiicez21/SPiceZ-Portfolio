@@ -1,0 +1,20 @@
+{
+    "email": "yugabharathi@example.com",
+    "socials": [
+        {
+            "platform": "GitHub",
+            "url": "https://github.com/SPiceZ",
+            "icon": "github"
+        },
+        {
+            "platform": "LinkedIn",
+            "url": "https://linkedin.com/in/yugabharathi-j",
+            "icon": "linkedin"
+        },
+        {
+            "platform": "Twitter",
+            "url": "https://twitter.com/SPiceZ",
+            "icon": "twitter"
+        }
+    ]
+}

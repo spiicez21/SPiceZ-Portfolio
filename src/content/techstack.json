@@ -1,0 +1,45 @@
+{
+    "categories": [
+        {
+            "id": "frontend",
+            "label": "Frontend",
+            "items": [
+                "React",
+                "TypeScript",
+                "Tailwind CSS",
+                "GSAP",
+                "Vite"
+            ]
+        },
+        {
+            "id": "backend",
+            "label": "Backend",
+            "items": [
+                "Node.js",
+                "Python",
+                "MongoDB",
+                "PostgreSQL"
+            ]
+        },
+        {
+            "id": "design",
+            "label": "Design",
+            "items": [
+                "Figma",
+                "Photoshop",
+                "Illustrator",
+                "After Effects"
+            ]
+        },
+        {
+            "id": "tools",
+            "label": "Tools",
+            "items": [
+                "Git",
+                "VS Code",
+                "Linux",
+                "Docker"
+            ]
+        }
+    ]
+}
