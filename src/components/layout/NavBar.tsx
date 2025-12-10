@@ -4,7 +4,6 @@ import { gsap } from '../../lib/animations/gsapClient';
 import './NavBar.css';
 
 const navItems = [
-    { label: 'BOOT', href: '#boot-sequence' },
     { label: 'WHOAMI', href: '#whoami' },
     { label: 'STACK', href: '#stack-trace' },
     { label: 'BUILDS', href: '#deployed-builds' },

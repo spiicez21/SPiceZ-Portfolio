@@ -31,16 +31,15 @@ function App() {
     setShowBootLoader(false);
   };
 
-  if (showBootLoader) {
-    return <BootLoader onComplete={handleBootComplete} />;
-  }
-
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-      </Routes>
-    </Router>
+    <>
+      {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Portfolio />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

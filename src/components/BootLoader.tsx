@@ -39,6 +39,130 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
     });
     const [messages, setMessages] = useState<string[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
+    const bootContentRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    // Canvas Animation Logic
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Set dimensions
+        const setSize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+        };
+        setSize();
+        window.addEventListener('resize', setSize);
+
+        // Grid configuration
+        const fontSize = 14;
+        const cols = Math.ceil(canvas.width / fontSize);
+        const rows = Math.ceil(canvas.height / fontSize);
+        const chars = '01';
+
+        // Initialize cells
+        const cells: { char: string; opacity: number; scale: number; x: number; y: number }[] = [];
+        for (let i = 0; i < cols; i++) {
+            for (let j = 0; j < rows; j++) {
+                cells.push({
+                    char: chars.charAt(Math.floor(Math.random() * chars.length)),
+                    opacity: 0,
+                    scale: 1,
+                    x: i * fontSize,
+                    y: j * fontSize
+                });
+            }
+        }
+
+        // Animation state
+        let animationFrameId: number;
+        const state = {
+            globalAlpha: 1
+        };
+
+        // Render loop
+        const render = () => {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            cells.forEach(cell => {
+                if (cell.opacity <= 0.01) return;
+
+                const x = cell.x + (fontSize / 2);
+                const y = cell.y + (fontSize / 2);
+
+                // Color matches var(--ink-muted) #888888 mostly
+                ctx.fillStyle = `rgba(100, 100, 100, ${cell.opacity * state.globalAlpha})`;
+
+                // Scale effect
+                if (Math.abs(cell.scale - 1) > 0.01) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(cell.scale, cell.scale);
+                    ctx.fillText(cell.char, 0, 0);
+                    ctx.restore();
+                } else {
+                    ctx.fillText(cell.char, x, y);
+                }
+            });
+
+            if (state.globalAlpha > 0) {
+                animationFrameId = requestAnimationFrame(render);
+            }
+        };
+
+        render();
+
+        // Expose animation triggers to the component logic
+        (canvas as any).fadeInGrid = () => {
+            gsap.to(cells, {
+                opacity: 0.15,
+                duration: 1,
+                stagger: {
+                    amount: 1,
+                    from: "random"
+                },
+                ease: "power2.inOut"
+            });
+        };
+
+        (canvas as any).dissolveGrid = (onCompleteCallback: () => void) => {
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    state.globalAlpha = 0; // Stop rendering
+                    onCompleteCallback();
+                }
+            });
+
+            // Scramble/Dissolve effect
+            tl.to(cells, {
+                opacity: 0,
+                scale: 0,
+                duration: 0.8,
+                stagger: {
+                    amount: 0.5,
+                    grid: [cols, rows],
+                    from: "center"
+                },
+                ease: "power2.in"
+            });
+        };
+
+        return () => {
+            window.removeEventListener('resize', setSize);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
 
     useEffect(() => {
         let currentStage = 0;
@@ -51,7 +175,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                 setMessages(prev => [...prev, randomMessage]);
                 messageIndex++;
             }
-        }, 400);
+        }, 300);
 
         // Progress through stages
         const stageInterval = setInterval(() => {
@@ -66,21 +190,53 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                 clearInterval(stageInterval);
                 clearInterval(messageInterval);
 
-                // Completion animation
-                setTimeout(() => {
-                    if (containerRef.current) {
-                        gsap.to(containerRef.current, {
-                            opacity: 0,
-                            duration: 0.5,
-                            onComplete: () => {
-                                onComplete();
-                                sessionStorage.setItem('portfolio_visited', 'true');
-                            },
-                        });
-                    }
-                }, 500);
+                // START TRANSITION SEQUENCE
+                const canvas = canvasRef.current;
+
+                // 1. Fade out boot container content
+                if (bootContentRef.current) {
+                    gsap.to(bootContentRef.current, {
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            // 2. Trigger Canvas animations
+                            if (canvas) {
+                                (canvas as any).fadeInGrid(); // Start fading in grid
+
+                                // Schedule dissolve
+                                setTimeout(() => {
+                                    // Optional flash
+                                    if (containerRef.current) {
+                                        gsap.to(containerRef.current, {
+                                            backgroundColor: "var(--accent)",
+                                            duration: 0.1,
+                                            yoyo: true,
+                                            repeat: 1,
+                                            opacity: 0.8
+                                        });
+                                    }
+
+                                    (canvas as any).dissolveGrid(() => {
+                                        // Final cleanup
+                                        if (containerRef.current) {
+                                            gsap.to(containerRef.current, {
+                                                opacity: 0,
+                                                duration: 0.2,
+                                                onComplete: () => {
+                                                    onComplete();
+                                                    sessionStorage.setItem('portfolio_visited', 'true');
+                                                }
+                                            });
+                                        }
+                                    });
+                                }, 800);
+                            }
+                        }
+                    });
+                }
             }
-        }, 800);
+        }, 600);
 
         return () => {
             clearInterval(messageInterval);
@@ -94,7 +250,9 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
     return (
         <div ref={containerRef} className="boot-loader">
-            <div className="boot-container">
+            <canvas ref={canvasRef} className="ascii-canvas" />
+
+            <div ref={bootContentRef} className="boot-container">
                 <div className="boot-header">
                     <div className="boot-title">INITIALIZING SPiceZ.PORTFOLIO v2.0.25</div>
                 </div>
