@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
-import SectionFrame from '../ui/SectionFrame';
 import heroDataRaw from '../../content/hero.json';
 import './HeroBootSequence.css';
 
-// Lazy load heavy 3D component
+// Lazy load components
 const Dither = lazy(() => import('../ui/Dither'));
+const HeroPortrait = lazy(() => import('../ui/HeroPortrait'));
 
 interface HeroData {
     name: string;
@@ -80,8 +80,8 @@ const HeroBootSequence = () => {
                 <div className="hero-overlay-fade" />
             </div>
 
-            <SectionFrame id="boot-sequence" className="hero-section" hideHeader number="01" label="BOOT SEQUENCE">
-                <div className="hero-content">
+            <div className="hero-container">
+                <div className="hero-content-left">
                     <div ref={nameRef} className="hero-name">
                         {heroData.name}
                     </div>
@@ -89,7 +89,13 @@ const HeroBootSequence = () => {
                         {heroData.tagline}
                     </div>
                 </div>
-            </SectionFrame>
+
+                <div className="hero-portrait-right">
+                    <Suspense fallback={null}>
+                        <HeroPortrait />
+                    </Suspense>
+                </div>
+            </div>
         </div>
     );
 };
