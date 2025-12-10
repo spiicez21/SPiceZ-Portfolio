@@ -9,14 +9,18 @@ const PixelLab = () => {
                 {graphicsData.map((graphic) => (
                     <div key={graphic.id} className="graphic-card">
                         <div className="graphic-image">
-                            <div className="graphic-placeholder">
-                                {graphic.category}
-                            </div>
+                            <img
+                                src={graphic.imagePublicId}
+                                alt={graphic.title}
+                                loading="lazy"
+                            />
                         </div>
                         <div className="graphic-info">
-                            <h3 className="graphic-title">{graphic.title}</h3>
+                            <div className="graphic-header">
+                                <h3 className="graphic-title">{graphic.title}</h3>
+                                <span className="graphic-category">{graphic.category}</span>
+                            </div>
                             <p className="graphic-description">{graphic.description}</p>
-                            <span className="graphic-category">{graphic.category}</span>
                         </div>
                     </div>
                 ))}
