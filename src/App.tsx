@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BootLoader from './components/BootLoader';
 import Portfolio from './routes/Portfolio';
-import CMS from './routes/CMS';
 
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(false);
@@ -40,7 +39,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Portfolio />} />
-        <Route path="/cms" element={<CMS />} />
       </Routes>
     </Router>
   );
