@@ -1,6 +1,6 @@
-
 import { useEffect, useRef } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
+import { useSmoothScroll } from '../../context/SmoothScrollContext';
 import './NavBar.css';
 
 const navItems = [
@@ -16,6 +16,7 @@ const navItems = [
 
 const NavBar = () => {
     const navRef = useRef<HTMLElement>(null);
+    const lenis = useSmoothScroll();
 
     useEffect(() => {
         if (!navRef.current) return;
@@ -35,10 +36,27 @@ const NavBar = () => {
         );
     }, []);
 
-    const handleLogoClick = (e: React.MouseEvent) => {
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        // Trigger boot sequence
-        window.dispatchEvent(new Event('triggerBootSequence'));
+
+        // Handle boot sequence trigger if it's the logo
+        if (href === '#boot-sequence') {
+            window.dispatchEvent(new Event('triggerBootSequence'));
+            // Optional: scroll to top if needed
+            if (lenis) lenis.scrollTo(0);
+            return;
+        }
+
+        if (lenis) {
+            lenis.scrollTo(href);
+        } else {
+            // Fallback if lenis is not ready
+            const targetId = href.replace('#', '');
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     };
 
     return (
@@ -47,14 +65,19 @@ const NavBar = () => {
                 <a
                     href="#boot-sequence"
                     className="navbar-logo"
-                    onClick={handleLogoClick}
+                    onClick={(e) => handleNavClick(e, '#boot-sequence')}
                 >
                     <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="logo-image" />
                 </a>
 
                 <div className="navbar-links">
                     {navItems.map((item, idx) => (
-                        <a key={idx} href={item.href} className="nav-link">
+                        <a
+                            key={idx}
+                            href={item.href}
+                            className="nav-link"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                        >
                             {item.label}
                         </a>
                     ))}
@@ -65,4 +88,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BootLoader from './components/BootLoader';
 import Portfolio from './routes/Portfolio';
 
+import { SmoothScrollProvider } from './context/SmoothScrollContext';
+
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(false);
 
@@ -32,14 +34,14 @@ function App() {
   };
 
   return (
-    <>
+    <SmoothScrollProvider>
       {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
       <Router>
         <Routes>
           <Route path="/" element={<Portfolio />} />
         </Routes>
       </Router>
-    </>
+    </SmoothScrollProvider>
   );
 }
 
