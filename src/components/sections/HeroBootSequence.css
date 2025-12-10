@@ -50,7 +50,7 @@
 }
 
 .hero-name {
-    font-family: 'Space Grotesk', sans-serif;
+    /* font-family: 'Space Grotesk', sans-serif; */
     font-size: clamp(2rem, 6vw, 5rem);
     /* Adjusted for fit */
     font-weight: 700;
@@ -65,7 +65,7 @@
 }
 
 .hero-tagline {
-    font-family: 'Inter', sans-serif;
+    /* font-family: 'Inter', sans-serif; */
     font-size: clamp(1rem, 2vw, 1.5rem);
     color: #888;
     max-width: 600px;
