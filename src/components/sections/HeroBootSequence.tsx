@@ -1,14 +1,23 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
-import heroData from '../../content/hero.json';
+import heroDataRaw from '../../content/hero.json';
 import './HeroBootSequence.css';
+
+interface HeroData {
+    name: string;
+    handle: string;
+    tagline: string;
+    asciiName: string;
+}
 
 const HeroBootSequence = () => {
     const heroRef = useRef<HTMLDivElement>(null);
     const nameRef = useRef<HTMLDivElement>(null);
     const taglineRef = useRef<HTMLDivElement>(null);
+    const [heroData] = useState<HeroData>(heroDataRaw);
 
     useEffect(() => {
+        if (!heroData) return;
         const tl = gsap.timeline({ delay: 0.3 });
 
         // Fade in name
@@ -47,7 +56,7 @@ const HeroBootSequence = () => {
         return () => {
             tl.kill();
         };
-    }, []);
+    }, [heroData]);
 
     return (
         <div ref={heroRef} className="hero-boot-sequence">
