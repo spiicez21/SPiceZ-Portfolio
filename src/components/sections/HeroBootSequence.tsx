@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
-import Dither from '../ui/Dither';
 import SectionFrame from '../ui/SectionFrame';
 import heroDataRaw from '../../content/hero.json';
 import './HeroBootSequence.css';
+
+// Lazy load heavy 3D component
+const Dither = lazy(() => import('../ui/Dither'));
 
 interface HeroData {
     name: string;
@@ -62,17 +64,19 @@ const HeroBootSequence = () => {
     return (
         <div className="hero-boot-wrapper" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
             <div className="hero-background" style={{ opacity: 0.1 }}>
-                <Dither
-                    waveColor={[0.5, 0.5, 0.5]}
-                    disableAnimation={true}
-                    enableMouseInteraction={true}
-                    mouseRadius={0.3}
-                    colorNum={4}
-                    waveAmplitude={0.3}
-                    waveFrequency={3}
-                    waveSpeed={0.05}
-                    pixelSize={3} // Increased for more retro look
-                />
+                <Suspense fallback={<div style={{ background: '#000', width: '100%', height: '100%' }} />}>
+                    <Dither
+                        waveColor={[0.5, 0.5, 0.5]}
+                        disableAnimation={true}
+                        enableMouseInteraction={true}
+                        mouseRadius={0.3}
+                        colorNum={4}
+                        waveAmplitude={0.3}
+                        waveFrequency={3}
+                        waveSpeed={0.05}
+                        pixelSize={3}
+                    />
+                </Suspense>
                 <div className="hero-overlay-fade" />
             </div>
 

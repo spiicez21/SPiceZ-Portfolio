@@ -279,6 +279,7 @@ export default function Dither({
             camera={{ position: [0, 0, 6] }}
             dpr={0.6} // Reduced resolution for performance (retro feel optimization)
             gl={{ antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}
+            frameloop={disableAnimation ? 'demand' : 'always'}
         >
             <DitheredWaves
                 waveSpeed={waveSpeed}
