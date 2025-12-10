@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
 import './NavBar.css';
@@ -38,11 +39,9 @@ const NavBar = () => {
     return (
         <nav ref={navRef} className="navbar">
             <div className="navbar-content">
-                <div className="navbar-logo">
-                    <span className="logo-bracket">[</span>
-                    <span className="logo-text">SPiceZ</span>
-                    <span className="logo-bracket">]</span>
-                </div>
+                <a href="#boot-sequence" className="navbar-logo">
+                    <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="logo-image" />
+                </a>
 
                 <div className="navbar-links">
                     {navItems.map((item, idx) => (
@@ -57,3 +56,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+

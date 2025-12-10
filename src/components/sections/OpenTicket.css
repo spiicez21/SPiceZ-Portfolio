@@ -24,6 +24,10 @@
     opacity: 0.9;
 }
 
+.resume-download {
+    margin-top: 1rem;
+}
+
 .social-links {
     display: flex;
     flex-direction: column;

@@ -39,7 +39,7 @@ const OpenTicket = () => {
     };
 
     return (
-        <SectionFrame id="open-ticket" label="OPEN A TICKET" number="05">
+        <SectionFrame id="open-ticket" label="OPEN A TICKET" number="09">
             <div className="contact-content">
                 <div className="contact-left">
                     <h3 className="contact-heading">Let's Connect</h3>
@@ -47,6 +47,12 @@ const OpenTicket = () => {
                         Got a project in mind? Want to collaborate? Or just want to say hi?
                         Drop me a message and I'll get back to you as soon as possible.
                     </p>
+
+                    <div className="resume-download">
+                        <InkButton href="/Resume/Resume.pdf" variant="primary">
+                            Download Resume
+                        </InkButton>
+                    </div>
 
                     <div className="social-links">
                         {contactData.socials.map((social, idx) => (
