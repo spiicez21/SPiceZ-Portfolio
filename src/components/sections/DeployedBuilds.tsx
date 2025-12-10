@@ -14,17 +14,23 @@ const DeployedBuilds = () => {
 
         const cards = gridRef.current.querySelectorAll('.project-card');
 
-        gsap.from(cards, {
-            scrollTrigger: {
-                trigger: gridRef.current,
-                start: 'top 80%',
+        gsap.fromTo(cards,
+            {
+                opacity: 0,
+                y: 50,
             },
-            y: 50,
-            opacity: 0,
-            stagger: 0.2,
-            duration: 0.8,
-            ease: 'power2.out',
-        });
+            {
+                scrollTrigger: {
+                    trigger: gridRef.current,
+                    start: 'top 80%',
+                },
+                opacity: 1,
+                y: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                ease: 'power2.out',
+            }
+        );
 
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -36,10 +42,20 @@ const DeployedBuilds = () => {
             <div ref={gridRef} className="projects-grid">
                 {projectsData.map((project) => (
                     <div key={project.id} className="project-card">
+                        {project.thumbnailPublicId && (
+                            <div className="project-image">
+                                <img
+                                    src={project.thumbnailPublicId}
+                                    alt={project.title}
+                                    loading="lazy"
+                                />
+                            </div>
+                        )}
+
                         <div className="project-header">
                             <h3 className="project-title">{project.title}</h3>
                             <div className="project-links">
-                                {project.links.repo && (
+                                {project.links.repo && project.links.repo !== '#' && (
                                     <a
                                         href={project.links.repo}
                                         target="_blank"
@@ -50,7 +66,7 @@ const DeployedBuilds = () => {
                                         <Github size={20} />
                                     </a>
                                 )}
-                                {project.links.demo && (
+                                {project.links.demo && project.links.demo !== '#' && (
                                     <a
                                         href={project.links.demo}
                                         target="_blank"
@@ -77,13 +93,13 @@ const DeployedBuilds = () => {
                             <span className="role-label">ROLE:</span> {project.role}
                         </div>
 
-                        <div className="project-actions">
-                            {project.links.demo && (
+                        {project.links.demo && project.links.demo !== '#' && (
+                            <div className="project-actions">
                                 <InkButton href={project.links.demo} variant="primary">
                                     View Build
                                 </InkButton>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

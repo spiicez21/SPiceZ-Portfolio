@@ -7,6 +7,10 @@ const navItems = [
     { label: 'WHOAMI', href: '#whoami' },
     { label: 'STACK', href: '#stack-trace' },
     { label: 'BUILDS', href: '#deployed-builds' },
+    { label: 'GRAPHICS', href: '#pixel-lab' },
+    { label: 'WIP', href: '#in-progress' },
+    { label: 'CERTS', href: '#verified-credentials' },
+    { label: 'WINS', href: '#bosses-defeated' },
     { label: 'CONTACT', href: '#open-ticket' },
 ];
 

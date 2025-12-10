@@ -4,6 +4,10 @@ import HeroBootSequence from '../components/sections/HeroBootSequence';
 import WhoAmI from '../components/sections/WhoAmI';
 import StackTrace from '../components/sections/StackTrace';
 import DeployedBuilds from '../components/sections/DeployedBuilds';
+import PixelLab from '../components/sections/PixelLab';
+import InProgressProcesses from '../components/sections/InProgressProcesses';
+import VerifiedCredentials from '../components/sections/VerifiedCredentials';
+import BossesDefeated from '../components/sections/BossesDefeated';
 import OpenTicket from '../components/sections/OpenTicket';
 
 const Portfolio = () => {
@@ -15,6 +19,10 @@ const Portfolio = () => {
                 <WhoAmI />
                 <StackTrace />
                 <DeployedBuilds />
+                <PixelLab />
+                <InProgressProcesses />
+                <VerifiedCredentials />
+                <BossesDefeated />
                 <OpenTicket />
             </main>
             <FooterBar />

@@ -1,0 +1,32 @@
+
+[
+    {
+        "id": "wip-1",
+        "title": "Ox-Inventory Revamp by SPZYT",
+        "description": "A complete visual and functional revamp of the popular ox-inventory system, customized for enhanced UX and FiveM gameplay integration.",
+        "status": "dev",
+        "progress": 75,
+        "tech": [
+            "Lua",
+            "JavaScript",
+            "React",
+            "FiveM API"
+        ],
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835670/7_heu8wr.png"
+    },
+    {
+        "id": "wip-2",
+        "title": "Craftify – E-commerce Platform",
+        "description": "An online e-commerce platform developed as part of my college mini project, focused on craft item management and seamless checkout.",
+        "status": "dev",
+        "progress": 60,
+        "tech": [
+            "React",
+            "Node.js",
+            "Express",
+            "MongoDB"
+        ],
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835667/4_jilxlq.jpg"
+    }
+]
+

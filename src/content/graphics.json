@@ -1,0 +1,109 @@
+
+[
+    {
+        "id": "graphic-1",
+        "title": "Poster Design",
+        "description": "Promotional poster created for a college club event.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835756/4_vacf5j.png",
+        "category": "Poster"
+    },
+    {
+        "id": "graphic-2",
+        "title": "Event Poster",
+        "description": "Event-themed poster crafted for my college club.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835755/3_jywst7.png",
+        "category": "Poster"
+    },
+    {
+        "id": "graphic-3",
+        "title": "University Event Poster",
+        "description": "Creative poster made for a university-level event promotion.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835754/2_awy3e9.png",
+        "category": "Poster"
+    },
+    {
+        "id": "graphic-4",
+        "title": "Portfolio Thumbnail",
+        "description": "Freelance portfolio thumbnail designed to reflect a bold and minimal aesthetic.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835756/4_zl0mjs.jpg",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-5",
+        "title": "YouTube Thumbnail",
+        "description": "A YouTube thumbnail created for a freelance client.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835757/5_tfngxd.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-6",
+        "title": "Personal Branding",
+        "description": "A personal branding thumbnail design showcasing my editing style.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835759/6_ritdqq.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-7",
+        "title": "Engagement Thumbnail",
+        "description": "Freelance thumbnail crafted for high visibility and engagement.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835754/2_ph5d8z.jpg",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-8",
+        "title": "CTR Optimized",
+        "description": "Client project thumbnail designed to maximize click-through rate.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835754/3_kcog3o.jpg",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-9",
+        "title": "Modern Logo",
+        "description": "A modern logo created for a freelance client's brand identity.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835680/18_zhr8uz.png",
+        "category": "Logo"
+    },
+    {
+        "id": "graphic-10",
+        "title": "Event Logo",
+        "description": "A logo-poster hybrid design made for a college event campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835679/17_b7vrrr.png",
+        "category": "Logo"
+    },
+    {
+        "id": "graphic-11",
+        "title": "Minimalist Logo",
+        "description": "Freelance logo design focusing on minimalist visual impact.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835679/16_gahv80.png",
+        "category": "Logo"
+    },
+    {
+        "id": "graphic-12",
+        "title": "Startup Brand",
+        "description": "Brand logo concept crafted for a client's startup project.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835766/15_nzzogp.png",
+        "category": "Logo"
+    },
+    {
+        "id": "graphic-13",
+        "title": "Ad Campaign Banner",
+        "description": "Freelance banner designed for online ad campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835698/21_uosy5m.png",
+        "category": "Banner"
+    },
+    {
+        "id": "graphic-14",
+        "title": "Event Showcase",
+        "description": "Client-focused banner for a college-level event showcase.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835698/23_p2y85k.png",
+        "category": "Banner"
+    },
+    {
+        "id": "graphic-15",
+        "title": "Campaign Banner",
+        "description": "Custom banner created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835699/22_enzwzv.png",
+        "category": "Banner"
+    }
+]
+

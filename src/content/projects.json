@@ -1,38 +1,77 @@
+
 [
     {
         "id": "project-1",
-        "title": "Project Alpha",
-        "subtitle": "Full-stack app · 2024",
-        "description": "A full-stack application built with React and Node.js featuring real-time updates and modern UI.",
+        "title": "Portfolio Website",
+        "subtitle": "Personal Portfolio · 2024",
+        "description": "A sleek and responsive portfolio website built with React, Tailwind CSS, and Framer Motion to showcase my work and skills.",
         "tech": [
             "React",
-            "Node.js",
-            "MongoDB",
-            "Socket.io"
+            "Tailwind CSS",
+            "TypeScript",
+            "Framer Motion"
         ],
-        "role": "Full Stack Developer",
+        "role": "Full Stack Developer & Designer",
         "links": {
-            "demo": "https://example.com",
-            "repo": "https://github.com/SPiceZ/project-alpha"
+            "demo": "https://yugabharathi21.netlify.app",
+            "repo": "https://github.com/Yugabharathi21/Portfolio-Webpage"
         },
-        "thumbnailPublicId": "portfolio/project-1"
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835666/1_mawfcp.png"
     },
     {
         "id": "project-2",
-        "title": "Design System",
-        "subtitle": "UI Library · 2024",
-        "description": "A comprehensive design system and component library built with React and TypeScript.",
+        "title": "Event Promotion Website",
+        "subtitle": "College Event · 2025",
+        "description": "A futuristic Fallout 3 terminal-style event website designed for Crescita 2k25, featuring a retro UI and immersive experience.",
         "tech": [
             "React",
-            "TypeScript",
-            "Storybook",
-            "Tailwind"
+            "Tailwind CSS",
+            "TypeScript"
         ],
-        "role": "UI/UX Designer & Developer",
+        "role": "Frontend Developer & UI Designer",
         "links": {
-            "demo": "https://example.com",
-            "repo": "https://github.com/SPiceZ/design-system"
+            "demo": "https://cse-crescita-25.netlify.app/",
+            "repo": "https://github.com/Yugabharathi21/final-crescita/tree/main"
         },
-        "thumbnailPublicId": "portfolio/project-2"
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835666/3_sf2erz.jpg"
+    },
+    {
+        "id": "project-3",
+        "title": "FiveM HUD for Qbox",
+        "subtitle": "Gaming Mod · 2024",
+        "description": "A custom HUD interface for FiveM, revamped from qbx-hud to improve user experience and visuals for roleplay servers.",
+        "tech": [
+            "Lua",
+            "JavaScript",
+            "FiveM API",
+            "HTML",
+            "CSS"
+        ],
+        "role": "UI/UX Developer",
+        "links": {
+            "demo": "#",
+            "repo": "https://github.com/Yugabharathi21/spz-hud-fivem"
+        },
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835672/2_py6l75.png"
+    },
+    {
+        "id": "project-4",
+        "title": "ThinkForge – Study Planner Chatbot",
+        "subtitle": "Hackathon Winner · 2025",
+        "description": "An AI-powered chatbot that helps students plan their study schedules effectively. Built for KEC Hackathon 2k25, and winner of Hackbuzz.",
+        "tech": [
+            "React",
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "FAST API"
+        ],
+        "role": "Full Stack Developer",
+        "links": {
+            "demo": "#",
+            "repo": "https://github.com/Yugabharathi21/Think-Forge"
+        },
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835666/5_qqxw4g.png"
     }
 ]
+

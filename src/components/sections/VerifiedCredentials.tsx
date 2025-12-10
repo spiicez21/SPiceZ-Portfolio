@@ -1,0 +1,39 @@
+import SectionFrame from '../ui/SectionFrame';
+import certificationsData from '../../content/certifications.json';
+import { ExternalLink } from 'lucide-react';
+import './VerifiedCredentials.css';
+
+const VerifiedCredentials = () => {
+  return (
+    <SectionFrame id="verified-credentials" label="VERIFIED CREDENTIALS" number="07">
+      <div className="certifications-list">
+        {certificationsData.map((cert, index) => (
+          <div key={cert.id} className="cert-item">
+            <div className="cert-number">{String(index + 1).padStart(2, '0')}</div>
+            <div className="cert-content">
+              <h3 className="cert-title">{cert.title}</h3>
+              <div className="cert-meta">
+                <span className="cert-issuer">{cert.issuer}</span>
+                <span className="cert-divider">•</span>
+                <span className="cert-date">{cert.date}</span>
+              </div>
+            </div>
+            {cert.link && cert.link !== '#' && (
+              <a 
+                href={cert.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="cert-link"
+                aria-label="View certificate"
+              >
+                <ExternalLink size={18} />
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </SectionFrame>
+  );
+};
+
+export default VerifiedCredentials;
