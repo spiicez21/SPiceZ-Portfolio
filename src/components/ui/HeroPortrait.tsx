@@ -45,6 +45,21 @@ export default function HeroPortrait() {
                 overflow: 'hidden'
             } as React.CSSProperties}
         >
+            {/* Background Portrait */}
+            <img
+                src="/Picture/Background-main.png"
+                alt="Background Decoration"
+                style={{
+                    position: 'absolute',
+                    height: '90%',
+                    width: 'auto',
+                    objectFit: 'contain',
+                    zIndex: 0,
+                    opacity: 0.5,
+                    pointerEvents: 'none'
+                }}
+            />
+
             {/* Base Image (Normal) */}
             <img
                 src="/Picture/normal-main.png"
