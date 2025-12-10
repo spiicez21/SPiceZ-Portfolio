@@ -36,10 +36,20 @@ const NavBar = () => {
         );
     }, []);
 
+    const handleLogoClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        // Trigger boot sequence
+        window.dispatchEvent(new Event('triggerBootSequence'));
+    };
+
     return (
         <nav ref={navRef} className="navbar">
             <div className="navbar-content">
-                <a href="#boot-sequence" className="navbar-logo">
+                <a
+                    href="#boot-sequence"
+                    className="navbar-logo"
+                    onClick={handleLogoClick}
+                >
                     <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="logo-image" />
                 </a>
 
