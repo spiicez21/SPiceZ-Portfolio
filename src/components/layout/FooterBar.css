@@ -1,4 +1,6 @@
 .footer-bar {
+    position: relative;
+    /* For absolute positioned children */
     border-top: var(--border-width) solid var(--border);
     background: var(--bg);
     padding: 3rem 2rem;
@@ -13,6 +15,8 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     color: var(--ink-muted);
+    pointer-events: none;
+    /* Allow clicks to pass through to Malak below */
 }
 
 .footer-text {

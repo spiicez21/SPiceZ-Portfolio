@@ -1,3 +1,4 @@
+import MalakEasterEgg from '../ui/MalakEasterEgg';
 import './FooterBar.css';
 
 const FooterBar = () => {
@@ -5,6 +6,7 @@ const FooterBar = () => {
 
     return (
         <footer className="footer-bar">
+            <MalakEasterEgg />
             <div className="footer-content">
                 <div className="footer-text">
                     {'>'} last updated: {currentYear} | built with Ctrl+C / Ctrl+V and caffeine ☕
