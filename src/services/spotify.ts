@@ -3,7 +3,21 @@ import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+
+// Auto-detect redirect URI based on current hostname
+const getRedirectUri = () => {
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return `${protocol}//${hostname}:5173/callback`;
+    }
+
+    // Production
+    return `${protocol}//${hostname}/callback`;
+};
+
+const REDIRECT_URI = getRedirectUri();
 const SCOPES = ['user-read-currently-playing', 'user-read-recently-played'];
 
 // Generate random string for state
