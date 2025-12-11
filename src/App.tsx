@@ -5,6 +5,7 @@ import Portfolio from './routes/Portfolio';
 
 import { SmoothScrollProvider } from './context/SmoothScrollContext';
 import RetroGrid from './components/utils/RetroGrid';
+import SpotifyEasterEgg from './components/ui/SpotifyEasterEgg';
 
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(false);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<Portfolio />} />
         </Routes>
       </Router>
+      <SpotifyEasterEgg />
     </SmoothScrollProvider>
   );
 }
