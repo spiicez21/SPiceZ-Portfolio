@@ -8,6 +8,7 @@ import PixelLab from '../components/sections/PixelLab';
 import InProgressProcesses from '../components/sections/InProgressProcesses';
 import VerifiedCredentials from '../components/sections/VerifiedCredentials';
 import BossesDefeated from '../components/sections/BossesDefeated';
+import GitHubActivity from '../components/sections/GitHubActivity';
 import OpenTicket from '../components/sections/OpenTicket';
 
 const Portfolio = () => {
@@ -23,6 +24,7 @@ const Portfolio = () => {
                 <InProgressProcesses />
                 <VerifiedCredentials />
                 <BossesDefeated />
+                <GitHubActivity />
                 <OpenTicket />
             </main>
             <FooterBar />
