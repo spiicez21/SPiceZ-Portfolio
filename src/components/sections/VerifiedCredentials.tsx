@@ -11,6 +11,11 @@ const VerifiedCredentials = () => {
         {certificationsData.map((cert, index) => (
           <div key={cert.id} className="cert-item">
             <div className="cert-number">{String(index + 1).padStart(2, '0')}</div>
+            {(cert as any).Badge && (
+              <div className="cert-badge-wrapper">
+                <img src={(cert as any).Badge} alt={cert.title} className="cert-badge" loading="lazy" />
+              </div>
+            )}
             <div className="cert-content">
               <h3 className="cert-title">{cert.title}</h3>
               <div className="cert-meta">
@@ -27,7 +32,8 @@ const VerifiedCredentials = () => {
                 className="cert-link"
                 aria-label="View certificate"
               >
-                <ExternalLink size={18} />
+                <span className="cert-link-text">View</span>
+                <ExternalLink size={14} />
               </a>
             )}
           </div>

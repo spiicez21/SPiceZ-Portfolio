@@ -1,16 +1,18 @@
 [
     {
         "id": "cert-1",
-        "title": "AWS Certified Developer",
-        "issuer": "Amazon Web Services",
-        "date": "2024",
-        "link": "https://aws.amazon.com/certification/"
+        "title": "Oracle APEX Cloud Developer",
+        "issuer": "Oracle",
+        "date": "2025",
+        "link": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=B5D45ACF600C4E33ACDD486705B0D1D0013BA56D0F6B2DCDF0E4464D64054EA4  ",
+        "Badge": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441216/APEX24CDOCP_bmb3ox.png"
     },
     {
         "id": "cert-2",
-        "title": "React Advanced Patterns",
-        "issuer": "Frontend Masters",
-        "date": "2024",
-        "link": "#"
+        "title": "Kotlin Fundamentals",
+        "issuer": "Google Developers Program",
+        "date": "2025",
+        "link": "https://developers.google.com/profile/badges/playlists/android/android-basics-compose-unit-2-pathway-1/",
+        "Badge": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441217/badge_jv6dwk.svg"
     }
 ]

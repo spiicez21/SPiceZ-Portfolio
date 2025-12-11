@@ -1,18 +1,10 @@
 [
     {
         "id": "hack-1",
-        "event": "HackTheNorth 2024",
+        "event": "HackBuzz 2k25",
         "position": "1st Place",
-        "project": "AI-Powered Code Review Tool",
-        "team": "Team Alpha",
-        "description": "Built an intelligent code review assistant using GPT-4"
-    },
-    {
-        "id": "hack-2",
-        "event": "MLH Local Hack Day",
-        "position": "2nd Place",
-        "project": "Real-time Collaboration Platform",
-        "team": "DevSquad",
-        "description": "Created a collaborative coding environment with live updates"
+        "project": "AI-Powered Study Help [thinkforge]",
+        "team": "ThinkForge",
+        "description": "An study Analyzer with Asking MQC backed with Ollama Local LLM"
     }
 ]
