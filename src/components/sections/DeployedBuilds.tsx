@@ -10,7 +10,7 @@ const DeployedBuilds = () => {
         <SectionFrame id="deployed-builds" label="DEPLOYED BUILDS" number="04">
             <AnimateIn
                 className="projects-grid"
-                animation="fade-up"
+                animation="clip-reveal"
                 stagger={0.2}
                 duration={0.8}
                 threshold={0.1}

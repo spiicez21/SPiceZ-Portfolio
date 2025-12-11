@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import AnimateIn from '../utils/AnimateIn';
+import Magnetic from '../utils/Magnetic';
 import InkButton from '../ui/InkButton';
 import contactData from '../../content/contact.json';
 import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
@@ -57,17 +58,18 @@ const OpenTicket = () => {
 
                     <div className="social-links">
                         {contactData.socials.map((social, idx) => (
-                            <a
-                                key={idx}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-link"
-                                aria-label={social.platform}
-                            >
-                                {getIcon(social.platform)}
-                                <span>{social.platform}</span>
-                            </a>
+                            <Magnetic key={idx} strength={0.4}>
+                                <a
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="social-link"
+                                    aria-label={social.platform}
+                                >
+                                    {getIcon(social.platform)}
+                                    <span>{social.platform}</span>
+                                </a>
+                            </Magnetic>
                         ))}
                     </div>
 

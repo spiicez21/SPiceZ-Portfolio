@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface AnimateInProps {
     children: React.ReactNode;
-    animation?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'scale-up' | 'blur-in';
+    animation?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'scale-up' | 'blur-in' | '3d-flip' | 'clip-reveal' | 'blur-slide';
     delay?: number;
     duration?: number;
     stagger?: number;
@@ -41,9 +41,24 @@ const AnimateIn = ({
             'slide-right': { opacity: 0, x: 50 },
             'scale-up': { opacity: 0, scale: 0.9 },
             'blur-in': { opacity: 0, filter: 'blur(10px)' },
+            '3d-flip': { opacity: 0, rotateX: 90, transformPerspective: 1000, transformOrigin: 'top center' },
+            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', opacity: 0 },
+            'blur-slide': { opacity: 0, filter: 'blur(20px)', y: 50 },
         };
 
-        const defaultTo: gsap.TweenVars = {
+        const defaultTo: Record<string, gsap.TweenVars> = {
+            'fade-up': {}, // uses defaults
+            'fade-in': {},
+            'slide-left': {},
+            'slide-right': {},
+            'scale-up': {},
+            'blur-in': { filter: 'blur(0px)' },
+            '3d-flip': { opacity: 1, rotateX: 0, ease: 'power2.out' }, // transformPerspective persists
+            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1, ease: 'power4.inOut' },
+            'blur-slide': { opacity: 1, filter: 'blur(0px)', y: 0, ease: 'power2.out' },
+        };
+
+        const baseTo: gsap.TweenVars = {
             opacity: 1,
             y: 0,
             x: 0,
@@ -60,8 +75,15 @@ const AnimateIn = ({
             }
         };
 
-        const fromVars = from || defaultFrom[animation] || defaultFrom['fade-up'];
-        const toVars = { ...defaultTo, ...to };
+        const animationType = animation || 'fade-up';
+        const fromVars = from || defaultFrom[animationType] || defaultFrom['fade-up'];
+        const specificTo = defaultTo[animationType] || {};
+        const toVars = { ...baseTo, ...specificTo, ...to };
+
+        // Handle specific styles needed for 3D/Clip
+        if (animationType === '3d-flip') {
+            gsap.set(element.children, { transformStyle: 'preserve-3d' });
+        }
 
         gsap.fromTo(element.children, fromVars, toVars);
 

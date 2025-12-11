@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { gsap } from '../../lib/animations/gsapClient';
 import heroDataRaw from '../../content/hero.json';
+import ScrambleText from '../utils/ScrambleText';
 import './HeroBootSequence.css';
 
 // Lazy load components
@@ -103,7 +104,7 @@ const HeroBootSequence = () => {
                                 transition: 'opacity 0.3s ease'
                             }}
                         >
-                            {heroData.name}
+                            <ScrambleText text={heroData.name} revealSpeed={60} scrambleSpeed={30} delay={0.5} />
                         </div>
 
                         {/* ASCII Layer */}

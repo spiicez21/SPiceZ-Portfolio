@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import Magnetic from '../utils/Magnetic';
 import './InkButton.css';
 
 interface InkButtonProps {
@@ -7,6 +8,7 @@ interface InkButtonProps {
     href?: string;
     variant?: 'primary' | 'secondary';
     className?: string;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 const InkButton = ({
@@ -14,22 +16,41 @@ const InkButton = ({
     onClick,
     href,
     variant = 'primary',
-    className = ''
+    className = '',
+    type = 'button'
 }: InkButtonProps) => {
-    const baseClass = `ink-button ink-button--${variant} ${className}`;
+    const ButtonContent = (
+        <>
+            <span className="ink-text">{children}</span>
+            <div className="ink-splash" />
+        </>
+    );
 
     if (href) {
         return (
-            <a href={href} className={baseClass} target="_blank" rel="noopener noreferrer">
-                {children}
-            </a>
+            <Magnetic strength={0.3}>
+                <a
+                    href={href}
+                    className={`ink-button ${variant} ${className}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {ButtonContent}
+                </a>
+            </Magnetic>
         );
     }
 
     return (
-        <button onClick={onClick} className={baseClass}>
-            {children}
-        </button>
+        <Magnetic strength={0.3}>
+            <button
+                className={`ink-button ${variant} ${className}`}
+                onClick={onClick}
+                type={type}
+            >
+                {ButtonContent}
+            </button>
+        </Magnetic>
     );
 };
 

@@ -49,9 +49,9 @@ const StackTrace = () => {
                         </AnimateIn>
                         <AnimateIn
                             className="stack-grid"
-                            animation="fade-up"
+                            animation="3d-flip"
                             stagger={0.05}
-                            duration={0.4}
+                            duration={0.6}
                             threshold={0.1}
                         >
                             {category.items.map((item, idx) => (
