@@ -4,6 +4,7 @@ import BootLoader from './components/BootLoader';
 import Portfolio from './routes/Portfolio';
 
 import { SmoothScrollProvider } from './context/SmoothScrollContext';
+import RetroGrid from './components/utils/RetroGrid';
 
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(false);
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <SmoothScrollProvider>
+      <RetroGrid opacity={0.05} />
       {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
       <Router>
         <Routes>

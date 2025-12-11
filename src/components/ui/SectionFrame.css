@@ -23,6 +23,31 @@
     letter-spacing: 0.1em;
     font-weight: 400;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.section-label::after {
+    content: '_';
+    display: inline-block;
+    width: 0.6em;
+    height: 1.2em;
+    background-color: var(--ink-accent);
+    margin-left: 0.3em;
+    animation: blink 1s step-end infinite;
+    opacity: 0;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .section-content {

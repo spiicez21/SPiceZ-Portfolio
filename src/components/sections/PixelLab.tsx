@@ -1,5 +1,6 @@
 import SectionFrame from '../ui/SectionFrame';
 import AnimateIn from '../utils/AnimateIn';
+import AsciiImage from '../utils/AsciiImage';
 import graphicsData from '../../content/graphics.json';
 import { useState } from 'react';
 import { X } from 'lucide-react';
@@ -28,10 +29,11 @@ const PixelLab = () => {
                         onClick={() => openPreview(graphic)}
                     >
                         <div className="graphic-image">
-                            <img
+                            <AsciiImage
                                 src={graphic.imagePublicId}
                                 alt={graphic.title}
-                                loading="lazy"
+                                className="w-full h-full"
+                                density={6}
                             />
                         </div>
                         <div className="graphic-info">
