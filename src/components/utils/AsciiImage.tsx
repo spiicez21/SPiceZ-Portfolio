@@ -109,7 +109,7 @@ const AsciiImage = ({
                     fontSize: '10px',
                     lineHeight: '10px',
                     whiteSpace: 'pre',
-                    color: '#0f0', // Matrix green
+                    color: '#fff', // White based on user feedback
                     textAlign: 'center'
                 }}
             >
