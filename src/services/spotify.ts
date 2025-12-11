@@ -108,12 +108,15 @@ export const getRecentlyPlayed = async () => {
     try {
         const response = await spotifyApi.getMyRecentlyPlayedTracks({ limit: 3 });
 
-        return response.items.map(item => ({
-            name: item.track.name,
-            artist: item.track.artists.map(a => a.name).join(', '),
-            album: item.track.album.name,
-            image: item.track.album.images[0]?.url || ''
-        }));
+        return response.items.map(item => {
+            const track = item.track as any; // Cast to access album property
+            return {
+                name: track.name,
+                artist: track.artists.map((a: any) => a.name).join(', '),
+                album: track.album?.name || '',
+                image: track.album?.images[0]?.url || ''
+            };
+        });
     } catch (error) {
         console.error('Error fetching recently played:', error);
         return [];

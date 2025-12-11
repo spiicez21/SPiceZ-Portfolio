@@ -22,7 +22,7 @@ const SpotifyEasterEgg = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const clickTimerRef = useRef<number>();
+    const clickTimerRef = useRef<number | undefined>(undefined);
 
     // Check authentication on mount
     useEffect(() => {
