@@ -1,4 +1,5 @@
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import aboutData from '../../content/about.json';
 import './WhoAmI.css';
 
@@ -6,14 +7,14 @@ const WhoAmI = () => {
     return (
         <SectionFrame id="whoami" label="WHOAMI" number="02">
             <div className="whoami-content">
-                <div className="whoami-main">
+                <AnimateIn className="whoami-main" animation="fade-up" duration={0.8}>
                     <p className="whoami-intro">{aboutData.intro}</p>
                     {aboutData.paragraphs.map((para, idx) => (
                         <p key={idx} className="whoami-paragraph">{para}</p>
                     ))}
-                </div>
+                </AnimateIn>
 
-                <div className="whoami-sidebar">
+                <AnimateIn className="whoami-sidebar" animation="fade-up" delay={0.2} duration={0.8}>
                     <div className="stats-box">
                         <div className="stats-header">QUICK STATS</div>
                         <div className="stats-grid">
@@ -25,7 +26,7 @@ const WhoAmI = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </AnimateIn>
             </div>
         </SectionFrame>
     );

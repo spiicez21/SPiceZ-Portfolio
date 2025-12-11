@@ -1,11 +1,12 @@
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import hackathonsData from '../../content/hackathons.json';
 import './BossesDefeated.css';
 
 const BossesDefeated = () => {
     return (
         <SectionFrame id="bosses-defeated" label="BOSSES DEFEATED" number="08">
-            <div className="hackathons-grid">
+            <AnimateIn className="hackathons-grid" animation="fade-up" stagger={0.15}>
                 {hackathonsData.map((hack) => (
                     <div key={hack.id} className="hack-card">
                         <div className="hack-badge">{hack.position}</div>
@@ -18,7 +19,7 @@ const BossesDefeated = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </AnimateIn>
         </SectionFrame>
     );
 };

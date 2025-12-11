@@ -1,6 +1,7 @@
 import type { JSX } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import techStackData from '../../content/techstack.json';
+import AnimateIn from '../utils/AnimateIn';
 import './StackTrace.css';
 import {
     FaReact, FaNodeJs, FaPython, FaFigma, FaGitAlt, FaLinux, FaDocker,
@@ -43,8 +44,16 @@ const StackTrace = () => {
             <div className="stack-trace-container">
                 {techStackData.categories.map((category) => (
                     <div key={category.id} className="stack-category-group">
-                        <h3 className="category-header">{category.label}</h3>
-                        <div className="stack-grid">
+                        <AnimateIn animation="fade-in" duration={0.5}>
+                            <h3 className="category-header">{category.label}</h3>
+                        </AnimateIn>
+                        <AnimateIn
+                            className="stack-grid"
+                            animation="fade-up"
+                            stagger={0.05}
+                            duration={0.4}
+                            threshold={0.1}
+                        >
                             {category.items.map((item, idx) => (
                                 <div key={idx} className="tech-card">
                                     <div className="icon-wrapper">
@@ -53,7 +62,7 @@ const StackTrace = () => {
                                     <span className="tech-name">{item}</span>
                                 </div>
                             ))}
-                        </div>
+                        </AnimateIn>
                     </div>
                 ))}
             </div>

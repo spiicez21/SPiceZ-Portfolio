@@ -1,4 +1,5 @@
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import graphicsData from '../../content/graphics.json';
 import { useState } from 'react';
 import { X } from 'lucide-react';
@@ -19,7 +20,7 @@ const PixelLab = () => {
 
     return (
         <SectionFrame id="pixel-lab" label="PIXEL LAB" number="05">
-            <div className="graphics-grid">
+            <AnimateIn className="graphics-grid" animation="fade-up" stagger={0.1}>
                 {graphicsData.map((graphic) => (
                     <div
                         key={graphic.id}
@@ -42,7 +43,7 @@ const PixelLab = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </AnimateIn>
 
             {selectedGraphic && (
                 <div className="graphic-preview-overlay" onClick={closePreview}>

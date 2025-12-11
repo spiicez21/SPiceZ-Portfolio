@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import InkButton from '../ui/InkButton';
 import contactData from '../../content/contact.json';
 import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
@@ -41,7 +42,7 @@ const OpenTicket = () => {
     return (
         <SectionFrame id="open-ticket" label="OPEN A TICKET" number="09">
             <div className="contact-content">
-                <div className="contact-left">
+                <AnimateIn className="contact-left" animation="slide-right" duration={0.8} threshold={0.2}>
                     <h3 className="contact-heading">Let's Connect</h3>
                     <p className="contact-description">
                         Got a project in mind? Want to collaborate? Or just want to say hi?
@@ -74,9 +75,9 @@ const OpenTicket = () => {
                         <Mail size={20} />
                         <a href={`mailto:${contactData.email}`}>{contactData.email}</a>
                     </div>
-                </div>
+                </AnimateIn>
 
-                <div className="contact-right">
+                <AnimateIn className="contact-right" animation="slide-left" delay={0.2} duration={0.8} threshold={0.2}>
                     <form
                         onSubmit={handleSubmit}
                         className="contact-form"
@@ -129,7 +130,7 @@ const OpenTicket = () => {
                             Send Packet →
                         </InkButton>
                     </form>
-                </div>
+                </AnimateIn>
             </div>
         </SectionFrame>
     );

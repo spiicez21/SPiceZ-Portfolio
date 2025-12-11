@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '../../lib/animations/gsapClient';
+import AnimateIn from '../utils/AnimateIn';
 import SectionFrame from '../ui/SectionFrame';
 import InkButton from '../ui/InkButton';
 import projectsData from '../../content/projects.json';
@@ -7,39 +6,15 @@ import { ExternalLink, Github } from 'lucide-react';
 import './DeployedBuilds.css';
 
 const DeployedBuilds = () => {
-    const gridRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!gridRef.current) return;
-
-        const cards = gridRef.current.querySelectorAll('.project-card');
-
-        gsap.fromTo(cards,
-            {
-                opacity: 0,
-                y: 50,
-            },
-            {
-                scrollTrigger: {
-                    trigger: gridRef.current,
-                    start: 'top 80%',
-                },
-                opacity: 1,
-                y: 0,
-                stagger: 0.2,
-                duration: 0.8,
-                ease: 'power2.out',
-            }
-        );
-
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, []);
-
     return (
         <SectionFrame id="deployed-builds" label="DEPLOYED BUILDS" number="04">
-            <div ref={gridRef} className="projects-grid">
+            <AnimateIn
+                className="projects-grid"
+                animation="fade-up"
+                stagger={0.2}
+                duration={0.8}
+                threshold={0.1}
+            >
                 {projectsData.map((project) => (
                     <div key={project.id} className="project-card">
                         {project.thumbnailPublicId && (
@@ -102,7 +77,7 @@ const DeployedBuilds = () => {
                         )}
                     </div>
                 ))}
-            </div>
+            </AnimateIn>
         </SectionFrame>
     );
 };

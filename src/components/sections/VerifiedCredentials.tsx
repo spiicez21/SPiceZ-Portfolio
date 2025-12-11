@@ -1,4 +1,5 @@
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import certificationsData from '../../content/certifications.json';
 import { ExternalLink } from 'lucide-react';
 import './VerifiedCredentials.css';
@@ -6,7 +7,7 @@ import './VerifiedCredentials.css';
 const VerifiedCredentials = () => {
   return (
     <SectionFrame id="verified-credentials" label="VERIFIED CREDENTIALS" number="07">
-      <div className="certifications-list">
+      <AnimateIn className="certifications-list" animation="slide-right" stagger={0.1} duration={0.6}>
         {certificationsData.map((cert, index) => (
           <div key={cert.id} className="cert-item">
             <div className="cert-number">{String(index + 1).padStart(2, '0')}</div>
@@ -19,9 +20,9 @@ const VerifiedCredentials = () => {
               </div>
             </div>
             {cert.link && cert.link !== '#' && (
-              <a 
-                href={cert.link} 
-                target="_blank" 
+              <a
+                href={cert.link}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="cert-link"
                 aria-label="View certificate"
@@ -31,7 +32,7 @@ const VerifiedCredentials = () => {
             )}
           </div>
         ))}
-      </div>
+      </AnimateIn>
     </SectionFrame>
   );
 };
