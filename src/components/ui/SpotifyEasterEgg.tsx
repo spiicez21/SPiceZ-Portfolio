@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Music, X } from 'lucide-react';
+import {
+    getAuthUrl,
+    handleCallback,
+    getAccessToken,
+    getCurrentlyPlaying,
+    getRecentlyPlayed
+} from '../../services/spotify';
 import './SpotifyEasterEgg.css';
 
 interface SpotifyTrack {
@@ -14,7 +21,20 @@ const SpotifyEasterEgg = () => {
     const [clickCount, setClickCount] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
     const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const clickTimerRef = useRef<number>();
+
+    // Check authentication on mount
+    useEffect(() => {
+        // Handle callback if present
+        if (window.location.hash.includes('access_token')) {
+            handleCallback();
+        }
+
+        // Check if already authenticated
+        const token = getAccessToken();
+        setIsAuthenticated(!!token);
+    }, []);
 
     // Reset click count after 2 seconds of no clicks
     useEffect(() => {
@@ -34,23 +54,38 @@ const SpotifyEasterEgg = () => {
 
         // Open popup after 5 rapid clicks
         if (newCount >= 5) {
-            setShowPopup(true);
             setClickCount(0);
-            fetchSpotifyData();
+
+            if (!isAuthenticated) {
+                // Redirect to Spotify auth
+                window.location.href = getAuthUrl();
+            } else {
+                // Fetch and show current track
+                setShowPopup(true);
+                fetchSpotifyData();
+            }
         }
     };
 
-    const fetchSpotifyData = () => {
-        // Mock data - replace with Spotify API
-        const mockCurrentTrack: SpotifyTrack = {
-            name: 'Song Title Here',
-            artist: 'Artist Name',
-            album: 'Album Name',
-            image: 'https://via.placeholder.com/80',
-            isPlaying: true
-        };
+    const fetchSpotifyData = async () => {
+        try {
+            const current = await getCurrentlyPlaying();
 
-        setCurrentTrack(mockCurrentTrack);
+            if (current) {
+                setCurrentTrack(current);
+            } else {
+                // If nothing is playing, get most recent track
+                const recent = await getRecentlyPlayed();
+                if (recent && recent.length > 0) {
+                    setCurrentTrack({
+                        ...recent[0],
+                        isPlaying: false
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching Spotify data:', error);
+        }
     };
 
     return (
@@ -73,8 +108,8 @@ const SpotifyEasterEgg = () => {
 
                     <div className="popup-content">
                         <div className="now-playing-badge">
-                            <Music size={14} />
-                            <span>NOW PLAYING</span>
+                            <Music size={12} />
+                            <span>{currentTrack.isPlaying ? 'NOW PLAYING' : 'LAST PLAYED'}</span>
                         </div>
 
                         <div className="track-display">
