@@ -12,12 +12,14 @@ interface HeroData {
     handle: string;
     tagline: string;
     asciiName: string;
+    asciiArt?: string[];
 }
 
 const HeroBootSequence = () => {
     const nameRef = useRef<HTMLDivElement>(null);
     const taglineRef = useRef<HTMLDivElement>(null);
     const [heroData] = useState<HeroData>(heroDataRaw);
+    const [showAscii, setShowAscii] = useState(false);
 
     useEffect(() => {
         if (!heroData) return;
@@ -82,9 +84,42 @@ const HeroBootSequence = () => {
 
             <div className="hero-container">
                 <div className="hero-content-left">
-                    <div ref={nameRef} className="hero-name">
-                        {heroData.name}
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setShowAscii(!showAscii)}
+                    >
+                        {/* Name Layer */}
+                        <div
+                            ref={nameRef}
+                            className="hero-name"
+                            style={{
+                                gridArea: '1/1',
+                                opacity: showAscii ? 0 : 1,
+                                pointerEvents: showAscii ? 'none' : 'auto',
+                                transition: 'opacity 0.3s ease'
+                            }}
+                        >
+                            {heroData.name}
+                        </div>
+
+                        {/* ASCII Layer */}
+                        <div
+                            className="hero-ascii"
+                            style={{
+                                gridArea: '1/1',
+                                opacity: showAscii ? 1 : 0,
+                                pointerEvents: showAscii ? 'auto' : 'none',
+                                transition: 'opacity 0.3s ease'
+                            }}
+                        >
+                            {heroData.asciiArt ? heroData.asciiArt.join('\n') : ''}
+                        </div>
                     </div>
+
                     <div ref={taglineRef} className="hero-tagline">
                         {heroData.tagline}
                     </div>

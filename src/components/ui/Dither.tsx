@@ -140,23 +140,27 @@ void mainImage(in vec4 inputColor, in vec2 uv, out vec4 outputColor) {
 
 class RetroEffectImpl extends Effect {
     constructor() {
-        const uniforms = new Map([
+        const uniforms = new Map<string, THREE.Uniform>([
             ['colorNum', new THREE.Uniform(4.0)],
             ['pixelSize', new THREE.Uniform(2.0)],
             ['resolution', new THREE.Uniform(new THREE.Vector2(window.innerWidth, window.innerHeight))]
         ]);
         super('RetroEffect', ditherFragmentShader, { uniforms });
-        this.uniforms = uniforms;
     }
-    set colorNum(v) {
-        this.uniforms.get('colorNum').value = v;
+
+    set colorNum(v: number) {
+        const uniform = this.uniforms.get('colorNum');
+        if (uniform) uniform.value = v;
     }
-    set pixelSize(v) {
-        this.uniforms.get('pixelSize').value = v;
+
+    set pixelSize(v: number) {
+        const uniform = this.uniforms.get('pixelSize');
+        if (uniform) uniform.value = v;
     }
-    setSize(w, h) {
-        const res = this.uniforms.get('resolution').value;
-        res.set(w, h)
+
+    setSize(w: number, h: number) {
+        const uniform = this.uniforms.get('resolution');
+        if (uniform) uniform.value.set(w, h);
     }
 }
 

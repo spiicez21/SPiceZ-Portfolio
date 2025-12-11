@@ -1,62 +1,255 @@
-.stack-trace-content {
+.stack-trace-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    perspective: 1000px;
+    /* align-items: start;  <-- Removed to allow full height borders */
 }
 
-.stack-category {
-    border: 2px solid var(--border-ink);
-    padding: 1.5rem;
-    background: var(--bg);
-}
-
-.category-label {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--border-ink);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-}
-
-.category-items {
+.stack-category-group {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
+    position: relative;
+    padding-left: 1.5rem;
+    animation: fadeInUp 0.6s ease-out backwards;
+    /* Ensure full height for the border */
+    min-height: 100%;
 }
 
-.stack-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+/* ... animations ... */
+
+/* Vertical line separator between items */
+.stack-category-group:not(:first-child) {
+    /* Techy gradient border */
+    border-left: 1px solid transparent;
+    border-image: linear-gradient(to bottom, var(--accent) 0%, rgba(var(--accent-rgb), 0.2) 50%, transparent 100%) 1;
+}
+
+/* Glowing dot (now on ALL groups, acting as a header node) */
+.stack-category-group::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    /* Align with the top of the line */
+    left: -3.5px;
+    /* Center on the border/edge */
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(var(--accent-rgb), 0.5);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.category-header {
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    color: var(--ink);
-    padding: 0.5rem;
-    background: var(--bg-alt);
-    transition: all 0.2s ease;
-}
-
-.stack-item:hover {
-    background: var(--bg);
-    border-left: 3px solid var(--accent);
-    padding-left: calc(0.5rem - 3px);
-}
-
-.item-bullet {
     color: var(--accent);
-    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-ink);
+    position: relative;
+    text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
 }
 
-.item-text {
-    flex: 1;
+.category-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 30%;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+}
+
+.stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+}
+
+.tech-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border-ink);
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.tech-card:hover::before {
+    left: 100%;
+}
+
+.tech-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: var(--bg);
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--accent-rgb), 0.2);
+    z-index: 10;
+}
+
+.tech-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tech-card:hover::after {
+    opacity: 1;
+}
+
+.icon-wrapper {
+    font-size: 2rem;
+    color: var(--ink);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 0 transparent);
+}
+
+.tech-card:hover .icon-wrapper {
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent));
+    transform: scale(1.1) rotateY(10deg);
+}
+
+.tech-name {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.tech-card:hover .tech-name {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.default-icon {
+    font-size: 1.25rem;
+    color: var(--accent);
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .stack-trace-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
 }
 
 @media (max-width: 640px) {
-    .stack-trace-content {
+    .stack-trace-container {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stack-category-group {
+        padding-left: 0;
+        border-left: none;
+        padding-top: 1.5rem;
+        border-top: 1px dashed var(--border-ink);
+    }
+
+    .stack-category-group:first-child {
+        padding-top: 0;
+        border-top: none;
+    }
+
+    .stack-category-group:not(:first-child) {
+        border-left: none;
+    }
+
+    .stack-category-group:not(:first-child)::before {
+        top: -3px;
+        left: 0;
+    }
+
+    .stack-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .tech-card {
+        padding: 0.75rem 0.25rem;
+    }
+
+    .icon-wrapper {
+        font-size: 1.75rem;
+    }
+
+    .tech-name {
+        font-size: 0.6rem;
+    }
+
+    .category-header {
+        font-size: 0.8rem;
     }
 }

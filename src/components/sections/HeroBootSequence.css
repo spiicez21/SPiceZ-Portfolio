@@ -62,6 +62,20 @@
     /* Prevent wrapping */
     text-transform: uppercase;
     /* Match user style */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.hero-ascii {
+    font-family: var(--font-mono);
+    font-size: clamp(0.5rem, 1vw, 1rem);
+    /* Much smaller for ASCII */
+    line-height: 1.1;
+    white-space: pre;
+    /* Preserve exact spacing */
+    color: var(--accent);
+    cursor: pointer;
+    user-select: none;
 }
 
 .hero-tagline {

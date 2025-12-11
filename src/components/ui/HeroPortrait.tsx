@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 
 export default function HeroPortrait() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [position, setPosition] = useState({ x: -1000, y: -1000 }); // Start off-screen
+
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!containerRef.current) return;
