@@ -165,82 +165,116 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
     }, []);
 
     useEffect(() => {
-        let currentStage = 0;
-        let messageIndex = 0;
+        let isMounted = true;
 
-        // Add messages progressively
-        const messageInterval = setInterval(() => {
-            if (messageIndex < bootMessages.length) {
-                const randomMessage = bootMessages[Math.floor(Math.random() * bootMessages.length)];
-                setMessages(prev => [...prev, randomMessage]);
-                messageIndex++;
-            }
-        }, 300);
+        // Define assets to preload
+        const assetsToLoad = [
+            '/Picture/Background-main.png',
+            '/Picture/Main-Depth.png',
+            '/Picture/doodle.png',
+            '/Spotify-Badge/batbro.gif',
+            // Add other critical assets here
+        ];
 
-        // Progress through stages
-        const stageInterval = setInterval(() => {
-            if (currentStage < stages.length) {
-                setLoadingState({
-                    stage: stages[currentStage].name,
-                    progress: stages[currentStage].progress,
-                    status: currentStage === stages.length - 1 ? 'complete' : 'loading',
-                });
-                currentStage++;
-            } else {
-                clearInterval(stageInterval);
-                clearInterval(messageInterval);
+        let loadedCount = 0;
 
-                // START TRANSITION SEQUENCE
-                const canvas = canvasRef.current;
+        const updateProgress = () => {
+            if (!isMounted) return;
+            const progress = Math.min(Math.round((loadedCount / assetsToLoad.length) * 100), 100);
 
-                // 1. Fade out boot container content
-                if (bootContentRef.current) {
-                    gsap.to(bootContentRef.current, {
-                        opacity: 0,
-                        duration: 0.5,
-                        ease: "power2.inOut",
-                        onComplete: () => {
-                            // 2. Trigger Canvas animations
-                            if (canvas) {
-                                (canvas as any).fadeInGrid(); // Start fading in grid
+            // Map progress to stages
+            let currentStageName = stages[0].name;
+            if (progress > 20) currentStageName = stages[1].name;
+            if (progress > 50) currentStageName = stages[2].name;
+            if (progress > 80) currentStageName = stages[3].name;
+            if (progress === 100) currentStageName = stages[4].name;
 
-                                // Schedule dissolve
-                                setTimeout(() => {
-                                    // Optional flash
-                                    if (containerRef.current) {
-                                        gsap.to(containerRef.current, {
-                                            backgroundColor: "var(--accent)",
-                                            duration: 0.1,
-                                            yoyo: true,
-                                            repeat: 1,
-                                            opacity: 0.8
-                                        });
-                                    }
+            setLoadingState({
+                stage: currentStageName,
+                progress: progress,
+                status: progress === 100 ? 'complete' : 'loading'
+            });
 
-                                    (canvas as any).dissolveGrid(() => {
-                                        // Final cleanup
+            if (progress === 100) {
+                // FINISH SEQUENCE
+                // Add a small delay for "READY TO DEPLOY" to be read
+                setTimeout(() => {
+                    if (!isMounted) return;
+                    // START TRANSITION SEQUENCE
+                    const canvas = canvasRef.current;
+                    if (bootContentRef.current) {
+                        gsap.to(bootContentRef.current, {
+                            opacity: 0,
+                            duration: 0.5,
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                if (canvas) {
+                                    (canvas as any).fadeInGrid();
+                                    setTimeout(() => {
                                         if (containerRef.current) {
                                             gsap.to(containerRef.current, {
-                                                opacity: 0,
-                                                duration: 0.2,
-                                                onComplete: () => {
-                                                    onComplete();
-                                                    sessionStorage.setItem('portfolio_visited', 'true');
-                                                }
+                                                backgroundColor: "var(--accent)",
+                                                duration: 0.1,
+                                                yoyo: true,
+                                                repeat: 1,
+                                                opacity: 0.8
                                             });
                                         }
-                                    });
-                                }, 800);
+                                        (canvas as any).dissolveGrid(() => {
+                                            if (containerRef.current) {
+                                                gsap.to(containerRef.current, {
+                                                    opacity: 0,
+                                                    duration: 0.2,
+                                                    onComplete: () => {
+                                                        onComplete();
+                                                        sessionStorage.setItem('portfolio_visited', 'true');
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }, 800);
+                                }
                             }
-                        }
-                    });
-                }
+                        });
+                    }
+                }, 500);
             }
-        }, 600);
+        };
+
+        // Preload Logic
+        assetsToLoad.forEach(src => {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => {
+                loadedCount++;
+                updateProgress();
+            };
+            img.onerror = () => {
+                console.warn(`Failed to load asset: ${src}`);
+                loadedCount++; // Count as loaded even on error to prevent hanging
+                updateProgress();
+            };
+        });
+
+        // Failsafe timeout (5 seconds max boot time)
+        const failsafe = setTimeout(() => {
+            if (loadedCount < assetsToLoad.length) {
+                console.log("Bootloader timeout - forcing start");
+                loadedCount = assetsToLoad.length;
+                updateProgress();
+            }
+        }, 5000);
+
+        // Message Rotator
+        const messageInterval = setInterval(() => {
+            const randomMessage = bootMessages[Math.floor(Math.random() * bootMessages.length)];
+            setMessages(prev => [...prev.slice(-4), randomMessage]);
+        }, 400);
 
         return () => {
+            isMounted = false;
+            clearTimeout(failsafe);
             clearInterval(messageInterval);
-            clearInterval(stageInterval);
         };
     }, [onComplete]);
 
