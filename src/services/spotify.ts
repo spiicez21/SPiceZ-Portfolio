@@ -3,45 +3,25 @@ import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 
 // Spotify API endpoints and credentials
-const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
-const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
-const REFRESH_TOKEN = import.meta.env.VITE_SPOTIFY_REFRESH_TOKEN;
+// NOTE: Secrets are now handled by Netlify Function to avoid exposing them in client bundle
+const TOKEN_ENDPOINT = '/.netlify/functions/spotify-token';
 
-console.log('🎵 Spotify Config:', {
-    hasClientId: !!CLIENT_ID,
-    hasClientSecret: !!CLIENT_SECRET,
-    hasRefreshToken: !!REFRESH_TOKEN
-});
+console.log('🎵 Spotify Config: Secrets handled by Netlify Function');
 
-// Function to generate an access token using the refresh token
+// Function to get access token from secure backend
 export const getAccessToken = async () => {
-    if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
-        console.warn('Missing Spotify credentials');
-        return null;
-    }
-
     try {
-        // Creates a base64 code of client_id:client_secret as required by the API
-        const basic = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
-
-        // The response will contain the access token
-        const response = await fetch(TOKEN_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                Authorization: `Basic ${basic}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                grant_type: 'refresh_token',
-                refresh_token: REFRESH_TOKEN,
-            }),
-        });
-
+        const response = await fetch(TOKEN_ENDPOINT);
         const data = await response.json();
-        return data.access_token;
+
+        if (response.ok && data.access_token) {
+            return data.access_token;
+        } else {
+            console.error('Failed to get access token:', data);
+            return null;
+        }
     } catch (error) {
-        console.error('Error getting access token:', error);
+        console.error('Error fetching access token from backend:', error);
         return null;
     }
 };
