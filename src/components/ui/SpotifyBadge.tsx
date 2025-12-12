@@ -35,6 +35,10 @@ const SpotifyBadge = () => {
                     gsap.set(badgeRef.current, { clearProps: 'transform' });
                     badgeRef.current.classList.add('animate-done');
                 }
+                // Allow overflow so hover (-3px lift) doesn't get clipped
+                if (containerRef.current) {
+                    containerRef.current.style.overflow = 'visible';
+                }
             }
         });
 
@@ -128,6 +132,7 @@ const SpotifyBadge = () => {
 
             <div className="spotify-badge" ref={badgeRef}>
                 <FaSpotify className="spotify-logo-corner" />
+                <img src="/Spotify-Badge/batbro.gif" alt="Batbro" className="spotify-batbro-gif" />
                 <div className="spotify-badge-header">
                     <Music size={14} />
                     <span>{currentTrack.isPlaying ? 'Now Playing' : 'Recently Played'}</span>

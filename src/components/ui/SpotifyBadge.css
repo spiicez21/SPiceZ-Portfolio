@@ -55,6 +55,20 @@
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
 }
 
+.spotify-batbro-gif {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    /* Position left of the icon */
+    height: 45px;
+    /* Adjust based on gif size */
+    width: auto;
+    object-fit: contain;
+    z-index: 5;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
 .spotify-badge:hover .spotify-logo-corner {
     transform: rotate(0deg) scale(1.1);
     transition: all 0.3s ease;
