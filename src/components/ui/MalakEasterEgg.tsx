@@ -6,6 +6,9 @@ const MalakEasterEgg = () => {
     const [showPopup, setShowPopup] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
 
+    // Check if Malak Easter Egg is enabled
+    const isEnabled = import.meta.env.VITE_MALAK === 'true' || import.meta.env.VITE_MALAK === true;
+
     const handleMiniClick = async () => {
         setShowPopup(true);
 
@@ -32,6 +35,9 @@ const MalakEasterEgg = () => {
             audioRef.current.currentTime = 0;
         }
     };
+
+    // Don't render if disabled
+    if (!isEnabled) return null;
 
     return (
         <>

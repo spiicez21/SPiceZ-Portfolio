@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import SpotifyBadge from './SpotifyBadge';
 
 export default function HeroPortrait() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -90,6 +91,9 @@ export default function HeroPortrait() {
                     WebkitMaskImage: 'radial-gradient(circle 250px at var(--x, -1000px) var(--y, -1000px), black 20%, transparent 100%)',
                 }}
             />
+
+            {/* Spotify Badge */}
+            <SpotifyBadge />
         </div>
     );
 }
