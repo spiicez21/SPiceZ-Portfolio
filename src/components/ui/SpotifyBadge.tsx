@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Music } from 'lucide-react';
 import { FaSpotify } from 'react-icons/fa';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import './SpotifyBadge.css';
 import { getAccessToken } from '../../services/spotify';
+
+gsap.registerPlugin(useGSAP);
 
 interface SpotifyTrack {
     name: string;
@@ -15,6 +19,39 @@ interface SpotifyTrack {
 const SpotifyBadge = () => {
     const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const introRef = useRef<HTMLDivElement>(null);
+    const badgeRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        // Only run animation if elements exist (meaning data loaded)
+        if (!containerRef.current || !introRef.current || !badgeRef.current) return;
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                // Remove transform from JS so CSS hover works
+                if (badgeRef.current) {
+                    gsap.set(badgeRef.current, { clearProps: 'transform' });
+                    badgeRef.current.classList.add('animate-done');
+                }
+            }
+        });
+
+        // Intro Slide (White Box)
+        tl.to(introRef.current, {
+            x: '0%',
+            duration: 0.5,
+            ease: 'power3.out'
+        })
+            // Badge Slide (follows intro)
+            .to(badgeRef.current, {
+                x: '0%',
+                duration: 0.6,
+                ease: 'power3.out'
+            }, '-=0.3'); // Overlap slightly
+
+    }, { scope: containerRef, dependencies: [currentTrack] });
 
     const fetchCurrentlyPlaying = async () => {
         try {
@@ -82,32 +119,36 @@ const SpotifyBadge = () => {
     }
 
     return (
-        <div className="spotify-badge">
-            <FaSpotify className="spotify-logo-corner" />
-            <div className="spotify-badge-header">
-                <Music size={14} />
-                <span>{currentTrack.isPlaying ? 'Now Playing' : 'Recently Played'}</span>
-            </div>
+        <div className="spotify-anim-wrapper" ref={containerRef}>
+            <div className="intro-slide" ref={introRef}></div>
 
-            <div className="spotify-badge-content">
-                <img
-                    src={currentTrack.image}
-                    alt={currentTrack.name}
-                    className="spotify-badge-album"
-                />
-
-                <div className="spotify-badge-info">
-                    <div className="spotify-badge-track">{currentTrack.name}</div>
-                    <div className="spotify-badge-artist">{currentTrack.artist}</div>
+            <div className="spotify-badge" ref={badgeRef}>
+                <FaSpotify className="spotify-logo-corner" />
+                <div className="spotify-badge-header">
+                    <Music size={14} />
+                    <span>{currentTrack.isPlaying ? 'Now Playing' : 'Recently Played'}</span>
                 </div>
 
-                {currentTrack.isPlaying && (
-                    <div className="spotify-badge-bars">
-                        <span className="bar"></span>
-                        <span className="bar"></span>
-                        <span className="bar"></span>
+                <div className="spotify-badge-content">
+                    <img
+                        src={currentTrack.image}
+                        alt={currentTrack.name}
+                        className="spotify-badge-album"
+                    />
+
+                    <div className="spotify-badge-info">
+                        <div className="spotify-badge-track">{currentTrack.name}</div>
+                        <div className="spotify-badge-artist">{currentTrack.artist}</div>
                     </div>
-                )}
+
+                    {currentTrack.isPlaying && (
+                        <div className="spotify-badge-bars">
+                            <span className="bar"></span>
+                            <span className="bar"></span>
+                            <span className="bar"></span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
