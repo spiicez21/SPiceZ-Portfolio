@@ -52,7 +52,7 @@ export const getAccessToken = async () => {
         if (response.ok && data.access_token) {
             return data.access_token;
         } else {
-            console.error('Failed to get access token from backend:', data);
+            console.error('Failed to get access token from backend:', JSON.stringify(data));
             return null;
         }
     } catch (error) {
