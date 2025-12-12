@@ -15,7 +15,7 @@ export default async (req, context) => {
     }
 
     try {
-        const basic = btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`);
+        const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
 
         const response = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
