@@ -4,7 +4,7 @@ import AnimateIn from '../utils/AnimateIn';
 import Magnetic from '../utils/Magnetic';
 import InkButton from '../ui/InkButton';
 import contactData from '../../content/contact.json';
-import { Github, Linkedin, Twitter, Instagram, Mail, Send, Coffee } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Mail, Coffee } from 'lucide-react';
 import './OpenTicket.css';
 
 const OpenTicket = () => {

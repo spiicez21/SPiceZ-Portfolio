@@ -9,6 +9,7 @@ interface InkButtonProps {
     variant?: 'primary' | 'secondary';
     className?: string;
     type?: 'button' | 'submit' | 'reset';
+    disabled?: boolean;
 }
 
 const InkButton = ({
@@ -17,7 +18,8 @@ const InkButton = ({
     href,
     variant = 'primary',
     className = '',
-    type = 'button'
+    type = 'button',
+    disabled = false
 }: InkButtonProps) => {
     const ButtonContent = (
         <>
@@ -47,6 +49,7 @@ const InkButton = ({
                 className={`ink-button ${variant} ${className}`}
                 onClick={onClick}
                 type={type}
+                disabled={disabled}
             >
                 {ButtonContent}
             </button>
