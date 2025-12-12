@@ -25,6 +25,7 @@
     /* Ensure stacking context */
     z-index: 25;
     /* Higher than intro-slide (20) */
+    will-change: transform;
 }
 
 .spotify-badge.animate-done {
@@ -40,6 +41,7 @@
     background: #ffffff;
     z-index: 20;
     transform: translateX(-110%);
+    will-change: transform;
 }
 
 .spotify-logo-corner {

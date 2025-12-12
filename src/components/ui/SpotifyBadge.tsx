@@ -42,14 +42,18 @@ const SpotifyBadge = () => {
         tl.to(introRef.current, {
             x: '0%',
             duration: 0.5,
-            ease: 'power3.out'
+            ease: 'expo.out'
         })
             // Badge Slide (follows intro)
             .to(badgeRef.current, {
                 x: '0%',
                 duration: 0.6,
-                ease: 'power3.out'
-            }, '-=0.3'); // Overlap slightly
+                ease: 'expo.out'
+            }, '-=0.2') // Overlap slightly
+            .to(introRef.current, {
+                autoAlpha: 0,
+                duration: 0.2
+            });
 
     }, { scope: containerRef, dependencies: [currentTrack] });
 
