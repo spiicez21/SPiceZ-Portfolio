@@ -61,6 +61,21 @@ export default function HeroPortrait() {
                 }}
             />
 
+            {/* Doodle Layer */}
+            <img
+                src="/Picture/doodle.png"
+                alt="Portrait Doodle"
+                style={{
+                    position: 'absolute',
+                    height: '90%',
+                    width: 'auto',
+                    objectFit: 'contain',
+                    zIndex: 1,
+                    opacity: 0.3,
+                    pointerEvents: 'none'
+                }}
+            />
+
             {/* Base Image (Normal) */}
             <img
                 src="/Picture/normal-main.png"
@@ -70,7 +85,7 @@ export default function HeroPortrait() {
                     height: '90%', // Adjust size as needed
                     width: 'auto',
                     objectFit: 'contain',
-                    zIndex: 1,
+                    zIndex: 2,
                     pointerEvents: 'none' // Let events pass to container
                 }}
             />
@@ -84,7 +99,7 @@ export default function HeroPortrait() {
                     height: '90%',
                     width: 'auto',
                     objectFit: 'contain',
-                    zIndex: 2,
+                    zIndex: 3,
                     pointerEvents: 'none',
                     // The CSS Mask Logic
                     maskImage: 'radial-gradient(circle 250px at var(--x, -1000px) var(--y, -1000px), black 20%, transparent 100%)',

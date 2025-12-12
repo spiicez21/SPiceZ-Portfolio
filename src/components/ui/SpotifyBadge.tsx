@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Music } from 'lucide-react';
+import { FaSpotify } from 'react-icons/fa';
 import './SpotifyBadge.css';
-import { getCurrentTrack, getRecentlyPlayed } from '../../services/spotify';
+import { getAccessToken } from '../../services/spotify';
 
 interface SpotifyTrack {
     name: string;
@@ -15,35 +16,64 @@ const SpotifyBadge = () => {
     const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchSpotifyData = async () => {
+    const fetchCurrentlyPlaying = async () => {
         try {
-            // Try to get current playing track
-            let track = await getCurrentTrack();
+            const token = await getAccessToken();
+            if (!token) return;
 
-            // If no current track, get recently played
-            if (!track) {
-                const recentTracks = await getRecentlyPlayed();
-                if (recentTracks.length > 0) {
-                    track = recentTracks[0];
-                }
+            const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (response.status === 204 || response.status > 400) {
+                // returns 204 if nothing playing
+                // Try recently played if nothing playing
+                fetchRecentlyPlayed(token);
+                return;
             }
 
-            if (track) {
-                setCurrentTrack(track);
+            const data = await response.json();
+
+            if (data.item) {
+                setCurrentTrack({
+                    name: data.item.name,
+                    artist: data.item.artists.map((artist: any) => artist.name).join(', '),
+                    album: data.item.album.name,
+                    image: data.item.album.images[0]?.url,
+                    isPlaying: data.is_playing
+                });
             }
         } catch (error) {
-            console.error('Error fetching Spotify data:', error);
+            console.error('Error fetching current track:', error);
         } finally {
             setIsLoading(false);
         }
     };
 
+    const fetchRecentlyPlayed = async (token: string) => {
+        try {
+            const response = await fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await response.json();
+            if (data.items && data.items.length > 0) {
+                const item = data.items[0].track;
+                setCurrentTrack({
+                    name: item.name,
+                    artist: item.artists.map((artist: any) => artist.name).join(', '),
+                    album: item.album.name,
+                    image: item.album.images[0]?.url,
+                    isPlaying: false
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching recent:', error);
+        }
+    };
+
     useEffect(() => {
-        fetchSpotifyData();
-
-        // Refresh every 30 seconds to update track
-        const interval = setInterval(fetchSpotifyData, 30000);
-
+        fetchCurrentlyPlaying();
+        const interval = setInterval(fetchCurrentlyPlaying, 30000);
         return () => clearInterval(interval);
     }, []);
 
@@ -53,6 +83,7 @@ const SpotifyBadge = () => {
 
     return (
         <div className="spotify-badge">
+            <FaSpotify className="spotify-logo-corner" />
             <div className="spotify-badge-header">
                 <Music size={14} />
                 <span>{currentTrack.isPlaying ? 'Now Playing' : 'Recently Played'}</span>
