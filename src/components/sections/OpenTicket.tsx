@@ -4,7 +4,7 @@ import AnimateIn from '../utils/AnimateIn';
 import Magnetic from '../utils/Magnetic';
 import InkButton from '../ui/InkButton';
 import contactData from '../../content/contact.json';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Mail, Send, Coffee } from 'lucide-react';
 import './OpenTicket.css';
 
 const OpenTicket = () => {
@@ -13,11 +13,35 @@ const OpenTicket = () => {
         email: '',
         message: '',
     });
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Netlify Forms will handle this automatically
-        console.log('Form submitted:', formData);
+        setStatus('sending');
+
+        try {
+            const response = await fetch('/.netlify/functions/contact-discord', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                // Reset success status after 3 seconds
+                setTimeout(() => setStatus('idle'), 3000);
+            } else {
+                console.error('Server responded with:', response.status);
+                if (response.status === 404) {
+                    alert("⚠️ Developer Note: This feature uses Netlify Functions.\nIt will not work on 'localhost' unless you run 'netlify dev'.\nPlease deploy to test!");
+                }
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            setStatus('error');
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,6 +59,10 @@ const OpenTicket = () => {
                 return <Linkedin size={24} />;
             case 'twitter':
                 return <Twitter size={24} />;
+            case 'instagram':
+                return <Instagram size={24} />;
+            case 'buy me a coffee':
+                return <Coffee size={24} />;
             default:
                 return <Mail size={24} />;
         }
@@ -83,12 +111,7 @@ const OpenTicket = () => {
                     <form
                         onSubmit={handleSubmit}
                         className="contact-form"
-                        name="contact"
-                        method="POST"
-                        data-netlify="true"
                     >
-                        <input type="hidden" name="form-name" value="contact" />
-
                         <div className="form-group">
                             <label htmlFor="name">NAME</label>
                             <input
@@ -99,6 +122,7 @@ const OpenTicket = () => {
                                 onChange={handleChange}
                                 required
                                 className="form-input"
+                                placeholder="John Doe"
                             />
                         </div>
 
@@ -112,6 +136,7 @@ const OpenTicket = () => {
                                 onChange={handleChange}
                                 required
                                 className="form-input"
+                                placeholder="john@example.com"
                             />
                         </div>
 
@@ -125,11 +150,15 @@ const OpenTicket = () => {
                                 required
                                 rows={6}
                                 className="form-textarea"
+                                placeholder="Project details or just a hello..."
                             />
                         </div>
 
-                        <InkButton variant="primary">
-                            Send Packet →
+                        <InkButton variant="primary" disabled={status === 'sending'}>
+                            {status === 'sending' ? 'Transmitting...' :
+                                status === 'success' ? 'Packet Sent! ✓' :
+                                    status === 'error' ? 'Transmission Failed ⚠️' :
+                                        'Send Packet →'}
                         </InkButton>
                     </form>
                 </AnimateIn>
