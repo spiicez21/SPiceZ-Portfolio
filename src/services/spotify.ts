@@ -2,22 +2,57 @@ import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
 
-// Spotify API endpoints and credentials
-// NOTE: Secrets are now handled by Netlify Function to avoid exposing them in client bundle
-const TOKEN_ENDPOINT = '/.netlify/functions/spotify-token';
+// Spotify API endpoints
+const SPOTIFY_TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
+const NETLIFY_FUNCTION_ENDPOINT = '/.netlify/functions/spotify-token';
 
-console.log('🎵 Spotify Config: Secrets handled by Netlify Function');
+// Local development secrets (Vite only)
+const VITE_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const VITE_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+const VITE_REFRESH_TOKEN = import.meta.env.VITE_SPOTIFY_REFRESH_TOKEN;
 
-// Function to get access token from secure backend
+// Check if we can run locally
+const canRunLocally = import.meta.env.DEV && VITE_CLIENT_ID && VITE_CLIENT_SECRET && VITE_REFRESH_TOKEN;
+
+console.log('🎵 Spotify Config:', {
+    mode: import.meta.env.DEV ? 'Local Dev' : 'Production',
+    method: canRunLocally ? 'Direct API (Local)' : 'Netlify Function (Secure)'
+});
+
+// Function to get access token
 export const getAccessToken = async () => {
+    // METHOD 1: Local Development (Direct API)
+    if (canRunLocally) {
+        try {
+            const basic = btoa(`${VITE_CLIENT_ID}:${VITE_CLIENT_SECRET}`);
+            const response = await fetch(SPOTIFY_TOKEN_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Basic ${basic}`,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    grant_type: 'refresh_token',
+                    refresh_token: VITE_REFRESH_TOKEN,
+                }),
+            });
+            const data = await response.json();
+            return data.access_token;
+        } catch (error) {
+            console.error('Error getting local access token:', error);
+            return null;
+        }
+    }
+
+    // METHOD 2: Production (Netlify Function)
     try {
-        const response = await fetch(TOKEN_ENDPOINT);
+        const response = await fetch(NETLIFY_FUNCTION_ENDPOINT);
         const data = await response.json();
 
         if (response.ok && data.access_token) {
             return data.access_token;
         } else {
-            console.error('Failed to get access token:', data);
+            console.error('Failed to get access token from backend:', data);
             return null;
         }
     } catch (error) {
