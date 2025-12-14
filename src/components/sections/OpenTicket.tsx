@@ -1,19 +1,40 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import AsciiRain from '../ui/AsciiRain';
 import SectionFrame from '../ui/SectionFrame';
-import AnimateIn from '../utils/AnimateIn';
-import Magnetic from '../utils/Magnetic';
-import InkButton from '../ui/InkButton';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import contactData from '../../content/contact.json';
-import { Github, Linkedin, Twitter, Instagram, Mail, Coffee } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Mail, Coffee, Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
 import './OpenTicket.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const OpenTicket = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         message: '',
     });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        tl.from(".ticket-header-line", {
+            width: 0,
+            duration: 0.8,
+            ease: "expo.inOut"
+        });
+
+    }, { scope: containerRef });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,12 +50,10 @@ const OpenTicket = () => {
             if (response.ok) {
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
-                // Reset success status after 3 seconds
                 setTimeout(() => setStatus('idle'), 3000);
             } else {
-                console.error('Server responded with:', response.status);
                 if (response.status === 404) {
-                    alert("⚠️ Developer Note: This feature uses Netlify Functions.\nIt will not work on 'localhost' unless you run 'netlify dev'.\nPlease deploy to test!");
+                    alert("⚠️ Developer Note: This feature uses Netlify Functions.\nIt will not work on 'localhost' unless you run 'netlify dev'.");
                 }
                 setStatus('error');
             }
@@ -53,115 +72,126 @@ const OpenTicket = () => {
 
     const getIcon = (platform: string) => {
         switch (platform.toLowerCase()) {
-            case 'github':
-                return <Github size={24} />;
-            case 'linkedin':
-                return <Linkedin size={24} />;
-            case 'twitter':
-                return <Twitter size={24} />;
-            case 'instagram':
-                return <Instagram size={24} />;
-            case 'buy me a coffee':
-                return <Coffee size={24} />;
-            default:
-                return <Mail size={24} />;
+            case 'github': return <Github size={18} />;
+            case 'linkedin': return <Linkedin size={18} />;
+            case 'twitter': return <Twitter size={18} />;
+            case 'instagram': return <Instagram size={18} />;
+            case 'buy me a coffee': return <Coffee size={18} />;
+            default: return <Mail size={18} />;
         }
     };
 
     return (
         <SectionFrame id="open-ticket" label="OPEN A TICKET" number="09">
-            <div className="contact-content">
-                <AnimateIn className="contact-left" animation="slide-right" duration={0.8} threshold={0.2}>
-                    <h3 className="contact-heading">Let's Connect</h3>
-                    <p className="contact-description">
-                        Got a project in mind? Want to collaborate? Or just want to say hi?
-                        Drop me a message and I'll get back to you as soon as possible.
-                    </p>
+            <div ref={containerRef} className="ticket-layout">
 
-                    <div className="resume-download">
-                        <InkButton href="/Resume/Resume.pdf" variant="primary">
-                            Download Resume
-                        </InkButton>
+                {/* Left: Quick Connect */}
+                <div className="ticket-info">
+                    <div className="info-header">
+                        <h3>SIGNAL CHANNEL</h3>
+                        <p>Initiate direct communication protocol.</p>
                     </div>
 
-                    <div className="social-links">
+                    <div className="social-grid">
                         {contactData.socials.map((social, idx) => (
-                            <Magnetic key={idx} strength={0.4}>
-                                <a
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="social-link"
-                                    aria-label={social.platform}
-                                >
-                                    {getIcon(social.platform)}
-                                    <span>{social.platform}</span>
-                                </a>
-                            </Magnetic>
+                            <a
+                                key={idx}
+                                href={social.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-chip"
+                                aria-label={social.platform}
+                            >
+                                {getIcon(social.platform)}
+                                <span>{social.platform}</span>
+                            </a>
                         ))}
                     </div>
 
-                    <div className="email-box">
-                        <Mail size={20} />
-                        <a href={`mailto:${contactData.email}`}>{contactData.email}</a>
+                    <div className="direct-link">
+                        <span className="label">DIRECT LINK://</span>
+                        <a href={`mailto:${contactData.email}`} className="email-link">
+                            {contactData.email}
+                        </a>
                     </div>
-                </AnimateIn>
+                </div>
 
-                <AnimateIn className="contact-right" animation="slide-left" delay={0.2} duration={0.8} threshold={0.2}>
-                    <form
-                        onSubmit={handleSubmit}
-                        className="contact-form"
-                    >
-                        <div className="form-group">
-                            <label htmlFor="name">NAME</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                                className="form-input"
-                                placeholder="John Doe"
-                            />
+                {/* Right: The Ticket Interface */}
+                <div className="ticket-interface-row">
+
+                    {/* Column 1: Format */}
+                    <div className="ticket-system">
+                        <div className="ticket-header">
+                            <span className="ticket-id">NEW TICKET // #001</span>
+                            <div className="ticket-header-line"></div>
+                            <span className="ticket-status">STATUS: STANDBY</span>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="email">EMAIL</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="form-input"
-                                placeholder="john@example.com"
-                            />
-                        </div>
+                        <form onSubmit={handleSubmit} className="ticket-form">
+                            <div className="form-field">
+                                <label htmlFor="name">AGENT NAME</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="ENTER NAME"
+                                />
+                            </div>
+                            <div className="form-field">
+                                <label htmlFor="email">RETURN FREQUENCY</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="ENTER EMAIL"
+                                />
+                            </div>
 
-                        <div className="form-group">
-                            <label htmlFor="message">MESSAGE</label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                required
-                                rows={6}
-                                className="form-textarea"
-                                placeholder="Project details or just a hello..."
-                            />
-                        </div>
+                            <div className="form-field">
+                                <label htmlFor="message">TRANSMISSION DATA</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
+                                    rows={4}
+                                    placeholder="ENTER MESSAGE CONTENT..."
+                                />
+                            </div>
 
-                        <InkButton variant="primary" disabled={status === 'sending'}>
-                            {status === 'sending' ? 'Transmitting...' :
-                                status === 'success' ? 'Packet Sent! ✓' :
-                                    status === 'error' ? 'Transmission Failed ⚠️' :
-                                        'Send Packet →'}
-                        </InkButton>
-                    </form>
-                </AnimateIn>
+                            <button
+                                type="submit"
+                                className={`ticket-submit ${status}`}
+                                disabled={status === 'sending' || status === 'success'}
+                            >
+                                <span className="btn-content">
+                                    {status === 'sending' && <><Loader2 className="spin" size={16} /> TRANSMITTING</>}
+                                    {status === 'success' && <><Check size={16} /> SENT CONFIRMED</>}
+                                    {status === 'error' && <><AlertTriangle size={16} /> FAILED</>}
+                                    {status === 'idle' && <><Send size={16} /> SEND TICKET</>}
+                                </span>
+                                <div className="btn-glitch"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Column 2: Matrix Rain */}
+                    <div className="matrix-container">
+                        <div className="matrix-overlay">
+                            <span className="matrix-label">ENCRYPTION: ACTIVE</span>
+                        </div>
+                        <AsciiRain />
+                    </div>
+
+                </div>
+
             </div>
         </SectionFrame>
     );
