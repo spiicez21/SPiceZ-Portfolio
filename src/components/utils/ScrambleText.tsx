@@ -82,7 +82,7 @@ const ScrambleText = ({
     };
 
     return (
-        <span ref={elementRef} className={className} style={{ display: 'inline-block', fontFamily: 'monospace' }}>
+        <span ref={elementRef} className={className} style={{ display: 'inline-block' }}>
             {displayText}
         </span>
     );

@@ -49,6 +49,16 @@
     display: block;
 }
 
+.navbar-logo-text {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 .navbar-links {
     display: flex;
     gap: 2rem;

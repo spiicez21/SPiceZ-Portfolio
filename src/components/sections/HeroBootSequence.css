@@ -52,18 +52,17 @@
 }
 
 .hero-name {
-    /* font-family: 'Space Grotesk', sans-serif; */
-    font-size: clamp(2rem, 6vw, 5rem);
-    /* Adjusted for fit */
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    /* Reduced size */
+    /* Larger for Nippo */
     font-weight: 700;
     line-height: 0.9;
     color: #fff;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
     white-space: nowrap;
-    /* Prevent wrapping */
     text-transform: uppercase;
-    /* Match user style */
     cursor: pointer;
     transition: opacity 0.3s ease;
 }
@@ -71,17 +70,15 @@
 .hero-ascii {
     font-family: var(--font-mono);
     font-size: clamp(0.5rem, 1vw, 1rem);
-    /* Much smaller for ASCII */
     line-height: 1.1;
     white-space: pre;
-    /* Preserve exact spacing */
     color: var(--accent);
     cursor: pointer;
     user-select: none;
 }
 
 .hero-tagline {
-    /* font-family: 'Inter', sans-serif; */
+    font-family: var(--font-mono);
     font-size: clamp(1rem, 2vw, 1.5rem);
     color: #888;
     max-width: 600px;

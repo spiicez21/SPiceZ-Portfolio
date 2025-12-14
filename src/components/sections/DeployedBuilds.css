@@ -49,11 +49,13 @@
 }
 
 .project-title {
-    font-family: var(--font-header);
-    font-size: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
     color: var(--ink-text);
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
 }
 
 .project-links {

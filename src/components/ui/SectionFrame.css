@@ -11,18 +11,36 @@
     margin: 0 auto;
 }
 
-.section-label {
+.section-header-content {
     position: absolute;
-    top: -0.6rem;
+    top: -1.2rem;
     left: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
     background: var(--bg);
-    padding: 0 1rem 0 0;
+    padding-right: 1rem;
+}
+
+.section-number {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--ink-muted);
-    letter-spacing: 0.1em;
-    font-weight: 400;
+    font-size: 1rem;
+    color: var(--accent);
+    opacity: 0.5;
+    font-weight: 300;
+}
+
+.section-label {
+    font-family: var(--font-heading);
+    /* Nippo */
+    font-size: 2rem;
+    /* Larger for impact */
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    font-weight: 700;
     text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
     display: flex;
     align-items: center;
 }
