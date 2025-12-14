@@ -4,19 +4,31 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--bg);
-    border-bottom: var(--border-width) solid var(--border);
-    backdrop-filter: blur(10px);
-}
-
-.navbar-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.5rem 2rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    pointer-events: none;
+    /* Let clicks pass through empty space */
 }
+
+/* Glass Modules */
+.nav-module {
+    background: rgba(0, 0, 0, 0.7);
+    /* Darker glass for better contrast */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    pointer-events: auto;
+    /* Re-enable clicks on modules */
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    /* Slight rounded corners for modern feel */
+}
+
+/* .nav-left and .nav-right are used in JSX for specificity if needed later */
 
 .navbar-logo {
     display: flex;
@@ -24,7 +36,6 @@
     text-decoration: none;
     transition: opacity 0.2s ease;
     z-index: 1002;
-    /* Ensure logo is above mobile menu */
 }
 
 .navbar-logo:hover {
@@ -32,14 +43,15 @@
 }
 
 .logo-image {
-    height: 40px;
+    height: 32px;
+    /* Slightly smaller for modular look */
     width: auto;
     display: block;
 }
 
 .navbar-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 .nav-link {
@@ -65,7 +77,10 @@
     color: var(--ink);
     cursor: pointer;
     z-index: 1002;
-    padding: 0.5rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Mobile Menu Overlay */
@@ -140,17 +155,26 @@
 }
 
 @media (max-width: 768px) {
-    .navbar-content {
+    .navbar {
         padding: 1rem;
+    }
+
+    .nav-module {
+        padding: 0.5rem 1rem;
     }
 
     .navbar-links {
         display: none;
-        /* Hide desktop links */
     }
 
     .mobile-toggle {
         display: block;
-        /* Show hamburger */
+        /* Show hamburger in the right module */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-toggle {
+        display: none;
     }
 }

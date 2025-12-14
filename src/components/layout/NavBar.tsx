@@ -100,7 +100,8 @@ const NavBar = () => {
 
     return (
         <nav ref={navRef} className="navbar">
-            <div className="navbar-content">
+            {/* Left Module: Logo */}
+            <div className="nav-module nav-left">
                 <a
                     href="#boot-sequence"
                     className="navbar-logo"
@@ -108,7 +109,10 @@ const NavBar = () => {
                 >
                     <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="logo-image" />
                 </a>
+            </div>
 
+            {/* Right Module: Links & Mobile Toggle */}
+            <div className="nav-module nav-right">
                 {/* Desktop Menu */}
                 <div className="navbar-links">
                     {navItems.map((item, idx) => (

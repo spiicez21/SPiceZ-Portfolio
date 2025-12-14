@@ -67,6 +67,8 @@
 
 .email-box a {
     color: var(--accent);
+    word-break: break-all;
+    /* Prevent overflow on small screens */
 }
 
 .contact-right {

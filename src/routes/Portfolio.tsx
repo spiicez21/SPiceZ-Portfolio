@@ -17,7 +17,7 @@ const Portfolio = () => {
     return (
         <div className="portfolio-page">
             <NavBar />
-            <main style={{ paddingTop: '80px' }}>
+            <main>
                 <HeroBootSequence />
                 <WhoAmI />
                 <StackTrace />

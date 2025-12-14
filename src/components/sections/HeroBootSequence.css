@@ -9,7 +9,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100dvh;
+    min-height: 100vh;
     z-index: 1;
 }
 
@@ -36,7 +37,8 @@
     align-items: center;
     position: relative;
     z-index: 3;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100dvh;
 }
 
 .hero-content-left {
@@ -99,7 +101,9 @@
     .hero-container {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
-        padding-top: 5rem;
+        grid-template-rows: auto 1fr;
+        padding-top: 6rem;
+        /* More space for fixed navbar modules */
         gap: 1rem;
         text-align: center;
     }
@@ -118,6 +122,22 @@
     }
 
     .hero-name {
-        font-size: clamp(2.5rem, 10vw, 4rem);
+        font-size: clamp(2rem, 8vw, 3.5rem);
+    }
+
+    .hero-tagline {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .hero-portrait-right {
+        height: auto;
+        min-height: 40vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-name {
+        font-size: clamp(1.8rem, 10vw, 3rem);
     }
 }
