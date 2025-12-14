@@ -1,4 +1,5 @@
 import MalakEasterEgg from '../ui/MalakEasterEgg';
+import F1Telemetry from '../ui/F1Telemetry';
 import './FooterBar.css';
 
 const FooterBar = () => {
@@ -7,6 +8,13 @@ const FooterBar = () => {
     return (
         <footer className="footer-bar">
             <MalakEasterEgg />
+
+            <div className="footer-big-text">
+                SPICEZ21
+            </div>
+
+            <F1Telemetry />
+
             <div className="footer-content">
                 <div className="footer-text">
                     {'>'} last updated: {currentYear} | built with Ctrl+C / Ctrl+V and caffeine ☕
