@@ -1,24 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { gsap } from '../../lib/animations/gsapClient';
 import { useSmoothScroll } from '../../context/SmoothScrollContext';
 import { Menu, X } from 'lucide-react';
 import './NavBar.css';
 
 const navItems = [
-    { label: 'WHOAMI', href: '#whoami' },
-    { label: 'STACK', href: '#stack-trace' },
-    { label: 'BUILDS', href: '#deployed-builds' },
-    { label: 'GRAPHICS', href: '#pixel-lab' },
-    { label: 'WIP', href: '#in-progress' },
-    { label: 'CERTS', href: '#verified-credentials' },
-    { label: 'WINS', href: '#bosses-defeated' },
-    { label: 'CONTACT', href: '#open-ticket' },
+    { label: 'WHOAMI', href: '/#whoami' },
+    { label: 'STACK', href: '/#stack-trace' },
+    { label: 'WORKS', href: '/#work-navigation' },
+    { label: 'CERTS', href: '/#verified-credentials' },
+    { label: 'WINS', href: '/#bosses-defeated' },
+    { label: 'CONTACT', href: '/#open-ticket' },
 ];
 
 const NavBar = () => {
     const navRef = useRef<HTMLElement>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const lenis = useSmoothScroll();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (!navRef.current) return;
@@ -49,25 +50,50 @@ const NavBar = () => {
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-
-        // Close menu if open
         setIsMenuOpen(false);
 
-        // Handle boot sequence trigger if it's the logo
-        if (href === '#boot-sequence') {
-            window.dispatchEvent(new Event('triggerBootSequence'));
-            if (lenis) lenis.scrollTo(0);
+        if (href === '#boot-sequence' || href === '/#boot-sequence') {
+            if (location.pathname !== '/') {
+                navigate('/');
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('triggerBootSequence'));
+                }, 100);
+            } else {
+                window.dispatchEvent(new Event('triggerBootSequence'));
+                if (lenis) lenis.scrollTo(0);
+            }
             return;
         }
 
-        if (lenis) {
-            lenis.scrollTo(href);
-        } else {
-            // Fallback if lenis is not ready
-            const targetId = href.replace('#', '');
-            const element = document.getElementById(targetId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+        if (href.startsWith('/#')) {
+            const targetId = href.replace('/#', '#');
+            if (location.pathname !== '/') {
+                navigate('/');
+                // Wait for navigation then scroll
+                setTimeout(() => {
+                    if (lenis) lenis.scrollTo(targetId);
+                    else {
+                        const element = document.getElementById(targetId.replace('#', ''));
+                        if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 500); // adjust delay
+            } else {
+                if (lenis) lenis.scrollTo(targetId);
+                else {
+                    const element = document.getElementById(targetId.replace('#', ''));
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        } else if (href.startsWith('/')) {
+            navigate(href);
+            // Scroll to top on new page
+            window.scrollTo(0, 0);
+        } else if (href.startsWith('#')) {
+            // Fallback for local hashes if any
+            if (lenis) lenis.scrollTo(href);
+            else {
+                const element = document.getElementById(href.replace('#', ''));
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
             }
         }
     };

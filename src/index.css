@@ -3,57 +3,79 @@
 /* Local JetBrains Mono */
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-Thin.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Thin.woff2') format('woff2');
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-ExtraLight.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-Light.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-Medium.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-SemiBold.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-Bold.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono-ExtraBold.woff2') format('woff2');
+  src: url('/webfonts/JetBrainsMono/JetBrainsMono-ExtraBold.woff2') format('woff2');
   font-weight: 800;
+  font-style: normal;
+}
+
+/* Nippo Fonts (Bold/Fat) */
+@font-face {
+  font-family: 'Nippo';
+  src: url('/webfonts/Nippo/Nippo-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nippo';
+  src: url('/webfonts/Nippo/Nippo-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nippo';
+  src: url('/webfonts/Nippo/Nippo-Bold.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -69,8 +91,9 @@
 
   /* Typography */
   --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'JetBrains Mono', monospace;
-  /* User requested ALL JetBrains Mono */
+  /* Small/Slim */
+  --font-heading: 'Nippo', sans-serif;
+  /* Bold/Fat */
 
   /* Spacing */
   --border-width: 1px;
@@ -93,14 +116,14 @@ body {
   background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-mono);
-  /* Global font override */
+  /* Default to Slim/Mono */
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Minimal Scrollbar */
+/* ... Scrollbar & Selection ... */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -118,7 +141,6 @@ body {
   background: var(--ink-muted);
 }
 
-/* Selection */
 ::selection {
   background: var(--ink);
   color: var(--bg);
@@ -131,10 +153,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  /* Update to Nippo */
+  font-weight: 700;
+  /* Default to bold for Nippo */
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  /* Nippo looks great uppercase */
 }
 
 /* Links */

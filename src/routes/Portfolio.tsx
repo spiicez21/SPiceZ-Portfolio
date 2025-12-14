@@ -4,14 +4,13 @@ import FooterBar from '../components/layout/FooterBar';
 import HeroBootSequence from '../components/sections/HeroBootSequence';
 import WhoAmI from '../components/sections/WhoAmI';
 import StackTrace from '../components/sections/StackTrace';
-import DeployedBuilds from '../components/sections/DeployedBuilds';
-import InProgressProcesses from '../components/sections/InProgressProcesses';
+
 import VerifiedCredentials from '../components/sections/VerifiedCredentials';
 import GitHubActivity from '../components/sections/GitHubActivity';
 import OpenTicket from '../components/sections/OpenTicket';
+import WorkNavigation from '../components/sections/WorkNavigation';
 
 // Lazy load heavy components
-const PixelLab = lazy(() => import('../components/sections/PixelLab'));
 const BossesDefeated = lazy(() => import('../components/sections/BossesDefeated'));
 
 const Portfolio = () => {
@@ -22,11 +21,7 @@ const Portfolio = () => {
                 <HeroBootSequence />
                 <WhoAmI />
                 <StackTrace />
-                <DeployedBuilds />
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
-                    <PixelLab />
-                </Suspense>
-                <InProgressProcesses />
+                <WorkNavigation />
                 <VerifiedCredentials />
                 <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
                     <BossesDefeated />

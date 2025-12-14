@@ -1,0 +1,178 @@
+/* Marquee Animations - See bottom for new definitions */
+
+/* Padding Overrides for tight spacing */
+.work-nav-section {
+    padding-bottom: 0 !important;
+    margin-bottom: -1rem !important;
+    /* Pull next section closer */
+}
+
+.work-nav-section .section-border {
+    padding-bottom: 1rem !important;
+    border-bottom: none;
+}
+
+.work-navigation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0;
+    width: 100%;
+}
+
+/* Dim others when one is hovered */
+.work-navigation-container:hover .work-nav-item {
+    opacity: 0.3;
+    filter: blur(2px);
+}
+
+.work-navigation-container .work-nav-item:hover {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.work-nav-item {
+    cursor: pointer;
+    position: relative;
+    padding: 0.5rem 0;
+    width: 100%;
+    overflow: hidden;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.work-nav-mask {
+    position: relative;
+    height: 6em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.marquee-track {
+    display: flex;
+    white-space: nowrap;
+    will-change: transform;
+    width: max-content;
+    min-width: 100%;
+    flex-shrink: 0;
+    /* CRITICAL FIX: Forces track to ignore parent width and overflow */
+}
+
+/* REFACTORED WORK NAV MASK to use Block Layout for reliable overflow */
+.work-nav-mask {
+    position: relative;
+    height: 6em;
+    overflow: hidden;
+    display: block;
+    /* Changed from flex */
+    white-space: nowrap;
+}
+
+/* GSAP handles movement now */
+.marquee-track {
+    display: flex;
+    /* Back to flex */
+    white-space: nowrap;
+    will-change: transform;
+    width: max-content;
+    min-width: 100%;
+}
+
+.marquee-content {
+    display: flex;
+    /* Back to flex */
+    align-items: center;
+    gap: 4rem;
+    padding-right: 4rem;
+    flex-shrink: 0;
+}
+
+.text-wrapper {
+    position: relative;
+    display: block;
+}
+
+.separator {
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--ink-muted);
+    display: block;
+}
+
+/* Animations removed, handled by GSAP */
+.marquee-left .marquee-track,
+.marquee-right .marquee-track,
+.work-nav-item:hover .marquee-track {
+    animation: none;
+}
+
+/* NEW KEYFRAMES */
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll-right {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.work-nav-text,
+.work-nav-hover-text {
+    font-size: 6rem;
+    font-family: 'Nippo', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+    transition: none;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: pre;
+}
+
+.work-nav-hover-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
+    display: flex;
+    justify-content: center;
+}
+
+.work-nav-hover-text .char {
+    color: transparent;
+    -webkit-text-stroke: 1px #fff;
+    -webkit-text-fill-color: transparent;
+    font-family: inherit;
+    font-weight: inherit;
+    backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+
+    .work-nav-text,
+    .work-nav-hover-text {
+        font-size: 2.5rem;
+    }
+
+    .work-nav-hover-text .char {
+        -webkit-text-stroke-width: 1px;
+    }
+
+    .work-navigation-container {
+        padding: 3rem 0;
+    }
+}
