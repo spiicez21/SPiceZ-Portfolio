@@ -1,7 +1,7 @@
 /* Layout Grid */
 .ticket-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 320px 1fr;
     /* Fixed width sidebar + Flex content */
     gap: 3rem;
     align-items: start;
@@ -66,7 +66,8 @@
     color: var(--accent);
     text-decoration: none;
     font-size: 1rem;
-    word-break: break-all;
+    word-break: normal;
+    white-space: nowrap;
 }
 
 /* --- Right: Ticket Interface Row --- */
