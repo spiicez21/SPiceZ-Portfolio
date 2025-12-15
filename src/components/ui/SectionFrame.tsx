@@ -14,15 +14,18 @@ const SectionFrame = ({ id, label, number, children, className = '' }: SectionFr
     return (
         <section id={id} className={`section-frame ${className}`}>
             <div className="section-border">
-                <div className="section-header-content">
-                    <span className="section-number">
-                        <span className="hash">#</span>
-                        {number}
-                    </span>
-                    <h2 className="section-label">
-                        <ScrambleText text={label} revealSpeed={40} scrambleSpeed={20} />
-                    </h2>
-                </div>
+                {/* Conditionally render header only if label or number is present */}
+                {(label || number) && (
+                    <div className="section-header-content">
+                        <span className="section-number">
+                            <span className="hash">#</span>
+                            {number}
+                        </span>
+                        <h2 className="section-label">
+                            <ScrambleText text={label} revealSpeed={40} scrambleSpeed={20} />
+                        </h2>
+                    </div>
+                )}
                 <div className="section-content">
                     {children}
                 </div>

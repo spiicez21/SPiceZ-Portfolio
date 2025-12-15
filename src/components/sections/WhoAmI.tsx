@@ -1,32 +1,101 @@
+import { useRef } from 'react';
 import SectionFrame from '../ui/SectionFrame';
-import AnimateIn from '../utils/AnimateIn';
 import aboutData from '../../content/about.json';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { BubbleText } from '../ui/BubbleText';
 import './WhoAmI.css';
 
-const WhoAmI = () => {
-    return (
-        <SectionFrame id="whoami" label="WHOAMI" number="02">
-            <div className="whoami-content">
-                <AnimateIn className="whoami-main" animation="fade-up" duration={0.8}>
-                    <p className="whoami-intro">{aboutData.intro}</p>
-                    {aboutData.paragraphs.map((para, idx) => (
-                        <p key={idx} className="whoami-paragraph">{para}</p>
-                    ))}
-                </AnimateIn>
+// Keywords to highlight - easily adjustable
+const KEYWORDS = [
+    "Computer Science", "building things", "debugging", "3 AM",
+    "designing graphics", "hackathons", "learning by doing",
+    "robust", "scalable", "full-stack", "creativity"
+];
 
-                <AnimateIn className="whoami-sidebar" animation="fade-up" delay={0.2} duration={0.8}>
-                    <div className="stats-box">
-                        <div className="stats-header">QUICK STATS</div>
-                        <div className="stats-grid">
-                            {Object.entries(aboutData.stats).map(([key, value]) => (
-                                <div key={key} className="stat-item">
-                                    <div className="stat-key">{key.toUpperCase()}</div>
-                                    <div className="stat-value">{value}</div>
-                                </div>
+const WhoAmI = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 85%",
+            }
+        });
+
+        tl.from(".identity-terminal", {
+            scale: 0.95,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power4.out"
+        });
+
+    }, { scope: containerRef });
+
+    // Helper to separate keywords from normal text
+    const renderWithHighlights = (text: string) => {
+        // Split by keywords (keeping delimiters)
+        const regex = new RegExp(`(${KEYWORDS.join('|')})`, 'gi');
+        const parts = text.split(regex);
+
+        return parts.map((part, index) => {
+            // Check if this part matches a keyword
+            const isKeyword = KEYWORDS.some(k => k.toLowerCase() === part.toLowerCase());
+
+            if (isKeyword) {
+                return <BubbleText key={index} text={part} className="font-bold text-white" />;
+            }
+            return <span key={index}>{part}</span>;
+        });
+    };
+
+    return (
+        <SectionFrame id="whoami" label="" number="">
+            <div className="whoami-container" ref={containerRef}>
+                <div className="identity-terminal">
+                    {/* Terminal Header */}
+                    <div className="terminal-header">
+                        <div className="terminal-controls">
+                            <div className="control close"></div>
+                            <div className="control minimize"></div>
+                            <div className="control maximize"></div>
+                        </div>
+                        <div className="terminal-title">user_identity.json</div>
+                        <div className="terminal-spacer" style={{ width: 50 }}></div>
+                    </div>
+
+                    {/* Terminal Body */}
+                    <div className="terminal-body">
+                        {/* Left: Bio Text */}
+                        <div className="bio-section">
+                            {aboutData.paragraphs.map((para, idx) => (
+                                <p key={idx} className="bio-para">
+                                    {renderWithHighlights(para)}
+                                </p>
                             ))}
                         </div>
+
+                        {/* Right: Stats Sidebar */}
+                        <div className="stats-sidebar">
+                            <div className="sidebar-block">
+                                <h3>SYSTEM SPECS</h3>
+                                {Object.entries(aboutData.stats).map(([key, value]) => (
+                                    <div key={key} className="stat-row">
+                                        <span className="label">{key.toUpperCase()}</span>
+                                        <span className="value">{value}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="location-block">
+                                <FaMapMarkerAlt className="icon" />
+                                <span>Erode, TamilNadu</span>
+                            </div>
+                        </div>
                     </div>
-                </AnimateIn>
+                </div>
             </div>
         </SectionFrame>
     );

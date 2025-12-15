@@ -1,92 +1,149 @@
-.whoami-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: start;
+/* WhoAmI.css - Compact Terminal Revamp */
+
+.whoami-container {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.whoami-main {
+/* Single Terminal Panel */
+.identity-terminal {
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
 }
 
-.whoami-intro {
-    font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    color: var(--accent);
-    font-weight: 700;
-    line-height: 1.4;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.whoami-paragraph {
-    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
-    color: var(--ink);
-    line-height: 1.8;
-    opacity: 0.9;
-}
-
-.whoami-sidebar {
-    position: sticky;
-    top: 2rem;
-}
-
-.stats-box {
-    border: 2px solid var(--border-ink);
-    background: var(--bg);
-    padding: 1.5rem;
-}
-
-.stats-header {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--border-ink);
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.stats-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.stat-item {
+/* Terminal Header */
+.terminal-header {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
-    background: var(--bg-alt);
-    border-left: 3px solid var(--accent);
 }
 
-.stat-key {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--ink);
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     opacity: 0.7;
 }
 
-.stat-value {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--accent);
-    font-weight: 700;
+.close {
+    background: #ff5f56;
 }
 
+.minimize {
+    background: #ffbd2e;
+}
+
+.maximize {
+    background: #27c93f;
+}
+
+.terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+}
+
+/* Terminal Body Grid */
+.terminal-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Bio Section */
+.bio-section {
+    font-family: var(--font-mono);
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.bio-para {
+    margin-bottom: 1.5rem;
+}
+
+/* Stats Sidebar */
+.stats-sidebar {
+    border-left: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sidebar-block h3 {
+    font-family: var(--font-heading);
+    color: var(--ink);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.4rem;
+}
+
+.label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+}
+
+.value {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.location-block {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.icon {
+    color: var(--ink-muted);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .whoami-content {
+    .terminal-body {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        padding: 1.5rem;
     }
 
-    .whoami-sidebar {
-        position: static;
+    .stats-sidebar {
+        border-left: none;
+        border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        padding-left: 0;
+        padding-top: 2rem;
     }
 }
