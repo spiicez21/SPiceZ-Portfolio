@@ -18,7 +18,9 @@
                 "Node.js",
                 "Python",
                 "MongoDB",
-                "PostgreSQL"
+                "PostgreSQL",
+                "Kotlin",
+                "Oracle APEX"
             ]
         },
         {
