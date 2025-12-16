@@ -1,4 +1,3 @@
-
 [
     {
         "id": "graphic-1",
@@ -104,6 +103,68 @@
         "description": "Custom banner created for a freelance client campaign.",
         "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835699/22_enzwzv.png",
         "category": "Banner"
+    },
+    {
+        "id": "graphic-16",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835881/Firefly_20250620192002_l5kwy4.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-17",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835871/fr2_iubogv.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-18",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835826/8f8811fa-3791-440c-89a3-c72369768c1b_n5t9km.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-19",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835823/FCGR6_amepb2.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-20",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835822/wegr6_wrevcy.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-21",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835767/13_eqbaml.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-22",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835764/10_v9gbur.png",
+        "category": "Thumbnail"
+    },
+    {
+        "id": "graphic-23",
+        "title": "Logo",
+        "description": "Custom Logo created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835765/14_orq8me.png",
+        "category": "Logo"
+    },
+    {
+        "id": "graphic-24",
+        "title": "Thumbnail",
+        "description": "Custom thumbnail created for a freelance client campaign.",
+        "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835694/19_nqoabr.png",
+        "category": "Thumbnail"
     }
 ]
-
