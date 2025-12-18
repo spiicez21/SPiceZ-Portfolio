@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import SpotifyBadge from './SpotifyBadge';
 
 export default function HeroPortrait() {
     const containerRef = useRef<HTMLDivElement>(null);
-
+    const [maskPos, setMaskPos] = useState({ x: -1000, y: -1000 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!containerRef.current) return;
@@ -12,22 +12,11 @@ export default function HeroPortrait() {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Update CSS variables for performance if possible, or state if simple
-        // Using state for Reactiveness, or direct style for perf
-        // Let's use direct style manipulation for 60fps smoothness without re-renders
-        containerRef.current.style.setProperty('--x', `${x}px`);
-        containerRef.current.style.setProperty('--y', `${y}px`);
+        setMaskPos({ x, y });
     };
 
     const handleMouseLeave = () => {
-        // Reset or hide
-        // Let's just move it off screen or keep last pos?
-        // User said "hover revel", implying it hides on leave?
-        // Let's hide it by moving mask away
-        if (containerRef.current) {
-            containerRef.current.style.setProperty('--x', '-1000px');
-            containerRef.current.style.setProperty('--y', '-1000px');
-        }
+        setMaskPos({ x: -1000, y: -1000 });
     };
 
     return (
@@ -42,7 +31,7 @@ export default function HeroPortrait() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                cursor: 'crosshair', // Optional
+                cursor: 'crosshair',
                 overflow: 'hidden'
             } as React.CSSProperties}
         >
@@ -52,8 +41,10 @@ export default function HeroPortrait() {
                 alt="Background Decoration"
                 style={{
                     position: 'absolute',
-                    height: '90%',
-                    width: 'auto',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'contain',
                     zIndex: 0,
                     opacity: 0.5,
@@ -67,8 +58,10 @@ export default function HeroPortrait() {
                 alt="Portrait Doodle"
                 style={{
                     position: 'absolute',
-                    height: '90%',
-                    width: 'auto',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'contain',
                     zIndex: 1,
                     opacity: 0.3,
@@ -82,28 +75,31 @@ export default function HeroPortrait() {
                 alt="Portrait"
                 style={{
                     position: 'absolute',
-                    height: '90%', // Adjust size as needed
-                    width: 'auto',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'contain',
                     zIndex: 2,
-                    pointerEvents: 'none' // Let events pass to container
+                    pointerEvents: 'none'
                 }}
             />
 
-            {/* Reveal Image (Dithered) */}
+            {/* Reveal Image (Dithered) - Mask follows mouse */}
             <img
                 src="/Picture/dithered-main.png"
                 alt="Portrait Dithered"
                 style={{
                     position: 'absolute',
-                    height: '90%',
-                    width: 'auto',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'contain',
                     zIndex: 3,
                     pointerEvents: 'none',
-                    // The CSS Mask Logic
-                    maskImage: 'radial-gradient(circle 250px at var(--x, -1000px) var(--y, -1000px), black 20%, transparent 100%)',
-                    WebkitMaskImage: 'radial-gradient(circle 250px at var(--x, -1000px) var(--y, -1000px), black 20%, transparent 100%)',
+                    maskImage: `radial-gradient(circle 200px at ${maskPos.x}px ${maskPos.y}px, black 20%, transparent 80%)`,
+                    WebkitMaskImage: `radial-gradient(circle 200px at ${maskPos.x}px ${maskPos.y}px, black 20%, transparent 80%)`,
                 }}
             />
 

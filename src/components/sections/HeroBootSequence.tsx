@@ -20,49 +20,36 @@ interface HeroData {
 const HeroBootSequence = () => {
     const nameRef = useRef<HTMLDivElement>(null);
     const taglineRef = useRef<HTMLDivElement>(null);
-    const cardRef = useRef<HTMLDivElement>(null); // New Ref
     const [heroData] = useState<HeroData>(heroDataRaw);
     const [showAscii, setShowAscii] = useState(false);
-    const [isTransmitting, setIsTransmitting] = useState(false);
 
     useEffect(() => {
         if (!heroData) return;
-        const tl = gsap.timeline({ delay: 0.3 });
+        const tl = gsap.timeline({ delay: 0.2 });
 
         // Fade in name
         if (nameRef.current) {
             tl.fromTo(nameRef.current,
-                {
-                    opacity: 0,
-                    y: 30,
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: 'power3.out',
-                }
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
             );
         }
 
         if (taglineRef.current) {
             tl.fromTo(taglineRef.current,
-                { opacity: 0, y: -50 },
-                { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-                "-=0.3"
+                { opacity: 0, y: -30 },
+                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+                "-=0.4"
             );
 
-            // Start transmission (Bars Active) - Use call to interact with React state
-            tl.call(() => setIsTransmitting(true), undefined, "-=0.1");
-
-            // Stagger words (Highlight first, then Content)
+            // Stagger words
             const highlightWords = taglineRef.current.querySelectorAll(".radio-highlight .radio-word");
             const contentWords = taglineRef.current.querySelectorAll(".radio-content .radio-word");
 
             if (highlightWords.length > 0) {
                 tl.fromTo(highlightWords,
                     { opacity: 0 },
-                    { opacity: 1, duration: 0.1, stagger: 0.2, ease: "none" }, // Slower stagger
+                    { opacity: 1, duration: 0.08, stagger: 0.15, ease: "none" },
                     "-=0.1"
                 );
             }
@@ -70,21 +57,8 @@ const HeroBootSequence = () => {
             if (contentWords.length > 0) {
                 tl.fromTo(contentWords,
                     { opacity: 0 },
-                    { opacity: 1, duration: 0.1, stagger: 0.15, ease: "none" }, // Slower stagger
-                    "+=0.1" // Small pause after highlight
-                );
-            }
-
-            // Stop transmission (Bars Static)
-            tl.call(() => setIsTransmitting(false));
-
-            // Animate bars entrance (grow from bottom)
-            const bars = taglineRef.current.querySelectorAll(".radio-bar");
-            if (bars.length > 0) {
-                tl.fromTo(bars,
-                    { scaleY: 0 },
-                    { scaleY: 1, duration: 0.4, stagger: 0.02, ease: "back.out(1.5)" },
-                    "-=4" // Keep it happening early/concurrently with text
+                    { opacity: 1, duration: 0.08, stagger: 0.1, ease: "none" },
+                    "+=0.05"
                 );
             }
         }
@@ -113,93 +87,53 @@ const HeroBootSequence = () => {
                 <div className="hero-overlay-fade" />
             </div>
 
+            {/* Portrait - Centered Behind */}
+            <div className="hero-portrait-center">
+                <Suspense fallback={null}>
+                    <HeroPortrait />
+                </Suspense>
+            </div>
+
+            {/* Filled Name - Behind Portrait */}
+            <div className="hero-name-behind" onClick={() => setShowAscii(!showAscii)}>
+                <div
+                    ref={nameRef}
+                    className="hero-name"
+                    style={{
+                        opacity: showAscii ? 0 : 1,
+                        transition: 'opacity 0.3s ease'
+                    }}
+                >
+                    <ScrambleText text={heroData.name} revealSpeed={60} scrambleSpeed={30} delay={0.5} />
+                </div>
+                <div
+                    className="hero-ascii"
+                    style={{
+                        position: 'absolute',
+                        opacity: showAscii ? 1 : 0,
+                        transition: 'opacity 0.3s ease'
+                    }}
+                >
+                    {heroData.asciiArt ? heroData.asciiArt.join('\n') : ''}
+                </div>
+            </div>
+
+            {/* Stroke Name - Above Portrait */}
+            <div
+                className="hero-name-above"
+                style={{ opacity: showAscii ? 0 : 1, transition: 'opacity 0.3s ease' }}
+            >
+                {heroData.name}
+            </div>
+
             <div className="hero-container">
-                <div className="hero-content-left">
-                    <div
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr',
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => setShowAscii(!showAscii)}
-                    >
-                        {/* Name Layer */}
-                        <div
-                            ref={nameRef}
-                            className="hero-name"
-                            style={{
-                                gridArea: '1/1',
-                                opacity: showAscii ? 0 : 1,
-                                pointerEvents: showAscii ? 'none' : 'auto',
-                                transition: 'opacity 0.3s ease'
-                            }}
-                        >
-                            <ScrambleText text={heroData.name} revealSpeed={60} scrambleSpeed={30} delay={0.5} />
-                        </div>
+            </div>
 
-                        {/* ASCII Layer */}
-                        <div
-                            className="hero-ascii"
-                            style={{
-                                gridArea: '1/1',
-                                opacity: showAscii ? 1 : 0,
-                                pointerEvents: showAscii ? 'auto' : 'none',
-                                transition: 'opacity 0.3s ease'
-                            }}
-                        >
-                            {heroData.asciiArt ? heroData.asciiArt.join('\n') : ''}
-                        </div>
-                    </div>
-
-                    <div className="hero-dashboard-row">
-                        <div ref={taglineRef} className="team-radio-box" style={{ opacity: 0 }}>
-                            <div className="radio-header">
-                                <div className="radio-branding">
-                                    <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="radio-logo" />
-                                    <span className="radio-label">RADIO</span>
-                                </div>
-                                <div className="radio-waveform">
-                                    {/* Generated Dense Waveform */}
-                                    {Array.from({ length: 16 }).map((_, i) => (
-                                        <div
-                                            key={i}
-                                            className="radio-bar"
-                                            style={{ '--delay': `${i * 0.08}s` } as React.CSSProperties}
-                                        ></div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="radio-highlight">
-                                {"SYSTEM ONLINE // READY TO RACE".split(" ").map((word, i) => (
-                                    <span key={i} className="radio-word" style={{ opacity: 0, display: 'inline-block', marginRight: '0.25em' }}>
-                                        {word}
-                                    </span>
-                                ))}
-                            </div>
-
-                            <div className="radio-content">
-                                {heroData.tagline.split(" ").map((word, i) => (
-                                    <span key={i} className="radio-word" style={{ opacity: 0, display: 'inline-block', marginRight: '0.25em' }}>
-                                        {word}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="gig-card-wrapper">
-                            <Suspense fallback={null}>
-                                <GigCard />
-                            </Suspense>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="hero-portrait-right">
-                    <Suspense fallback={null}>
-                        <HeroPortrait />
-                    </Suspense>
-                </div>
+            {/* GigCard - RIGHT */}
+            <div className="gig-card-wrapper">
+                <Suspense fallback={null}>
+                    <GigCard />
+                </Suspense>
             </div>
         </div>
     );
