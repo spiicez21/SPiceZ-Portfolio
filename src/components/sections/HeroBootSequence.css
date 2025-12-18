@@ -53,18 +53,22 @@
 
 .hero-name {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 7vw, 4.5rem);
-    /* Reduced size */
-    /* Larger for Nippo */
-    font-weight: 700;
+    font-size: clamp(3rem, 7vw, 5rem);
+    /* Bigger and bolder */
+    font-weight: 800;
     line-height: 0.9;
     color: #fff;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.03em;
     white-space: nowrap;
     text-transform: uppercase;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    font-style: italic;
+    /* Speed */
+    transform: skewX(-5deg);
+    /* F1 Skew */
+    text-shadow: 2px 2px 0px var(--accent-dark, #222);
 }
 
 .hero-ascii {
@@ -77,11 +81,231 @@
     user-select: none;
 }
 
-.hero-tagline {
+/* Dashboard Row for Radio + Pit Window */
+.hero-dashboard-row {
+    display: flex;
+    align-items: stretch;
+    /* Stretch children to equal height */
+    justify-content: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.gig-card-wrapper {
+    flex: 1;
+    /* Take equal width */
+    max-width: 350px;
+    display: flex;
+    /* Helps child stretch */
+}
+
+.hero-action-row {
+    /* Legacy - kept just in case, but replaced by dashboard-row */
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Team Radio Component */
+.team-radio-box {
+    flex: 1;
+    max-width: 400px;
+    background: rgba(5, 5, 5, 0.85);
+    /* Dark background like reference */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--accent);
+    /* Top accent bar like F1 graphics */
     font-family: var(--font-mono);
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    color: #888;
-    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);  Standard box for now */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.radio-header {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radio-branding {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.radio-logo {
+    height: 1.2rem;
+    width: auto;
+    object-fit: contain;
+}
+
+.radio-label {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #fff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.radio-waveform {
+    display: flex;
+    align-items: flex-end;
+    gap: 1px;
+    /* Tight gap for density */
+    height: 18px;
+    padding-bottom: 2px;
+}
+
+.radio-bar {
+    width: 2px;
+    /* Thin bars */
+    background: linear-gradient(to top, var(--accent) 60%, rgba(255, 255, 255, 0.8));
+    /* Gradient fade */
+    border-radius: 1px;
+    height: 20%;
+    /* Base height */
+    opacity: 0.8;
+    transform-origin: bottom;
+}
+
+/* Distribute animations pseudo-randomly with longhand to respect inline duration, BUT only when transmitting */
+.transmitting .radio-bar:nth-child(odd) {
+    animation-name: wave-mix-1;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+.transmitting .radio-bar:nth-child(even) {
+    animation-name: wave-mix-2;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+.transmitting .radio-bar:nth-child(3n) {
+    animation-name: wave-mix-3;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+.transmitting .radio-bar:nth-child(5n) {
+    animation-name: wave-mix-1;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes wave-mix-1 {
+    0% {
+        height: 10%;
+        opacity: 0.3;
+    }
+
+    30% {
+        height: 80%;
+        opacity: 1;
+    }
+
+    60% {
+        height: 20%;
+        opacity: 0.5;
+    }
+
+    100% {
+        height: 60%;
+        opacity: 0.8;
+    }
+}
+
+@keyframes wave-mix-2 {
+    0% {
+        height: 20%;
+        opacity: 0.4;
+    }
+
+    40% {
+        height: 100%;
+        opacity: 1;
+    }
+
+    70% {
+        height: 30%;
+        opacity: 0.6;
+    }
+
+    100% {
+        height: 10%;
+        opacity: 0.3;
+    }
+}
+
+@keyframes wave-mix-3 {
+    0% {
+        height: 5%;
+        opacity: 0.2;
+    }
+
+    20% {
+        height: 70%;
+        opacity: 0.9;
+    }
+
+    50% {
+        height: 15%;
+        opacity: 0.4;
+    }
+
+    80% {
+        height: 90%;
+        opacity: 1;
+    }
+
+    100% {
+        height: 40%;
+        opacity: 0.6;
+    }
+}
+
+.radio-highlight {
+    padding: 0.8rem 1.2rem 0.2rem;
+    /* Reduced padding */
+    color: #fff;
+    font-size: 1rem;
+    /* Slightly smaller font */
+    font-weight: 800;
+    line-height: 1.1;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.radio-content {
+    padding: 0.3rem 1.2rem 1rem;
+    /* Reduced padding */
+    color: var(--accent);
+    /* Accent color for 'transcript' part */
+    font-size: 0.85rem;
+    /* Slightly smaller font */
+    font-weight: 600;
+    line-height: 1.3;
+    font-style: italic;
+    text-transform: uppercase;
+    min-height: 40px;
+    /* Reduced min-height */
+    opacity: 0.9;
 }
 
 .hero-portrait-right {
@@ -109,7 +333,19 @@
         align-items: center;
         text-align: center;
         order: 1;
-        /* Text first */
+    }
+
+    .hero-dashboard-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .team-radio-box,
+    .gig-card-wrapper {
+        max-width: 100%;
+        width: 100%;
     }
 
     .hero-portrait-right {

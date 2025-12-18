@@ -23,6 +23,7 @@ const HeroBootSequence = () => {
     const cardRef = useRef<HTMLDivElement>(null); // New Ref
     const [heroData] = useState<HeroData>(heroDataRaw);
     const [showAscii, setShowAscii] = useState(false);
+    const [isTransmitting, setIsTransmitting] = useState(false);
 
     useEffect(() => {
         if (!heroData) return;
@@ -44,21 +45,49 @@ const HeroBootSequence = () => {
             );
         }
 
-        // Fade in tagline
+        // Animate Team Radio Box (Slide Down)
         if (taglineRef.current) {
             tl.fromTo(taglineRef.current,
-                {
-                    opacity: 0,
-                    y: 20,
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: 'power2.out',
-                },
-                '-=0.8'
+                { opacity: 0, y: -50 },
+                { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+                "-=0.3"
             );
+
+            // Start transmission (Bars Active) - Use call to interact with React state
+            tl.call(() => setIsTransmitting(true), undefined, "-=0.1");
+
+            // Stagger words (Highlight first, then Content)
+            const highlightWords = taglineRef.current.querySelectorAll(".radio-highlight .radio-word");
+            const contentWords = taglineRef.current.querySelectorAll(".radio-content .radio-word");
+
+            if (highlightWords.length > 0) {
+                tl.fromTo(highlightWords,
+                    { opacity: 0 },
+                    { opacity: 1, duration: 0.1, stagger: 0.2, ease: "none" }, // Slower stagger
+                    "-=0.1"
+                );
+            }
+
+            if (contentWords.length > 0) {
+                tl.fromTo(contentWords,
+                    { opacity: 0 },
+                    { opacity: 1, duration: 0.1, stagger: 0.15, ease: "none" }, // Slower stagger
+                    "+=0.1" // Small pause after highlight
+                );
+            }
+
+            // Stop transmission (Bars Static)
+            tl.call(() => setIsTransmitting(false));
+
+            // Animate bars entrance (grow from bottom)
+            const bars = taglineRef.current.querySelectorAll(".radio-bar");
+            if (bars.length > 0) {
+                tl.fromTo(bars,
+                    { scaleY: 0 },
+                    { scaleY: 1, duration: 0.4, stagger: 0.02, ease: "back.out(1.5)" },
+                    "-=4" // Keep it happening early/concurrently with text
+                );
+            }
         }
 
         // Fade in card
@@ -142,14 +171,50 @@ const HeroBootSequence = () => {
                         </div>
                     </div>
 
-                    <div ref={taglineRef} className="hero-tagline">
-                        {heroData.tagline}
-                    </div>
+                    <div className="hero-dashboard-row">
+                        <div ref={taglineRef} className="team-radio-box" style={{ opacity: 0 }}>
+                            <div className="radio-header">
+                                <div className="radio-branding">
+                                    <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="radio-logo" />
+                                    <span className="radio-label">RADIO</span>
+                                </div>
+                                <div className={`radio-waveform ${isTransmitting ? 'transmitting' : ''}`}>
+                                    {/* Generated Dense Waveform */}
+                                    {Array.from({ length: 28 }).map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="radio-bar"
+                                            style={{
+                                                animationDelay: `${Math.random() * 0.5}s`,
+                                                animationDuration: `${0.2 + Math.random() * 0.3}s`
+                                            }}
+                                        ></div>
+                                    ))}
+                                </div>
+                            </div>
 
-                    <div ref={cardRef} style={{ opacity: 0 }}>
-                        <Suspense fallback={null}>
-                            <GigCard />
-                        </Suspense>
+                            <div className="radio-highlight">
+                                {"SYSTEM ONLINE // READY TO RACE".split(" ").map((word, i) => (
+                                    <span key={i} className="radio-word" style={{ opacity: 0, display: 'inline-block', marginRight: '0.25em' }}>
+                                        {word}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className="radio-content">
+                                {heroData.tagline.split(" ").map((word, i) => (
+                                    <span key={i} className="radio-word" style={{ opacity: 0, display: 'inline-block', marginRight: '0.25em' }}>
+                                        {word}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div ref={cardRef} className="gig-card-wrapper" style={{ opacity: 0 }}>
+                            <Suspense fallback={null}>
+                                <GigCard />
+                            </Suspense>
+                        </div>
                     </div>
                 </div>
 
