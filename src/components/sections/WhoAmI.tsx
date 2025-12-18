@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import aboutData from '../../content/about.json';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
+import { gsap } from '../../lib/animations/gsapClient';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { BubbleText } from '../ui/BubbleText';
 import './WhoAmI.css';
@@ -25,13 +25,18 @@ const WhoAmI = () => {
             }
         });
 
-        tl.from(".identity-terminal", {
-            scale: 0.95,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power4.out"
-        });
-
+        tl.fromTo(".identity-terminal",
+            {
+                scale: 0.95,
+                opacity: 0,
+            },
+            {
+                scale: 1,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power4.out"
+            }
+        );
     }, { scope: containerRef });
 
     // Helper to separate keywords from normal text

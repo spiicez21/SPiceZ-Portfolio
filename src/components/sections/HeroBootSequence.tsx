@@ -7,6 +7,7 @@ import './HeroBootSequence.css';
 // Lazy load components
 const Dither = lazy(() => import('../ui/Dither'));
 const HeroPortrait = lazy(() => import('../ui/HeroPortrait'));
+const GigCard = lazy(() => import('../ui/GigCard')); // Lazy import
 
 interface HeroData {
     name: string;
@@ -19,6 +20,7 @@ interface HeroData {
 const HeroBootSequence = () => {
     const nameRef = useRef<HTMLDivElement>(null);
     const taglineRef = useRef<HTMLDivElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null); // New Ref
     const [heroData] = useState<HeroData>(heroDataRaw);
     const [showAscii, setShowAscii] = useState(false);
 
@@ -56,6 +58,25 @@ const HeroBootSequence = () => {
                     ease: 'power2.out',
                 },
                 '-=0.8'
+            );
+        }
+
+        // Fade in card
+        if (cardRef.current) {
+            tl.fromTo(cardRef.current,
+                {
+                    opacity: 0,
+                    y: 20,
+                    x: -10,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    x: 0,
+                    duration: 1,
+                    ease: 'power2.out',
+                },
+                '-=0.6'
             );
         }
 
@@ -123,6 +144,12 @@ const HeroBootSequence = () => {
 
                     <div ref={taglineRef} className="hero-tagline">
                         {heroData.tagline}
+                    </div>
+
+                    <div ref={cardRef} style={{ opacity: 0 }}>
+                        <Suspense fallback={null}>
+                            <GigCard />
+                        </Suspense>
                     </div>
                 </div>
 
