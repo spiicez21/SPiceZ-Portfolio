@@ -57,28 +57,6 @@
   font-style: normal;
 }
 
-/* Nippo Fonts (Bold/Fat) */
-@font-face {
-  font-family: 'Nippo';
-  src: url('/webfonts/Nippo/Nippo-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Nippo';
-  src: url('/webfonts/Nippo/Nippo-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Nippo';
-  src: url('/webfonts/Nippo/Nippo-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
 /* Minimal Black Monotone Theme */
 :root {
   /* Minimal Palette */
@@ -92,8 +70,8 @@
   /* Typography */
   --font-mono: 'JetBrains Mono', monospace;
   /* Small/Slim */
-  --font-heading: 'Nippo', sans-serif;
-  /* Bold/Fat */
+  --font-heading: 'JetBrains Mono', monospace;
+  /* Bold/Fat - unified font family */
 
   /* Spacing */
   --border-width: 1px;
@@ -120,7 +98,8 @@ body {
   background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-mono);
-  /* Default to Slim/Mono */
+  font-weight: 300;
+  /* Slim Variant Default */
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -158,13 +137,12 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  /* Update to Nippo */
-  font-weight: 700;
-  /* Default to bold for Nippo */
+  font-weight: 800;
+  /* Bold/ExtraBold Variant */
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
+  /* Tighter for bold mono */
   text-transform: uppercase;
-  /* Nippo looks great uppercase */
 }
 
 /* Links */

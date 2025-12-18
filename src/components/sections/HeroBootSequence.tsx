@@ -45,7 +45,6 @@ const HeroBootSequence = () => {
             );
         }
 
-        // Animate Team Radio Box (Slide Down)
         if (taglineRef.current) {
             tl.fromTo(taglineRef.current,
                 { opacity: 0, y: -50 },
@@ -88,25 +87,6 @@ const HeroBootSequence = () => {
                     "-=4" // Keep it happening early/concurrently with text
                 );
             }
-        }
-
-        // Fade in card
-        if (cardRef.current) {
-            tl.fromTo(cardRef.current,
-                {
-                    opacity: 0,
-                    y: 20,
-                    x: -10,
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    x: 0,
-                    duration: 1,
-                    ease: 'power2.out',
-                },
-                '-=0.6'
-            );
         }
 
         return () => {
@@ -178,16 +158,13 @@ const HeroBootSequence = () => {
                                     <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="radio-logo" />
                                     <span className="radio-label">RADIO</span>
                                 </div>
-                                <div className={`radio-waveform ${isTransmitting ? 'transmitting' : ''}`}>
+                                <div className="radio-waveform">
                                     {/* Generated Dense Waveform */}
-                                    {Array.from({ length: 28 }).map((_, i) => (
+                                    {Array.from({ length: 16 }).map((_, i) => (
                                         <div
                                             key={i}
                                             className="radio-bar"
-                                            style={{
-                                                animationDelay: `${Math.random() * 0.5}s`,
-                                                animationDuration: `${0.2 + Math.random() * 0.3}s`
-                                            }}
+                                            style={{ '--delay': `${i * 0.08}s` } as React.CSSProperties}
                                         ></div>
                                     ))}
                                 </div>
@@ -210,7 +187,7 @@ const HeroBootSequence = () => {
                             </div>
                         </div>
 
-                        <div ref={cardRef} className="gig-card-wrapper" style={{ opacity: 0 }}>
+                        <div className="gig-card-wrapper">
                             <Suspense fallback={null}>
                                 <GigCard />
                             </Suspense>

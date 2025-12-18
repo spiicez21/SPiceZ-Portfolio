@@ -8,90 +8,119 @@
     display: flex;
     flex-direction: column;
     font-family: var(--font-heading);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Header - Compact */
 .pit-header {
     background: #ffffff;
-    padding: 0.25rem;
-    /* Ultra compact */
+    padding: 0.3rem 0.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #000000;
     line-height: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    border-bottom: 2px solid #e10600;
+    border-bottom: 2px solid #fff;
 }
 
 .pit-title {
-    font-size: 0.65rem;
-    font-weight: 800;
-    opacity: 0.8;
-    letter-spacing: 0.1em;
-    margin-bottom: 0px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #666;
+    letter-spacing: 0.15em;
+    margin-bottom: 1px;
+    text-transform: uppercase;
 }
 
 .pit-status {
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
+    color: #000;
 }
 
+/* Body - Compact */
 .pit-body {
     flex: 1;
-    background: linear-gradient(180deg, #141414 0%, #050505 100%);
-    padding: 0.6rem 0.8rem;
-    /* Sleek padding */
+    background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+    padding: 0.5rem 0.8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.3rem;
-    /* Minimal gap */
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Strategy Pills */
 .strategy-pill {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    padding: 0.25rem 0.4rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 2px;
+    border-left: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.strategy-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: #fff;
+    transform: translateX(3px);
 }
 
 .strat-icon {
     width: 18px;
-    /* Tiny icon */
     height: 18px;
     border-radius: 50%;
-    border: 2px solid #ffd700;
-    color: #ffd700;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     font-weight: 800;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
     font-family: var(--font-heading);
+    transition: all 0.3s ease;
+}
+
+.strategy-pill:hover .strat-icon {
+    border-color: #fff;
+    color: #fff;
 }
 
 .strat-name {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.85);
     font-family: var(--font-mono);
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
 }
 
+/* Footer - Compact */
 .pit-footer {
-    background: #fff;
-    color: #000;
+    background: linear-gradient(90deg, #1a1a1a 0%, #0d0d0d 100%);
+    color: rgba(255, 255, 255, 0.4);
     text-align: center;
-    padding: 0.3rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.55rem;
+    font-weight: 500;
     font-family: var(--font-mono);
     text-transform: lowercase;
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pit-footer span {
+    color: #fff;
+    font-weight: 700;
 }

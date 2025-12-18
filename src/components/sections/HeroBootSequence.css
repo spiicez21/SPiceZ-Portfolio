@@ -111,201 +111,127 @@
     width: 100%;
 }
 
-/* Team Radio Component */
+/* Team Radio Component - Monotone */
 .team-radio-box {
     flex: 1;
     max-width: 400px;
-    background: rgba(5, 5, 5, 0.85);
-    /* Dark background like reference */
+    background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 3px solid var(--accent);
-    /* Top accent bar like F1 graphics */
+    border-top: 2px solid #fff;
     font-family: var(--font-mono);
     display: flex;
     flex-direction: column;
-    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);  Standard box for now */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.team-radio-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fff;
 }
 
 .radio-header {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-    padding: 0.5rem 1rem;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    padding: 0.4rem 0.8rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .radio-branding {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .radio-logo {
-    height: 1.2rem;
+    height: 1.4rem;
     width: auto;
     object-fit: contain;
+    filter: brightness(1.1);
 }
 
 .radio-label {
     font-family: var(--font-heading);
     font-weight: 800;
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #fff;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .radio-waveform {
     display: flex;
     align-items: flex-end;
-    gap: 1px;
-    /* Tight gap for density */
+    gap: 2px;
     height: 18px;
-    padding-bottom: 2px;
+    padding: 3px 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
 }
 
 .radio-bar {
     width: 2px;
-    /* Thin bars */
-    background: linear-gradient(to top, var(--accent) 60%, rgba(255, 255, 255, 0.8));
-    /* Gradient fade */
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.4) 0%, #fff 100%);
     border-radius: 1px;
-    height: 20%;
-    /* Base height */
+    min-height: 3px;
     opacity: 0.8;
     transform-origin: bottom;
+    animation: waveform 0.5s ease-in-out infinite alternate;
+    animation-delay: var(--delay, 0s);
 }
 
-/* Distribute animations pseudo-randomly with longhand to respect inline duration, BUT only when transmitting */
-.transmitting .radio-bar:nth-child(odd) {
-    animation-name: wave-mix-1;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-}
-
-.transmitting .radio-bar:nth-child(even) {
-    animation-name: wave-mix-2;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-}
-
-.transmitting .radio-bar:nth-child(3n) {
-    animation-name: wave-mix-3;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-}
-
-.transmitting .radio-bar:nth-child(5n) {
-    animation-name: wave-mix-1;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-}
-
-@keyframes wave-mix-1 {
+@keyframes waveform {
     0% {
-        height: 10%;
-        opacity: 0.3;
-    }
-
-    30% {
-        height: 80%;
-        opacity: 1;
-    }
-
-    60% {
-        height: 20%;
+        height: 15%;
         opacity: 0.5;
     }
 
-    100% {
-        height: 60%;
-        opacity: 0.8;
-    }
-}
-
-@keyframes wave-mix-2 {
-    0% {
-        height: 20%;
-        opacity: 0.4;
-    }
-
-    40% {
-        height: 100%;
-        opacity: 1;
-    }
-
-    70% {
-        height: 30%;
-        opacity: 0.6;
-    }
-
-    100% {
-        height: 10%;
-        opacity: 0.3;
-    }
-}
-
-@keyframes wave-mix-3 {
-    0% {
-        height: 5%;
-        opacity: 0.2;
-    }
-
-    20% {
-        height: 70%;
-        opacity: 0.9;
-    }
-
     50% {
-        height: 15%;
-        opacity: 0.4;
-    }
-
-    80% {
         height: 90%;
         opacity: 1;
     }
 
     100% {
-        height: 40%;
+        height: 25%;
         opacity: 0.6;
     }
 }
 
 .radio-highlight {
-    padding: 0.8rem 1.2rem 0.2rem;
-    /* Reduced padding */
+    padding: 0.6rem 1rem 0.2rem;
     color: #fff;
-    font-size: 1rem;
-    /* Slightly smaller font */
-    font-weight: 800;
-    line-height: 1.1;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.2;
     font-style: italic;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
 }
 
 .radio-content {
-    padding: 0.3rem 1.2rem 1rem;
-    /* Reduced padding */
-    color: var(--accent);
-    /* Accent color for 'transcript' part */
-    font-size: 0.85rem;
-    /* Slightly smaller font */
-    font-weight: 600;
+    padding: 0.2rem 1rem 0.6rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.7rem;
+    font-weight: 400;
     line-height: 1.3;
-    font-style: italic;
+    font-style: normal;
     text-transform: uppercase;
-    min-height: 40px;
-    /* Reduced min-height */
-    opacity: 0.9;
+    min-height: 24px;
+    letter-spacing: 0.03em;
+}
+
+.radio-word {
+    transition: opacity 0.1s ease;
 }
 
 .hero-portrait-right {
