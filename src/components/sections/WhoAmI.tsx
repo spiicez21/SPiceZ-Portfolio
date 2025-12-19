@@ -75,6 +75,9 @@ const WhoAmI = () => {
                     <div className="terminal-body">
                         {/* Left: Bio Text */}
                         <div className="bio-section">
+                            <p className="bio-para intro-para">
+                                {renderWithHighlights(aboutData.intro)}
+                            </p>
                             {aboutData.paragraphs.map((para, idx) => (
                                 <p key={idx} className="bio-para">
                                     {renderWithHighlights(para)}

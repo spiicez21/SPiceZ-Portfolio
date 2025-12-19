@@ -3,14 +3,12 @@ import NavBar from '../components/layout/NavBar';
 import FooterBar from '../components/layout/FooterBar';
 import HeroBootSequence from '../components/sections/HeroBootSequence';
 import WhoAmI from '../components/sections/WhoAmI';
-import StackTrace from '../components/sections/StackTrace';
 
-import VerifiedCredentials from '../components/sections/VerifiedCredentials';
-import GitHubActivity from '../components/sections/GitHubActivity';
-import OpenTicket from '../components/sections/OpenTicket';
-import WorkNavigation from '../components/sections/WorkNavigation';
-
-// Lazy load heavy components
+const VerifiedCredentials = lazy(() => import('../components/sections/VerifiedCredentials'));
+const GitHubActivity = lazy(() => import('../components/sections/GitHubActivity'));
+const OpenTicket = lazy(() => import('../components/sections/OpenTicket'));
+const StackTrace = lazy(() => import('../components/sections/StackTrace'));
+const WorkNavigation = lazy(() => import('../components/sections/WorkNavigation'));
 const BossesDefeated = lazy(() => import('../components/sections/BossesDefeated'));
 
 const Portfolio = () => {
@@ -20,14 +18,24 @@ const Portfolio = () => {
             <main>
                 <HeroBootSequence />
                 <WhoAmI />
-                <StackTrace />
-                <WorkNavigation />
-                <VerifiedCredentials />
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <StackTrace />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <WorkNavigation />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <VerifiedCredentials />
+                </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
                     <BossesDefeated />
                 </Suspense>
-                <GitHubActivity />
-                <OpenTicket />
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <GitHubActivity />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <OpenTicket />
+                </Suspense>
             </main>
             <FooterBar />
         </div>

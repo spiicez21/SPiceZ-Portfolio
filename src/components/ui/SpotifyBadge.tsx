@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { Music } from 'lucide-react';
 import { FaSpotify } from 'react-icons/fa';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -13,6 +12,7 @@ interface SpotifyTrack {
     artist: string;
     album: string;
     image: string;
+    url: string;
     isPlaying: boolean;
 }
 
@@ -22,41 +22,37 @@ const SpotifyBadge = () => {
 
     const containerRef = useRef<HTMLDivElement>(null);
     const introRef = useRef<HTMLDivElement>(null);
-    const badgeRef = useRef<HTMLDivElement>(null);
+    const badgeRef = useRef<HTMLAnchorElement>(null);
 
     useGSAP(() => {
-        // Only run animation if elements exist (meaning data loaded)
         if (!containerRef.current || !introRef.current || !badgeRef.current) return;
 
         const tl = gsap.timeline({
+            delay: 1, // Wait for hero animations
             onComplete: () => {
-                // Remove transform from JS so CSS hover works
                 if (badgeRef.current) {
                     gsap.set(badgeRef.current, { clearProps: 'transform' });
                     badgeRef.current.classList.add('animate-done');
                 }
-                // Allow overflow so hover (-3px lift) doesn't get clipped
-                if (containerRef.current) {
-                    containerRef.current.style.overflow = 'visible';
-                }
             }
         });
 
-        // Intro Slide (White Box)
-        tl.to(introRef.current, {
-            x: '0%',
-            duration: 0.5,
-            ease: 'expo.out'
-        })
-            // Badge Slide (follows intro)
+        // Sophisticated entry animation
+        tl.set(badgeRef.current, { x: '120%' })
+            .set(introRef.current, { x: '-120%', opacity: 1 })
+            .to(introRef.current, {
+                x: '120%',
+                duration: 1.2,
+                ease: 'power3.inOut'
+            })
             .to(badgeRef.current, {
                 x: '0%',
-                duration: 0.6,
+                duration: 1,
                 ease: 'expo.out'
-            }, '-=0.2') // Overlap slightly
+            }, '-=0.8')
             .to(introRef.current, {
-                autoAlpha: 0,
-                duration: 0.2
+                opacity: 0,
+                duration: 0.3
             });
 
     }, { scope: containerRef, dependencies: [currentTrack] });
@@ -85,6 +81,7 @@ const SpotifyBadge = () => {
                     artist: data.item.artists.map((artist: any) => artist.name).join(', '),
                     album: data.item.album.name,
                     image: data.item.album.images[0]?.url,
+                    url: data.item.external_urls.spotify,
                     isPlaying: data.is_playing
                 });
             }
@@ -108,6 +105,7 @@ const SpotifyBadge = () => {
                     artist: item.artists.map((artist: any) => artist.name).join(', '),
                     album: item.album.name,
                     image: item.album.images[0]?.url,
+                    url: item.external_urls.spotify,
                     isPlaying: false
                 });
             }
@@ -130,18 +128,22 @@ const SpotifyBadge = () => {
         <div className="spotify-anim-wrapper" ref={containerRef}>
             <div className="intro-slide" ref={introRef}></div>
 
-            <div className="spotify-badge" ref={badgeRef}>
-                <FaSpotify className="spotify-logo-corner" />
-                <img src="/Spotify-Badge/batbro.gif" alt="Batbro" className="spotify-batbro-gif" />
+            <a
+                href={currentTrack.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`spotify-badge ${currentTrack.isPlaying ? 'active' : ''}`}
+                ref={badgeRef}
+            >
                 <div className="spotify-badge-header">
-                    <Music size={14} />
-                    <span>{currentTrack.isPlaying ? 'Now Playing' : 'Recently Played'}</span>
+                    <span>{currentTrack.isPlaying ? 'AUD_STREAM_ACTIVE' : 'AUD_LOG_RECENT'}</span>
+                    <FaSpotify className="spotify-logo-corner" />
                 </div>
 
                 <div className="spotify-badge-content">
                     <img
                         src={currentTrack.image}
-                        alt={currentTrack.name}
+                        alt=""
                         className="spotify-badge-album"
                     />
 
@@ -149,16 +151,11 @@ const SpotifyBadge = () => {
                         <div className="spotify-badge-track">{currentTrack.name}</div>
                         <div className="spotify-badge-artist">{currentTrack.artist}</div>
                     </div>
-
-                    {currentTrack.isPlaying && (
-                        <div className="spotify-badge-bars">
-                            <span className="bar"></span>
-                            <span className="bar"></span>
-                            <span className="bar"></span>
-                        </div>
-                    )}
                 </div>
-            </div>
+
+                <div className="progress-bar-fill"></div>
+                <img src="/Spotify-Badge/batbro.gif" alt="" className="spotify-batbro-gif" />
+            </a>
         </div>
     );
 };

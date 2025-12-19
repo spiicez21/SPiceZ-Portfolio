@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, memo } from 'react';
 import SpotifyBadge from './SpotifyBadge';
+
+const MemoizedSpotifyBadge = memo(SpotifyBadge);
 
 export default function HeroPortrait() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [maskPos, setMaskPos] = useState({ x: -1000, y: -1000 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!containerRef.current) return;
@@ -12,11 +13,14 @@ export default function HeroPortrait() {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        setMaskPos({ x, y });
+        containerRef.current.style.setProperty('--mask-x', `${x}px`);
+        containerRef.current.style.setProperty('--mask-y', `${y}px`);
     };
 
     const handleMouseLeave = () => {
-        setMaskPos({ x: -1000, y: -1000 });
+        if (!containerRef.current) return;
+        containerRef.current.style.setProperty('--mask-x', `-1000px`);
+        containerRef.current.style.setProperty('--mask-y', `-1000px`);
     };
 
     return (
@@ -32,7 +36,9 @@ export default function HeroPortrait() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 cursor: 'crosshair',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                '--mask-x': '-1000px',
+                '--mask-y': '-1000px',
             } as React.CSSProperties}
         >
             {/* Background Portrait */}
@@ -85,26 +91,31 @@ export default function HeroPortrait() {
                 }}
             />
 
-            {/* Reveal Image (Dithered) - Mask follows mouse */}
-            <img
-                src="/Picture/dithered-main.png"
-                alt="Portrait Dithered"
+            {/* Reveal Image (Dithered) - Mask follows mouse via CSS variables */}
+            <div
+                className="portrait-reveal-layer"
                 style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
+                    inset: 0,
                     zIndex: 3,
                     pointerEvents: 'none',
-                    maskImage: `radial-gradient(circle 200px at ${maskPos.x}px ${maskPos.y}px, black 20%, transparent 80%)`,
-                    WebkitMaskImage: `radial-gradient(circle 200px at ${maskPos.x}px ${maskPos.y}px, black 20%, transparent 80%)`,
+                    maskImage: `radial-gradient(circle 200px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
+                    WebkitMaskImage: `radial-gradient(circle 200px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
                 }}
-            />
+            >
+                <img
+                    src="/Picture/dithered-main.png"
+                    alt="Portrait Dithered"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                    }}
+                />
+            </div>
 
             {/* Spotify Badge */}
-            <SpotifyBadge />
+            <MemoizedSpotifyBadge />
         </div>
     );
 }

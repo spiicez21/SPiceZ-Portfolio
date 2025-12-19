@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 import ScrambleText from '../utils/ScrambleText';
 import './SectionFrame.css';
 
@@ -10,7 +10,7 @@ interface SectionFrameProps {
     className?: string;
 }
 
-const SectionFrame = ({ id, label, number, children, className = '' }: SectionFrameProps) => {
+const SectionFrame = memo(({ id, label, number, children, className = '' }: SectionFrameProps) => {
     return (
         <section id={id} className={`section-frame ${className}`}>
             <div className="section-border">
@@ -33,6 +33,6 @@ const SectionFrame = ({ id, label, number, children, className = '' }: SectionFr
             <div className="scanline-overlay" />
         </section>
     );
-};
+});
 
 export default SectionFrame;

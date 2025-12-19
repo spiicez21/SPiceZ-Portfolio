@@ -13,16 +13,16 @@ const RetroGrid = ({ className = '', opacity = 0.1 }: RetroGridProps) => {
         const grid = gridRef.current;
         if (!grid) return;
 
+        // Initialize quickTo for performance
+        const xTo = gsap.quickTo(grid, "x", { duration: 1, ease: "power2.out" });
+        const yTo = gsap.quickTo(grid, "y", { duration: 1, ease: "power2.out" });
+
         const handleMouseMove = (e: MouseEvent) => {
             const x = (e.clientX / window.innerWidth - 0.5) * 20;
             const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
-            gsap.to(grid, {
-                x: x,
-                y: y,
-                duration: 1,
-                ease: 'power2.out'
-            });
+            xTo(x);
+            yTo(y);
         };
 
         window.addEventListener('mousemove', handleMouseMove);

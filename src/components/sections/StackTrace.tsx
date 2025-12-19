@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { type JSX, memo } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import techStackData from '../../content/techstack.json';
 import './StackTrace.css';
@@ -39,7 +39,7 @@ const iconMap: IconMapType = {
     "Docker": <FaDocker />,
 };
 
-const StackTrace = () => {
+const StackTrace = memo(() => {
     return (
         <SectionFrame id="stack-trace" label="STACK TRACE" number="03">
             <div className="dashboard-grid">
@@ -66,6 +66,6 @@ const StackTrace = () => {
             </div>
         </SectionFrame>
     );
-};
+});
 
 export default StackTrace;
