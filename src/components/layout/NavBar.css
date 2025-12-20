@@ -44,47 +44,6 @@
     transform: skewX(-5deg);
 }
 
-/* Center: Symbol Module */
-.nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.brand-symbol {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-    font-family: var(--font-heading);
-    font-weight: 900;
-    font-size: 1.2rem;
-    color: #fff;
-    transform: rotate(5deg);
-    transition: all 0.3s ease;
-}
-
-.brand-symbol:hover {
-    transform: rotate(0deg) scale(1.1);
-    background: var(--accent);
-}
-
-.symbol-logo {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    /* Masking it to white by default */
-    transition: filter 0.3s ease;
-}
-
-.brand-symbol:hover .symbol-logo {
-    filter: brightness(0);
-    /* Turn black on hover background */
-}
 
 /* Right: Action Module */
 .nav-right {
@@ -236,9 +195,6 @@
 }
 
 @media (max-width: 768px) {
-    .nav-center {
-        display: none;
-    }
 
     .nav-action-btn {
         display: none;

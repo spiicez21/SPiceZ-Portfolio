@@ -1,5 +1,6 @@
 import { type JSX, memo } from 'react';
 import SectionFrame from '../ui/SectionFrame';
+import AnimateIn from '../utils/AnimateIn';
 import techStackData from '../../content/techstack.json';
 import './StackTrace.css';
 import {
@@ -42,7 +43,7 @@ const iconMap: IconMapType = {
 const StackTrace = memo(() => {
     return (
         <SectionFrame id="stack-trace" label="STACK TRACE" number="03">
-            <div className="dashboard-grid">
+            <AnimateIn className="dashboard-grid" animation="fade-up" stagger={0.05} threshold={0.1}>
                 {techStackData.categories.map((category) => (
                     <div key={category.id} className="sys-module">
                         <div className="sys-header">
@@ -63,7 +64,7 @@ const StackTrace = memo(() => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </AnimateIn>
         </SectionFrame>
     );
 });

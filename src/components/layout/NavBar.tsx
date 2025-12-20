@@ -111,12 +111,6 @@ const NavBar = () => {
                 </a>
             </div>
 
-            {/* Center Module: Symbol */}
-            <div className="nav-module nav-center">
-                <div className="brand-symbol">
-                    <img src="/Logo/SPiceZ.png" alt="Logo" className="symbol-logo" />
-                </div>
-            </div>
 
             {/* Right Module: Action & Menu */}
             <div className="nav-module nav-right">

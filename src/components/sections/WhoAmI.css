@@ -1,149 +1,140 @@
-/* WhoAmI.css - Compact Terminal Revamp */
-
-.whoami-container {
+.whoami-revamp {
     width: 100%;
-    position: relative;
-    z-index: 10;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    padding: 8rem 2rem;
+    will-change: transform;
+    /* Increased padding for parallax breathing room */
 }
 
-/* Single Terminal Panel */
-.identity-terminal {
-    background: rgba(10, 10, 10, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
+.revamp-grid {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    gap: 3rem;
+    /* Reduced from 6rem */
+    align-items: flex-start;
+}
+
+.revamp-col {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+    gap: 1.5rem;
+    /* Reduced from 2rem */
+    will-change: transform, opacity;
 }
 
-/* Terminal Header */
-.terminal-header {
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
+.col-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+    border-bottom: 1px solid rgba(178, 255, 5, 0.2);
+    padding-bottom: 0.5rem;
+    width: fit-content;
+}
+
+/* Col 1: Identity */
+.identity-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 6vw, 5rem);
+    color: #fff;
+    line-height: 0.95;
+    margin: 0;
+    will-change: transform;
+    pointer-events: auto;
+    /* Ensure hover works for magnetic */
+}
+
+.status-indicator {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.terminal-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.control {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    opacity: 0.7;
-}
-
-.close {
-    background: #ff5f56;
-}
-
-.minimize {
-    background: #ffbd2e;
-}
-
-.maximize {
-    background: #27c93f;
-}
-
-.terminal-title {
+    gap: 0.8rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--ink-muted);
-    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Terminal Body Grid */
-.terminal-body {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    padding: 2rem;
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s infinite;
 }
 
-/* Bio Section */
-.bio-section {
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 0 15px var(--accent);
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+}
+
+.location-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
     font-family: var(--font-mono);
-    color: var(--ink-muted);
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 1rem;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.location-tag .icon {
+    color: var(--accent);
+}
+
+/* Col 2: Bio */
+.bio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
 }
 
 .bio-para {
-    margin-bottom: 1.5rem;
+    font-family: var(--font-regular);
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
-/* Stats Sidebar */
-.stats-sidebar {
-    border-left: 1px dashed rgba(255, 255, 255, 0.1);
-    padding-left: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.sidebar-block h3 {
-    font-family: var(--font-heading);
-    color: var(--ink);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
-
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 0.4rem;
-}
-
-.label {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--ink-muted);
-}
-
-.value {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
+.intro-para {
+    font-size: 1.6rem;
     color: #fff;
+    font-weight: 500;
 }
 
-.location-block {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: auto;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.8rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: #fff;
-}
-
-.icon {
-    color: var(--ink-muted);
+.keyword-highlight {
+    color: var(--accent);
+    position: relative;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .terminal-body {
+@media (max-width: 1024px) {
+    .revamp-grid {
         grid-template-columns: 1fr;
-        padding: 1.5rem;
+        gap: 4rem;
     }
 
-    .stats-sidebar {
-        border-left: none;
-        border-top: 1px dashed rgba(255, 255, 255, 0.1);
-        padding-left: 0;
-        padding-top: 2rem;
+    .identity-title {
+        font-size: 4rem;
     }
 }

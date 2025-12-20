@@ -1,3 +1,4 @@
+
 import { useRef } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import aboutData from '../../content/about.json';
@@ -16,65 +17,130 @@ const KEYWORDS = [
 
 const WhoAmI = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const col1Ref = useRef<HTMLDivElement>(null);
+    const col2Ref = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
+        if (!containerRef.current || !col1Ref.current || !col2Ref.current) return;
+
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top 85%",
+                toggleActions: "play reverse play reverse"
             }
         });
 
-        tl.fromTo(".identity-terminal",
+        // 1. Column Entrance: Very smooth slide up + blur fade
+        tl.fromTo([col1Ref.current, col2Ref.current],
             {
-                scale: 0.95,
+                y: 60,
                 opacity: 0,
+                filter: "blur(15px)"
             },
             {
-                scale: 1,
+                y: 0,
                 opacity: 1,
-                duration: 0.8,
-                ease: "power4.out"
+                filter: "blur(0px)",
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "expo.out"
             }
         );
+
+        // 2. Inner Elements Reveal: Staggering headers and content
+        tl.fromTo([".col-label", ".identity-title", ".status-indicator", ".location-tag"],
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out"
+            },
+            "-=0.8"
+        );
+
+        // 3. Bio Paragraphs: Smooth reveal as user scrolls
+        gsap.fromTo(".bio-para",
+            { opacity: 0, y: 30, filter: "blur(5px)" },
+            {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".bio-content",
+                    start: "top 90%",
+                    toggleActions: "play reverse play reverse"
+                }
+            }
+        );
+
+        // 4. Subtle Professional Parallax: Minimal drift for depth
+        gsap.to(col1Ref.current, {
+            y: -20,
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.5 // Slower scrub for smoothness
+            }
+        });
+
+        gsap.to(col2Ref.current, {
+            y: 20,
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.5
+            }
+        });
+
     }, { scope: containerRef });
 
-    // Helper to separate keywords from normal text
     const renderWithHighlights = (text: string) => {
-        // Split by keywords (keeping delimiters)
         const regex = new RegExp(`(${KEYWORDS.join('|')})`, 'gi');
         const parts = text.split(regex);
 
         return parts.map((part, index) => {
-            // Check if this part matches a keyword
             const isKeyword = KEYWORDS.some(k => k.toLowerCase() === part.toLowerCase());
-
             if (isKeyword) {
-                return <BubbleText key={index} text={part} className="font-bold text-white" />;
+                return (
+                    <span key={index} className="keyword-highlight">
+                        <BubbleText text={part} className="font-bold" />
+                    </span>
+                );
             }
             return <span key={index}>{part}</span>;
         });
     };
 
     return (
-        <SectionFrame id="whoami" label="" number="">
-            <div className="whoami-container" ref={containerRef}>
-                <div className="identity-terminal">
-                    {/* Terminal Header */}
-                    <div className="terminal-header">
-                        <div className="terminal-controls">
-                            <div className="control close"></div>
-                            <div className="control minimize"></div>
-                            <div className="control maximize"></div>
+        <SectionFrame id="whoami" label="WHOAMI" number="01">
+            <div className="whoami-revamp" ref={containerRef}>
+                <div className="revamp-grid split-layout">
+                    {/* Column 1: Identity Profile */}
+                    <div className="revamp-col identity-col" ref={col1Ref}>
+                        <div className="col-label">IDENTITY_PROFILE</div>
+                        <h2 className="identity-title">SYSTEM_CORE</h2>
+                        <div className="status-indicator">
+                            <span className="pulse-dot"></span>
+                            AUTHENTICATED: YUGA_ROOT
                         </div>
-                        <div className="terminal-title">user_identity.json</div>
-                        <div className="terminal-spacer" style={{ width: 50 }}></div>
+                        <div className="location-tag">
+                            <FaMapMarkerAlt className="icon" />
+                            {aboutData.stats.location}
+                        </div>
                     </div>
 
-                    {/* Terminal Body */}
-                    <div className="terminal-body">
-                        {/* Left: Bio Text */}
-                        <div className="bio-section">
+                    {/* Column 2: Core Bio Log */}
+                    <div className="revamp-col bio-col" ref={col2Ref}>
+                        <div className="col-label">CORE_LOG</div>
+                        <div className="bio-content">
                             <p className="bio-para intro-para">
                                 {renderWithHighlights(aboutData.intro)}
                             </p>
@@ -83,24 +149,6 @@ const WhoAmI = () => {
                                     {renderWithHighlights(para)}
                                 </p>
                             ))}
-                        </div>
-
-                        {/* Right: Stats Sidebar */}
-                        <div className="stats-sidebar">
-                            <div className="sidebar-block">
-                                <h3>SYSTEM SPECS</h3>
-                                {Object.entries(aboutData.stats).map(([key, value]) => (
-                                    <div key={key} className="stat-row">
-                                        <span className="label">{key.toUpperCase()}</span>
-                                        <span className="value">{value}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="location-block">
-                                <FaMapMarkerAlt className="icon" />
-                                <span>Erode, TamilNadu</span>
-                            </div>
                         </div>
                     </div>
                 </div>
