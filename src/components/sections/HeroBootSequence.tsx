@@ -22,6 +22,9 @@ const HeroBootSequence = () => {
     useGSAP(() => {
         if (!containerRef.current) return;
 
+        // Set WhoAmI to initial position BEFORE timeline
+        gsap.set("#whoami", { y: 0 });
+
         // Create the main scroll timeline - Signature completes, then immediate exit
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -93,13 +96,17 @@ const HeroBootSequence = () => {
             ease: "power2.in"
         }, 0.7);
 
-
         // HOLD WhoAmI in place during signature animation (0 to 0.7)
         tl.to("#whoami", {
-            y: 0, // Stay at 0
-            duration: 0.7,
-            ease: "none"
+            y: 0,
+            ease: "none",
+            immediateRender: false
         }, 0);
+
+        tl.to("#whoami", {
+            y: 0,
+            ease: "none"
+        }, 0.69); // Hold until just before 0.7
 
         // THEN slide up AFTER signature is done (0.7 to 1.0)
         tl.to("#whoami", {
