@@ -1,81 +1,61 @@
 @import "tailwindcss";
 
-/* Local JetBrains Mono */
+/* Custom Fonts */
+/* Clash Display - Small/Regular */
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Thin.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-ExtraLight.woff2') format('woff2');
-  font-weight: 200;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Regular.woff2') format('woff2');
+  font-family: 'ClashDisplay';
+  src: url('/webfonts/ClashDIsplay/ClashDisplay-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Medium.woff2') format('woff2');
+  font-family: 'ClashDisplay';
+  src: url('/webfonts/ClashDIsplay/ClashDisplay-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-SemiBold.woff2') format('woff2');
+  font-family: 'ClashDisplay';
+  src: url('/webfonts/ClashDIsplay/ClashDisplay-Semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
 }
 
+/* Stardom - Bold/Headings */
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('/webfonts/JetBrainsMono/JetBrainsMono-ExtraBold.woff2') format('woff2');
-  font-weight: 800;
+  font-family: 'Stardom';
+  src: url('/webfonts/Stardom/Stardom-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
 }
 
 /* Minimal Black Monotone Theme */
 :root {
   /* Minimal Palette */
-  --bg: #000000;
+  --bg: #050505;
+  /* Slightly deeper black */
   --bg-alt: #0a0a0a;
   --ink: #ffffff;
   --ink-muted: #888888;
-  --accent: #ffffff;
-  --border: #222222;
+  --accent: #b2ff05;
+  /* High color neon lime */
+  --border: rgba(255, 255, 255, 0.1);
 
   /* Typography */
-  --font-mono: 'JetBrains Mono', monospace;
-  /* Small/Slim */
-  --font-heading: 'JetBrains Mono', monospace;
-  /* Bold/Fat - unified font family */
+  --font-regular: 'ClashDisplay', sans-serif;
+  --font-heading: 'Stardom', sans-serif;
+  --font-mono: 'ClashDisplay', monospace;
+  /* Using Clash as primary regular font */
 
   /* Spacing */
   --border-width: 1px;
   --section-padding: 6rem;
+}
+
+* {
+  cursor: none !important;
 }
 
 @media (max-width: 768px) {

@@ -212,7 +212,7 @@
 }
 
 .sys-title {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 700;
     color: var(--primary);
@@ -220,7 +220,7 @@
 }
 
 .sys-id {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     color: rgba(255, 255, 255, 0.4);
 }
@@ -318,7 +318,7 @@
 }
 
 .sys-status {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.6rem;
     color: var(--primary);
     opacity: 0.8;

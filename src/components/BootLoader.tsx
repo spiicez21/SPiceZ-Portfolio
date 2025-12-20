@@ -91,7 +91,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
+            ctx.font = `${fontSize}px var(--font-mono)`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
@@ -288,7 +288,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
             <div ref={bootContentRef} className="boot-container">
                 <div className="boot-header">
-                    <div className="boot-title">INITIALIZING SPiceZ.PORTFOLIO v2.0.25</div>
+                    <div className="boot-title">INITIALIZING YUGA_BHARATHI.OS v2.0.25</div>
                 </div>
 
                 <div className="boot-content">

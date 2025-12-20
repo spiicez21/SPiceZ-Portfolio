@@ -53,7 +53,7 @@ const AsciiRain = () => {
         const fontSize = 10;
         const columns = Math.ceil(width / fontSize);
         const drops: number[] = new Array(columns).fill(0).map(() => Math.random() * -100);
-        const chars = "SPICEZ2101FORM44LH";
+        const chars = "YUGABHARATHIJAI21";
 
         // Scanline Config
         let scanY = 0;
@@ -64,7 +64,7 @@ const AsciiRain = () => {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, width, height);
 
-            ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
+            ctx.font = `${fontSize}px var(--font-mono)`;
 
             // Update Scanline
             scanY += 4; // Faster scan speed

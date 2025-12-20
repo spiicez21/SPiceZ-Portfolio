@@ -57,7 +57,7 @@ const GigCard = () => {
             </div>
 
             <div className="pit-footer">
-                powered by <span>SPiceZ</span>
+                powered by <span>YUGA BHARATHI</span>
             </div>
         </div>
     );

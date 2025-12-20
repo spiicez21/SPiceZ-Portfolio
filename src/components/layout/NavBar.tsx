@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { gsap } from '../../lib/animations/gsapClient';
 import { useSmoothScroll } from '../../context/SmoothScrollContext';
-import { Menu, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import './NavBar.css';
 
 const navItems = [
@@ -10,7 +10,6 @@ const navItems = [
     { label: 'STACK', href: '/#stack-trace' },
     { label: 'WORKS', href: '/#work-navigation' },
     { label: 'CERTS', href: '/#verified-credentials' },
-    { label: 'WINS', href: '/#bosses-defeated' },
     { label: 'CONTACT', href: '/#open-ticket' },
 ];
 
@@ -99,56 +98,61 @@ const NavBar = () => {
     };
 
     return (
-        <nav ref={navRef} className="navbar">
-            {/* Left Module: Logo */}
+        <nav ref={navRef} className="navbar slim-sleek">
+            {/* Left Module: Name */}
             <div className="nav-module nav-left">
                 <a
                     href="#boot-sequence"
-                    className="navbar-logo"
+                    className="navbar-brand-text"
                     onClick={(e) => handleNavClick(e, '#boot-sequence')}
                 >
-                    <img src="/Logo/SPiceZ.png" alt="SPiceZ" className="logo-image" />
+                    <span className="brand-firstname">YUGA</span>
+                    <span className="brand-lastname">BHARATHI</span>
                 </a>
             </div>
 
-            {/* Right Module: Links & Mobile Toggle */}
-            <div className="nav-module nav-right">
-                {/* Desktop Menu */}
-                <div className="navbar-links">
-                    {navItems.map((item, idx) => (
-                        <a
-                            key={idx}
-                            href={item.href}
-                            className="nav-link"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                        >
-                            {item.label}
-                        </a>
-                    ))}
+            {/* Center Module: Symbol */}
+            <div className="nav-module nav-center">
+                <div className="brand-symbol">
+                    <img src="/Logo/SPiceZ.png" alt="Logo" className="symbol-logo" />
                 </div>
+            </div>
 
-                {/* Mobile Toggle */}
+            {/* Right Module: Action & Menu */}
+            <div className="nav-module nav-right">
+                <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nav-action-btn"
+                >
+                    HIRE ME
+                </a>
+
                 <button
-                    className="mobile-toggle"
+                    className={`mobile-toggle ${isMenuOpen ? 'active' : ''}`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label="Toggle menu"
                 >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {isMenuOpen ? <X size={24} color="#000" /> : <div className="menu-icon-bars"><span></span><span></span></div>}
                 </button>
             </div>
 
             {/* Mobile Menu Overlay */}
             <div className={`mobile-menu-overlay ${isMenuOpen ? 'open' : ''}`}>
-                {navItems.map((item, idx) => (
-                    <a
-                        key={idx}
-                        href={item.href}
-                        className="nav-link"
-                        onClick={(e) => handleNavClick(e, item.href)}
-                    >
-                        {item.label}
-                    </a>
-                ))}
+                <div className="overlay-nav-items">
+                    {navItems.map((item, idx) => (
+                        <a
+                            key={idx}
+                            href={item.href}
+                            className="overlay-link"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                        >
+                            <span className="link-num">0{idx + 1}</span>
+                            <span className="link-text">{item.label}</span>
+                        </a>
+                    ))}
+                </div>
             </div>
         </nav>
     );

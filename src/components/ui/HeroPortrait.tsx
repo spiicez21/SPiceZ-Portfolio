@@ -28,15 +28,12 @@ export default function HeroPortrait() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            className="portrait-inner-wrapper"
             style={{
                 position: 'relative',
                 width: '100%',
                 height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
                 cursor: 'crosshair',
-                overflow: 'hidden',
                 '--mask-x': '-1000px',
                 '--mask-y': '-1000px',
             } as React.CSSProperties}
@@ -44,33 +41,17 @@ export default function HeroPortrait() {
             {/* Background Portrait */}
             <img
                 src="/Picture/Background-main.png"
-                alt="Background Decoration"
+                alt=""
                 style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) scale(1.4)',
                     height: '100%',
+                    width: 'auto',
                     objectFit: 'contain',
                     zIndex: 0,
-                    opacity: 0.5,
-                    pointerEvents: 'none'
-                }}
-            />
-
-            {/* Doodle Layer */}
-            <img
-                src="/Picture/doodle.png"
-                alt="Portrait Doodle"
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    zIndex: 1,
-                    opacity: 0.3,
+                    opacity: 0.4,
                     pointerEvents: 'none'
                 }}
             />
@@ -78,20 +59,21 @@ export default function HeroPortrait() {
             {/* Base Image (Normal) */}
             <img
                 src="/Picture/normal-main.png"
-                alt="Portrait"
+                alt=""
                 style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) scale(1.4)',
                     height: '100%',
+                    width: 'auto',
                     objectFit: 'contain',
                     zIndex: 2,
                     pointerEvents: 'none'
                 }}
             />
 
-            {/* Reveal Image (Dithered) - Mask follows mouse via CSS variables */}
+            {/* Reveal Image (Dithered) */}
             <div
                 className="portrait-reveal-layer"
                 style={{
@@ -99,22 +81,26 @@ export default function HeroPortrait() {
                     inset: 0,
                     zIndex: 3,
                     pointerEvents: 'none',
-                    maskImage: `radial-gradient(circle 200px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
-                    WebkitMaskImage: `radial-gradient(circle 200px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
+                    maskImage: `radial-gradient(circle 250px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
+                    WebkitMaskImage: `radial-gradient(circle 250px at var(--mask-x) var(--mask-y), black 20%, transparent 80%)`,
                 }}
             >
                 <img
                     src="/Picture/dithered-main.png"
-                    alt="Portrait Dithered"
+                    alt=""
                     style={{
-                        width: '100%',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%) scale(1.4)',
                         height: '100%',
+                        width: 'auto',
                         objectFit: 'contain',
                     }}
                 />
             </div>
 
-            {/* Spotify Badge */}
+            {/* Spotify Badge stays in its fixed corner via CSS (usually bottom-right) */}
             <MemoizedSpotifyBadge />
         </div>
     );

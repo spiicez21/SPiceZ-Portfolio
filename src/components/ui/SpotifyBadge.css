@@ -136,7 +136,7 @@
     background: rgba(255, 255, 255, 0.5);
     width: 65%;
     /* Default fallback */
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px var(--accent);
     transition: width 0.3s ease;
 }
 

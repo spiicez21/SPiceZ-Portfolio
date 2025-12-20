@@ -10,7 +10,7 @@ const FooterBar = () => {
             <MalakEasterEgg />
 
             <div className="footer-big-text">
-                SPICEZ21
+                YUGA BHARATHI
             </div>
 
             <F1Telemetry />
@@ -20,7 +20,7 @@ const FooterBar = () => {
                     {'>'} last updated: {currentYear} | built with Ctrl+C / Ctrl+V and caffeine ☕
                 </div>
                 <div className="footer-text">
-                    © {currentYear} SPiceZ — Yugabharathi J
+                    © {currentYear} YUGA BHARATHI — Yugabharathi J
                 </div>
             </div>
         </footer>

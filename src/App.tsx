@@ -8,6 +8,7 @@ const InProgressRoute = lazy(() => import('./routes/InProgressRoute'));
 
 import { SmoothScrollProvider } from './context/SmoothScrollContext';
 import RetroGrid from './components/utils/RetroGrid';
+import CustomCursor from './components/ui/CustomCursor';
 
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(false);
@@ -40,6 +41,7 @@ function App() {
   return (
     <SmoothScrollProvider>
       <RetroGrid opacity={0.05} />
+      <CustomCursor />
       {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
       <Router>
         <Routes>
