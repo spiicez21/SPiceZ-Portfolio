@@ -96,22 +96,22 @@ const HeroBootSequence = () => {
             ease: "power2.in"
         }, 0.7);
 
-        // HOLD WhoAmI in place during signature animation (0 to 0.7)
-        tl.to("#whoami", {
-            y: 0,
-            ease: "none",
-            immediateRender: false
-        }, 0);
+        // LOCK WhoAmI completely - multiple approaches
+        gsap.set("#whoami", { y: 0, visibility: "hidden" }); // Hide initially
 
-        tl.to("#whoami", {
-            y: 0,
-            ease: "none"
-        }, 0.69); // Hold until just before 0.7
+        // Lock at multiple points with overwrite to prevent any other animations
+        tl.to("#whoami", { y: 0, visibility: "hidden", ease: "none", overwrite: true }, 0);
+        tl.to("#whoami", { y: 0, visibility: "hidden", ease: "none", overwrite: true }, 0.2);
+        tl.to("#whoami", { y: 0, visibility: "hidden", ease: "none", overwrite: true }, 0.4);
+        tl.to("#whoami", { y: 0, visibility: "hidden", ease: "none", overwrite: true }, 0.5);
+        tl.to("#whoami", { y: 0, visibility: "hidden", ease: "none", overwrite: true }, 0.69);
 
-        // THEN slide up AFTER signature is done (0.7 to 1.0)
+        // Make visible and slide up AFTER signature is done (0.7 to 1.0)
         tl.to("#whoami", {
+            visibility: "visible",
             y: "-100vh",
-            ease: "power2.inOut"
+            ease: "power2.inOut",
+            overwrite: true
         }, 0.7);
 
         // FINAL EXIT

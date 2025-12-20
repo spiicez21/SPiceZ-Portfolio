@@ -1,4 +1,5 @@
 
+
 import { useRef } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import aboutData from '../../content/about.json';
@@ -6,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from '../../lib/animations/gsapClient';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { BubbleText } from '../ui/BubbleText';
+import { useSmoothSnap } from '../../hooks/useSmoothSnap';
 import './WhoAmI.css';
 
 // Keywords to highlight - easily adjustable
@@ -20,16 +22,22 @@ const WhoAmI = () => {
     const col1Ref = useRef<HTMLDivElement>(null);
     const col2Ref = useRef<HTMLDivElement>(null);
 
+    // Add smooth snap behavior
+    useSmoothSnap('whoami');
+
     useGSAP(() => {
         if (!containerRef.current || !col1Ref.current || !col2Ref.current) return;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 85%",
-                toggleActions: "play reverse play reverse"
-            }
-        });
+        // Disabled - Hero section controls the slide-up now
+        // const tl = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: containerRef.current,
+        //         start: "top 85%",
+        //         toggleActions: "play reverse play reverse"
+        //     }
+        // });
+
+        const tl = gsap.timeline(); // No ScrollTrigger
 
         // 1. Column Entrance: Very smooth slide up + blur fade
         tl.fromTo([col1Ref.current, col2Ref.current],
