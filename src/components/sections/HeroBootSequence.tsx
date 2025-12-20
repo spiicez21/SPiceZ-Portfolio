@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import AnimateIn from '../utils/AnimateIn';
+import SignatureSVG from '../ui/SignatureSVG';
 import './HeroBootSequence.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -38,7 +39,7 @@ const HeroBootSequence = () => {
             }
         });
 
-        // STAGE 0: Initial state
+        // STAGE 0: Initial state - Set up stroke animation
         if (signaturePathRef.current) {
             const pathLength = signaturePathRef.current.getTotalLength();
             gsap.set(signaturePathRef.current, {
@@ -51,7 +52,7 @@ const HeroBootSequence = () => {
         tl.to(marqueeLeftRef.current, { xPercent: -30, ease: "none" }, 0);
         tl.to(marqueeRightRef.current, { xPercent: 30, ease: "none" }, 0);
 
-        // STAGE 2 (0-0.5): Signature draws in
+        // STAGE 2 (0-0.5): Signature draws in with stroke animation
         if (signaturePathRef.current) {
             tl.to(signaturePathRef.current, {
                 strokeDashoffset: 0,
@@ -148,17 +149,7 @@ const HeroBootSequence = () => {
 
             {/* Signature Overlay */}
             <div className="hero-signature-wrapper">
-                <svg viewBox="0 0 400 200" className="hero-signature-svg">
-                    <path
-                        ref={signaturePathRef}
-                        d="M40,120 C60,80 100,40 140,80 C160,100 130,140 110,120 C90,100 120,60 180,60 C220,60 260,120 300,100 C340,80 370,40 380,80" // Stylized signature curve
-                        fill="none"
-                        stroke="#b2ff05"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
+                <SignatureSVG ref={signaturePathRef} />
             </div>
 
             {/* Bottom-Left Info Box */}
