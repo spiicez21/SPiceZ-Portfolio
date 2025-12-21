@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { gsap } from '../../lib/animations/gsapClient';
 import { useSmoothScroll } from '../../context/SmoothScrollContext';
-import { X } from 'lucide-react';
+import { Minus } from 'lucide-react';
 import './NavBar.css';
 
 const navItems = [
@@ -128,12 +128,19 @@ const NavBar = () => {
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label="Toggle menu"
                 >
-                    {isMenuOpen ? <X size={24} color="#000" /> : <div className="menu-icon-bars"><span></span><span></span></div>}
+                    {isMenuOpen ? <Minus size={24} color="#000" /> : <div className="menu-icon-bars"><span></span><span></span></div>}
                 </button>
             </div>
 
             {/* Mobile Menu Overlay */}
             <div className={`mobile-menu-overlay ${isMenuOpen ? 'open' : ''}`}>
+                <button
+                    className="overlay-close-btn"
+                    onClick={() => setIsMenuOpen(false)}
+                    aria-label="Close menu"
+                >
+                    <Minus size={28} strokeWidth={3} />
+                </button>
                 <div className="overlay-nav-items">
                     {navItems.map((item, idx) => (
                         <a
