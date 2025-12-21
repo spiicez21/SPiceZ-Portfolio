@@ -50,26 +50,27 @@ const StackTrace = memo(() => {
         const categories = containerRef.current.querySelectorAll('.category-section');
 
         // Animate each category section with scroll effects
-        categories.forEach((category, index) => {
-            // Category entrance with slide and fade
+        categories.forEach((category, idx) => {
+            // MATRIX CASCADE - Drop from top like code rain
             gsap.fromTo(category,
                 {
+                    y: -200,
                     opacity: 0,
-                    x: index % 2 === 0 ? -50 : 50,
-                    rotateY: index % 2 === 0 ? -5 : 5,
+                    filter: "brightness(3) saturate(0)",
+                    scale: 1.1
                 },
                 {
+                    y: 0,
                     opacity: 1,
-                    x: 0,
-                    rotateY: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
+                    filter: "brightness(1) saturate(1)",
+                    scale: 1,
+                    duration: 1.4,
+                    delay: idx * 0.2,
+                    ease: "bounce.out",
                     scrollTrigger: {
                         trigger: category,
                         start: "top 85%",
-                        end: "top 20%",
-                        toggleActions: "play none none reverse",
-                        scrub: false
+                        toggleActions: "play none none reverse"
                     }
                 }
             );

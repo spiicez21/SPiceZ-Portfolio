@@ -3,6 +3,7 @@ import NavBar from '../components/layout/NavBar';
 import FooterBar from '../components/layout/FooterBar';
 import HeroBootSequence from '../components/sections/HeroBootSequence';
 import WhoAmI from '../components/sections/WhoAmI';
+import SectionTransitions from '../components/utils/SectionTransitions';
 
 const VerifiedCredentials = lazy(() => import('../components/sections/VerifiedCredentials'));
 const GitHubActivity = lazy(() => import('../components/sections/GitHubActivity'));
@@ -15,6 +16,7 @@ const Portfolio = () => {
     return (
         <div className="portfolio-page">
             <NavBar />
+            <SectionTransitions />
             <main>
                 <HeroBootSequence />
                 <WhoAmI />

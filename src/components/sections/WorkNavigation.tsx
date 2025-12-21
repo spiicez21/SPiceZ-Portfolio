@@ -2,9 +2,12 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import SectionFrame from '../ui/SectionFrame';
 import './WorkNavigation.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const items = [
     { title: 'DEPLOYED BUILDS', path: '/deployed-builds', id: '04' },
@@ -35,6 +38,34 @@ const WorkNavigation = () => {
 
     useGSAP(() => {
         const links = gsap.utils.toArray<HTMLElement>('.work-nav-item');
+
+        // GLITCH REVEAL - RGB split with jitter
+        links.forEach((link, index) => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+
+            tl.fromTo(link,
+                {
+                    opacity: 0,
+                    filter: 'hue-rotate(180deg) saturate(3)',
+                },
+                {
+                    opacity: 1,
+                    filter: 'hue-rotate(0deg) saturate(1)',
+                    duration: 0.8,
+                    delay: index * 0.12,
+                    ease: 'steps(5)',
+                }
+            )
+                .to(link, { x: -2, duration: 0.03 }, '<')
+                .to(link, { x: 2, duration: 0.03 })
+                .to(link, { x: 0, duration: 0.03 });
+        });
 
         // GSAP Marquee Animation
         links.forEach((link, i) => {
