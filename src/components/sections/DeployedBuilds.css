@@ -18,7 +18,8 @@
 
 .project-card:hover {
     transform: translateY(-4px);
-    border-color: var(--accent);
+    border-color: rgba(178, 255, 5, 0.6);
+    box-shadow: 0 4px 20px rgba(178, 255, 5, 0.15);
 }
 
 .project-image {
@@ -70,7 +71,7 @@
 }
 
 .project-icon-link:hover {
-    color: var(--accent);
+    color: rgba(178, 255, 5, 0.9);
 }
 
 .project-subtitle {
@@ -98,9 +99,15 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     padding: 0.15rem 0.5rem;
-    border: 1px solid var(--border-ink);
+    border: 1px solid rgba(178, 255, 5, 0.3);
     color: var(--ink);
-    background: var(--bg-alt);
+    background: rgba(178, 255, 5, 0.05);
+    transition: all 0.2s ease;
+}
+
+.tech-tag:hover {
+    border-color: rgba(178, 255, 5, 0.6);
+    background: rgba(178, 255, 5, 0.1);
 }
 
 .project-role {
@@ -113,7 +120,7 @@
 }
 
 .role-label {
-    color: var(--accent);
+    color: rgba(178, 255, 5, 0.9);
     font-weight: 700;
 }
 

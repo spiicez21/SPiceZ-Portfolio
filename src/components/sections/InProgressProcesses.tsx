@@ -1,5 +1,4 @@
 import SectionFrame from '../ui/SectionFrame';
-import AnimateIn from '../utils/AnimateIn';
 import wipData from '../../content/wip.json';
 import './InProgressProcesses.css';
 
@@ -15,7 +14,7 @@ const InProgressProcesses = () => {
 
     return (
         <SectionFrame id="in-progress" label="IN-PROGRESS PROCESSES" number="06">
-            <AnimateIn className="wip-list" animation="scale-up" stagger={0.15}>
+            <div className="wip-list">
                 {wipData.map((project) => (
                     <div key={project.id} className="wip-item">
                         <div className="wip-header">
@@ -41,7 +40,7 @@ const InProgressProcesses = () => {
                         </div>
                     </div>
                 ))}
-            </AnimateIn>
+            </div>
         </SectionFrame>
     );
 };

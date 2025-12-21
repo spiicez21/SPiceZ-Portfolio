@@ -1,4 +1,3 @@
-import AnimateIn from '../utils/AnimateIn';
 import SectionFrame from '../ui/SectionFrame';
 import InkButton from '../ui/InkButton';
 import projectsData from '../../content/projects.json';
@@ -8,13 +7,7 @@ import './DeployedBuilds.css';
 const DeployedBuilds = () => {
     return (
         <SectionFrame id="deployed-builds" label="DEPLOYED BUILDS" number="04">
-            <AnimateIn
-                className="projects-grid"
-                animation="clip-reveal"
-                stagger={0.2}
-                duration={0.8}
-                threshold={0.1}
-            >
+            <div className="projects-grid">
                 {projectsData.map((project) => (
                     <div key={project.id} className="project-card">
                         {project.thumbnailPublicId && (
@@ -77,7 +70,7 @@ const DeployedBuilds = () => {
                         )}
                     </div>
                 ))}
-            </AnimateIn>
+            </div>
         </SectionFrame>
     );
 };

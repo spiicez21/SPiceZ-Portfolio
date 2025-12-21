@@ -90,6 +90,13 @@
 .text-wrapper {
     position: relative;
     display: block;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.work-nav-text,
+.work-nav-hover-text {
+    transform-style: preserve-3d;
 }
 
 .separator {
@@ -130,16 +137,19 @@
 .work-nav-text,
 .work-nav-hover-text {
     font-size: 6rem;
-    font-family: 'Nippo', sans-serif;
+    font-family: 'Clash Display', Impact, Haettenschweiler, 'Franklin Gothic Bold', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1.1;
     margin: 0;
     transition: none;
-    color: var(--ink);
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
     text-align: center;
     white-space: pre;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3);
+    -webkit-text-fill-color: transparent;
+    transform-style: preserve-3d;
 }
 
 .work-nav-hover-text {
@@ -154,11 +164,12 @@
 
 .work-nav-hover-text .char {
     color: transparent;
-    -webkit-text-stroke: 1px #fff;
+    -webkit-text-stroke: 2px rgba(178, 255, 5, 0.9);
     -webkit-text-fill-color: transparent;
     font-family: inherit;
     font-weight: inherit;
     backface-visibility: hidden;
+    text-shadow: 0 0 20px rgba(178, 255, 5, 0.3);
 }
 
 @media (max-width: 768px) {

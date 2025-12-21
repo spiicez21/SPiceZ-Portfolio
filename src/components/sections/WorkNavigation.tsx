@@ -15,22 +15,9 @@ const items = [
 const WorkNavigation = () => {
     const navigate = useNavigate();
     const containerRef = useRef<HTMLDivElement>(null);
-    const overlayRef = useRef<HTMLDivElement>(null);
 
     const handleNavigate = (path: string) => {
-        if (!overlayRef.current) return;
-
-        // Masked transition
-        // We expand the overlay to cover the screen
-        gsap.to(overlayRef.current, {
-            scale: 50, // Scale up massive to cover screen
-            duration: 0.8,
-            ease: "power2.inOut",
-            onComplete: () => {
-                navigate(path);
-                // Reset scale after navigation (optional, depends on if component unmounts)
-            }
-        });
+        navigate(path);
     };
 
     // Helper to split text into characters
@@ -79,35 +66,43 @@ const WorkNavigation = () => {
             const hoverChars = link.querySelectorAll('.work-nav-hover-text .char');
 
             // Start hidden
-            gsap.set(hoverChars, { y: '100%' });
+            gsap.set(hoverChars, { y: '120%', rotationX: -90, scale: 0.8 });
 
             link.addEventListener('mouseenter', () => {
                 gsap.to(chars, {
-                    y: '-100%',
-                    duration: 0.3, // Faster duration per letter
-                    stagger: 0.02, // Fast stagger
-                    ease: 'power2.out'
+                    y: '-120%',
+                    rotationX: 90,
+                    scale: 0.8,
+                    duration: 0.4,
+                    stagger: 0.015,
+                    ease: 'power3.out'
                 });
                 gsap.to(hoverChars, {
                     y: '0%',
-                    duration: 0.3,
-                    stagger: 0.02,
-                    ease: 'power2.out'
+                    rotationX: 0,
+                    scale: 1,
+                    duration: 0.4,
+                    stagger: 0.015,
+                    ease: 'power3.out'
                 });
             });
 
             link.addEventListener('mouseleave', () => {
                 gsap.to(chars, {
                     y: '0%',
-                    duration: 0.3,
-                    stagger: 0.02, // Reverse stagger could be cool, but sticking to simple first
-                    ease: 'power2.out'
+                    rotationX: 0,
+                    scale: 1,
+                    duration: 0.4,
+                    stagger: 0.015,
+                    ease: 'power3.out'
                 });
                 gsap.to(hoverChars, {
-                    y: '100%',
-                    duration: 0.3,
-                    stagger: 0.02,
-                    ease: 'power2.out'
+                    y: '120%',
+                    rotationX: -90,
+                    scale: 0.8,
+                    duration: 0.4,
+                    stagger: 0.015,
+                    ease: 'power3.out'
                 });
             });
         });
@@ -139,24 +134,6 @@ const WorkNavigation = () => {
                     </div>
                 ))}
             </div>
-
-            {/* Transition Overlay */}
-            <div
-                ref={overlayRef}
-                className="transition-overlay"
-                style={{
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    width: '50px',
-                    height: '50px',
-                    backgroundColor: '#000', // Or theme color
-                    borderRadius: '50%',
-                    transform: 'translate(-50%, -50%) scale(0)',
-                    pointerEvents: 'none',
-                    zIndex: 9999
-                }}
-            />
         </SectionFrame>
     );
 };

@@ -15,9 +15,9 @@
 }
 
 .graphic-card:hover {
-    border-color: var(--ink);
+    border-color: rgba(178, 255, 5, 0.6);
     transform: translateY(-4px);
-    box-shadow: 4px 4px 0 var(--border);
+    box-shadow: 4px 4px 0 rgba(178, 255, 5, 0.2);
 }
 
 .graphic-image {
@@ -76,11 +76,12 @@
 .graphic-category {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: var(--ink-muted);
+    color: rgba(178, 255, 5, 0.9);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     padding: 0.25rem 0.75rem;
-    border: var(--border-width) solid var(--border);
+    border: var(--border-width) solid rgba(178, 255, 5, 0.4);
+    background: rgba(178, 255, 5, 0.05);
     white-space: nowrap;
 }
 
@@ -133,8 +134,9 @@
 }
 
 .preview-close-btn:hover {
-    background: var(--ink);
+    background: rgba(178, 255, 5, 0.9);
     color: var(--bg);
+    border-color: rgba(178, 255, 5, 0.9);
 }
 
 .preview-image-container {
@@ -178,11 +180,12 @@
 .preview-category {
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--ink);
+    color: rgba(178, 255, 5, 0.9);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     padding: 0.4rem 1rem;
-    border: var(--border-width) solid var(--border);
+    border: var(--border-width) solid rgba(178, 255, 5, 0.4);
+    background: rgba(178, 255, 5, 0.05);
     align-self: flex-start;
 }
 
