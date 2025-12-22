@@ -27,7 +27,7 @@
     transition: z-index 0s 0s;
 }
 
-/* Tech Icon - Minimal */
+/* Tech Icon */
 .tech-icon-scattered {
     width: 80px;
     height: 80px;
@@ -35,31 +35,32 @@
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: rgba(255, 255, 255, 0.6);
-    background: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: 4px;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     position: relative;
 }
 
 .tech-logo:hover .tech-icon-scattered {
-    color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
+    color: rgba(255, 255, 255, 0.95);
     border-color: rgba(178, 255, 5, 0.3);
 }
 
-/* Hover Card - Minimal Black and Green */
+/* Hover Card - Minimal Black & Green */
 .hover-card {
     position: absolute;
     left: 100%;
     top: 50%;
     transform: translateY(-50%) translateX(20px);
-    margin-left: 10px;
-    padding: 0.6rem 1rem;
+    margin-left: 15px;
+    padding: 0.8rem 1.2rem;
     background: rgba(0, 0, 0, 0.95);
-    border: 1px solid rgba(178, 255, 5, 0.2);
-    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
     backdrop-filter: blur(10px);
     opacity: 0;
     visibility: hidden;
@@ -78,13 +79,19 @@
 .hover-card-name {
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(178, 255, 5, 0.9);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
     letter-spacing: 0.02em;
 }
 
 .hover-card-category {
-    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: rgba(178, 255, 5, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Responsive Adjustments */
