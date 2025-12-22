@@ -61,7 +61,11 @@
 
 .telemetry-value {
     color: var(--accent);
-    font-weight: 700;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    min-width: 3.5ch;
+    display: inline-block;
+    text-align: right;
 }
 
 .telemetry-value.text-green {
@@ -78,6 +82,12 @@
     color: #d100d1;
     /* LH44 Purple */
     text-shadow: 0 0 5px rgba(209, 0, 209, 0.5);
+}
+
+/* Fixed width for time numbers */
+.telemetry-value.nums {
+    min-width: 5.5ch;
+    letter-spacing: 0.05em;
 }
 
 .telemetry-sep {

@@ -1,22 +1,39 @@
-/* Scattered Tech Stack Layout with Horizontal Scroll */
+/* Simple Grid Layout - No Horizontal Scroll */
 
-.stack-wrapper {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
+.stack-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    padding: 2rem 0;
 }
 
-.stack-scroll-container {
-    width: 150vw;
-    height: 100%;
-    position: relative;
-    will-change: transform;
+.tech-category {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-/* Tech Logo Scattered Positioning */
+.category-title {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(178, 255, 5, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Tech Logo */
 .tech-logo {
-    position: absolute;
+    position: relative;
     cursor: pointer;
     z-index: 1;
     transition: z-index 0s 0.3s;
@@ -29,8 +46,8 @@
 
 /* Tech Icon */
 .tech-icon-scattered {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,71 +113,44 @@
 
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 1.25rem;
+    }
+
     .tech-icon-scattered {
-        width: 70px;
-        height: 70px;
+        width: 90px;
+        height: 90px;
         font-size: 2.5rem;
-    }
-
-    .hover-card-name {
-        font-size: 1rem;
-    }
-
-    .hover-card-category {
-        font-size: 0.7rem;
     }
 }
 
 @media (max-width: 768px) {
-    .stack-wrapper {
-        height: 80vh;
+    .stack-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .stack-scroll-container {
-        width: 400vw;
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1rem;
     }
 
     .tech-icon-scattered {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         font-size: 2rem;
     }
 
     .hover-card {
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 1rem;
     }
 
     .hover-card-name {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .hover-card-category {
         font-size: 0.65rem;
-    }
-}
-
-/* Scroll Indicator */
-.stack-wrapper::after {
-    content: '→';
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    font-size: 2rem;
-    color: rgba(178, 255, 5, 0.5);
-    animation: scrollHint 2s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes scrollHint {
-
-    0%,
-    100% {
-        transform: translateX(0);
-        opacity: 0.5;
-    }
-
-    50% {
-        transform: translateX(10px);
-        opacity: 1;
     }
 }

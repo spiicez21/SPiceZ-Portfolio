@@ -21,12 +21,6 @@ type IconMapType = {
     [key: string]: JSX.Element;
 };
 
-type TechItem = {
-    name: string;
-    category: string;
-    position: { x: number; y: number };
-};
-
 // Map the tech stack names to their respective icons
 const iconMap: IconMapType = {
     "React": <FaReact />,
@@ -50,58 +44,15 @@ const iconMap: IconMapType = {
     "Docker": <FaDocker />,
 };
 
-// Predefined random positions for consistent layout
-const generatePositions = (): TechItem[] => {
-    const positions: TechItem[] = [];
-    let xOffset = 5;
-
-    techStackData.categories.forEach((category) => {
-        category.items.forEach((item) => {
-            // Distribute items across horizontal space with some randomness
-            const x = xOffset + (Math.random() * 8);
-            const y = 20 + (Math.random() * 55); // Random Y between 20% and 75%
-
-            positions.push({
-                name: item,
-                category: category.label,
-                position: { x, y }
-            });
-
-            xOffset += 6; // Closer spacing horizontally
-        });
-    });
-
-    return positions;
-};
-
 const StackTrace = memo(() => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-    const [techItems] = useState<TechItem[]>(generatePositions());
 
     useGSAP(() => {
-        if (!containerRef.current || !scrollContainerRef.current) return;
+        if (!containerRef.current) return;
 
-        // Horizontal scroll animation
-        const scrollWidth = scrollContainerRef.current.scrollWidth;
-        const viewportWidth = window.innerWidth;
-
-        gsap.to(scrollContainerRef.current, {
-            x: -(scrollWidth - viewportWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: () => `+=${scrollWidth}`,
-                scrub: 1,
-                pin: true,
-                anticipatePin: 1,
-            }
-        });
-
-        // Animate logos on scroll
-        const logos = scrollContainerRef.current.querySelectorAll('.tech-logo');
+        // Animate logos on initial view
+        const logos = containerRef.current.querySelectorAll('.tech-logo');
         logos.forEach((logo, index) => {
             gsap.fromTo(logo,
                 {
@@ -125,34 +76,35 @@ const StackTrace = memo(() => {
             );
         });
 
-    }, { scope: containerRef, dependencies: [techItems] });
+    }, { scope: containerRef });
 
     return (
         <SectionFrame id="stack-trace" label="STACK TRACE" number="03">
-            <div className="stack-wrapper" ref={containerRef}>
-                <div className="stack-scroll-container" ref={scrollContainerRef}>
-                    {techItems.map((tech, index) => (
-                        <div
-                            key={index}
-                            className="tech-logo"
-                            style={{
-                                left: `${tech.position.x}%`,
-                                top: `${tech.position.y}%`
-                            }}
-                            onMouseEnter={() => setHoveredTech(tech.name)}
-                            onMouseLeave={() => setHoveredTech(null)}
-                        >
-                            <div className="tech-icon-scattered">
-                                {iconMap[tech.name]}
-                            </div>
+            <div className="stack-container" ref={containerRef}>
+                {techStackData.categories.map((category) => (
+                    <div key={category.id} className="tech-category">
+                        <h3 className="category-title">{category.label}</h3>
+                        <div className="tech-grid">
+                            {category.items.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="tech-logo"
+                                    onMouseEnter={() => setHoveredTech(item)}
+                                    onMouseLeave={() => setHoveredTech(null)}
+                                >
+                                    <div className="tech-icon-scattered">
+                                        {iconMap[item]}
+                                    </div>
 
-                            <div className={`hover-card ${hoveredTech === tech.name ? 'active' : ''}`}>
-                                <div className="hover-card-name">{tech.name}</div>
-                                <div className="hover-card-category">{tech.category}</div>
-                            </div>
+                                    <div className={`hover-card ${hoveredTech === item ? 'active' : ''}`}>
+                                        <div className="hover-card-name">{item}</div>
+                                        <div className="hover-card-category">{category.label}</div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </SectionFrame>
     );

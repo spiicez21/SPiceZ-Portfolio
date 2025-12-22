@@ -1,85 +1,79 @@
 .wip-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .wip-item {
-    border: var(--border-width) solid var(--border);
-    padding: 2rem;
-    background: var(--bg);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease;
 }
 
 .wip-item:hover {
     border-color: rgba(178, 255, 5, 0.5);
-    box-shadow: 0 4px 16px rgba(178, 255, 5, 0.1);
 }
 
 .wip-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .wip-title {
     font-family: var(--font-mono);
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
     margin: 0;
 }
 
 .wip-status {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: rgba(178, 255, 5, 0.9);
+    color: rgba(178, 255, 5, 1);
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(178, 255, 5, 0.5);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 0.25rem 0.75rem;
-    border: var(--border-width) solid rgba(178, 255, 5, 0.4);
-    background: rgba(178, 255, 5, 0.05);
-    white-space: nowrap;
 }
 
 .wip-description {
-    color: var(--ink-muted);
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     font-size: 0.875rem;
+    margin: 0 0 1rem 0;
 }
 
 .wip-progress {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .progress-bar-container {
     flex: 1;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border: var(--border-width) solid var(--border);
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
     overflow: hidden;
-    position: relative;
-    pointer-events: none;
 }
 
 .progress-bar-fill {
     height: 100%;
-    background: rgba(178, 255, 5, 0.3);
+    background: linear-gradient(90deg, rgba(178, 255, 5, 0.8), rgba(178, 255, 5, 1));
     transition: width 0.3s ease;
-    position: relative;
-    pointer-events: none;
 }
 
 .progress-label {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--ink-muted);
+    color: rgba(178, 255, 5, 0.9);
     min-width: 3rem;
     text-align: right;
 }
@@ -88,28 +82,27 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: var(--border-width) solid var(--border);
 }
 
 .tech-badge {
     font-family: var(--font-mono);
     font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.8);
     padding: 0.25rem 0.75rem;
-    border: var(--border-width) solid rgba(178, 255, 5, 0.3);
-    color: var(--ink);
-    background: rgba(178, 255, 5, 0.05);
-    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.tech-badge:hover {
-    border-color: rgba(178, 255, 5, 0.6);
-    background: rgba(178, 255, 5, 0.1);
-}
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .wip-item {
-        padding: 1.5rem;
+        padding: 1.25rem;
+    }
+
+    .wip-title {
+        font-size: 1rem;
     }
 
     .wip-header {
