@@ -17,9 +17,8 @@
 }
 
 .project-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(178, 255, 5, 0.6);
-    box-shadow: 0 4px 20px rgba(178, 255, 5, 0.15);
+    border-color: var(--accent);
+    border-width: 2px;
 }
 
 .project-image {

@@ -210,13 +210,82 @@
 
 .overlay-link:hover .link-text {
     transform: translateX(30px) skewX(-5deg);
-    color: #000;
+    color: var(--accent);
 }
 
 .overlay-link:hover .link-num {
     opacity: 1;
     transform: scale(1.2);
-    color: #000;
+    color: var(--accent);
+}
+
+/* Submenu Styles */
+.nav-item-wrapper {
+    position: relative;
+}
+
+.submenu {
+    position: absolute;
+    right: -1250px;
+    top: 50%;
+    transform: translateY(-50%) translateX(0);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.submenu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-1020px);
+    pointer-events: auto;
+}
+
+.submenu-link {
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    background: rgba(178, 255, 5, 0.05);
+    border: 1px solid rgba(178, 255, 5, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.submenu-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(178, 255, 5, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.submenu-link:hover::before {
+    left: 100%;
+}
+
+.submenu-link:hover {
+    background: rgba(178, 255, 5, 0.15);
+    border-color: var(--accent);
+    transform: translateX(-10px);
+}
+
+.submenu-text {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
 }
 
 @media (max-width: 1024px) {
@@ -234,5 +303,21 @@
     .brand-firstname,
     .brand-lastname {
         font-size: 1.2rem;
+    }
+
+    .submenu {
+        right: -700px;
+    }
+
+    .submenu.active {
+        transform: translateY(-50%) translateX(-720px);
+    }
+
+    .submenu-text {
+        font-size: 1rem;
+    }
+
+    .submenu-link {
+        padding: 0.6rem 1rem;
     }
 }

@@ -8,7 +8,15 @@ import './NavBar.css';
 const navItems = [
     { label: 'WHOAMI', href: '/#whoami' },
     { label: 'STACK', href: '/#stack-trace' },
-    { label: 'WORKS', href: '/#work-navigation' },
+    {
+        label: 'WORKS',
+        href: '/#work-navigation',
+        submenu: [
+            { label: 'DEPLOYED BUILDS', href: '/deployed-builds' },
+            { label: 'PIXEL LAB', href: '/pixel-lab' },
+            { label: 'IN PROGRESS', href: '/in-progress' }
+        ]
+    },
     { label: 'CERTS', href: '/#verified-credentials' },
     { label: 'CONTACT', href: '/#open-ticket' },
 ];
@@ -16,6 +24,7 @@ const navItems = [
 const NavBar = () => {
     const navRef = useRef<HTMLElement>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [hoveredItem, setHoveredItem] = useState<number | null>(null);
     const lenis = useSmoothScroll();
     const navigate = useNavigate();
     const location = useLocation();
@@ -143,15 +152,35 @@ const NavBar = () => {
                 </button>
                 <div className="overlay-nav-items">
                     {navItems.map((item, idx) => (
-                        <a
+                        <div
                             key={idx}
-                            href={item.href}
-                            className="overlay-link"
-                            onClick={(e) => handleNavClick(e, item.href)}
+                            className="nav-item-wrapper"
+                            onMouseEnter={() => setHoveredItem(idx)}
+                            onMouseLeave={() => setHoveredItem(null)}
                         >
-                            <span className="link-num">0{idx + 1}</span>
-                            <span className="link-text">{item.label}</span>
-                        </a>
+                            <a
+                                href={item.href}
+                                className="overlay-link"
+                                onClick={(e) => handleNavClick(e, item.href)}
+                            >
+                                <span className="link-num">0{idx + 1}</span>
+                                <span className="link-text">{item.label}</span>
+                            </a>
+                            {item.submenu && (
+                                <div className={`submenu ${hoveredItem === idx ? 'active' : ''}`}>
+                                    {item.submenu.map((subItem, subIdx) => (
+                                        <a
+                                            key={subIdx}
+                                            href={subItem.href}
+                                            className="submenu-link"
+                                            onClick={(e) => handleNavClick(e, subItem.href)}
+                                        >
+                                            <span className="submenu-text">{subItem.label}</span>
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
             </div>

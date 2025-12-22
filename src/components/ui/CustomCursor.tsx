@@ -7,9 +7,6 @@ const CustomCursor = () => {
     const echo1Ref = useRef<HTMLDivElement>(null);
     const echo2Ref = useRef<HTMLDivElement>(null);
     const [isActive, setIsActive] = useState(false);
-    const [isMerging, setIsMerging] = useState(false);
-    const [mergeSize, setMergeSize] = useState({ width: 60, height: 60 });
-    const currentTargetRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (!mainRef.current || !echo1Ref.current || !echo2Ref.current) return;
@@ -30,40 +27,17 @@ const CustomCursor = () => {
             mouseX = e.clientX;
             mouseY = e.clientY;
 
-            if (currentTargetRef.current) {
-                const rect = currentTargetRef.current.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-
-                const pullStrength = 0.7;
-                const targetX = mouseX + (centerX - mouseX) * pullStrength;
-                const targetY = mouseY + (centerY - mouseY) * pullStrength;
-
-                mainX(targetX);
-                mainY(targetY);
-                echo1X(targetX);
-                echo1Y(targetY);
-                echo2X(targetX);
-                echo2Y(targetY);
-
-                const elementWidth = Math.min(rect.width, 150);
-                const elementHeight = Math.min(rect.height, 150);
-                setMergeSize({ width: elementWidth, height: elementHeight });
-            } else {
-                mainX(mouseX);
-                mainY(mouseY);
-                echo1X(mouseX);
-                echo1Y(mouseY);
-                echo2X(mouseX);
-                echo2Y(mouseY);
-            }
+            mainX(mouseX);
+            mainY(mouseY);
+            echo1X(mouseX);
+            echo1Y(mouseY);
+            echo2X(mouseX);
+            echo2Y(mouseY);
         };
 
         const handleMouseEnter = (e: Event) => {
             const target = e.target as HTMLElement;
             setIsActive(true);
-            setIsMerging(true);
-            currentTargetRef.current = target;
 
             // Apply invert effect to the element
             target.classList.add('cursor-inverted');
@@ -72,9 +46,6 @@ const CustomCursor = () => {
         const handleMouseLeave = (e: Event) => {
             const target = e.target as HTMLElement;
             setIsActive(false);
-            setIsMerging(false);
-            currentTargetRef.current = null;
-            setMergeSize({ width: 60, height: 60 });
 
             // Remove invert effect
             target.classList.remove('cursor-inverted');
@@ -82,7 +53,7 @@ const CustomCursor = () => {
 
         window.addEventListener('mousemove', handleMouseMove);
 
-        const interactiveSelectors = 'a, button, .clickable, .nav-action-btn, .mobile-toggle, .cert-link, .work-nav-item, input, textarea, .ink-button';
+        const interactiveSelectors = 'button, .nav-action-btn, .mobile-toggle, .work-nav-item, .ink-button, .overlay-close-btn';
         const updateInteractiveListeners = () => {
             const elements = document.querySelectorAll(interactiveSelectors);
             elements.forEach(el => {
@@ -123,11 +94,7 @@ const CustomCursor = () => {
             />
             <div
                 ref={mainRef}
-                className={`cursor-dot ${isActive ? 'active' : ''} ${isMerging ? 'merging' : ''}`}
-                style={isMerging ? {
-                    width: `${mergeSize.width}px`,
-                    height: `${mergeSize.height}px`,
-                } : undefined}
+                className={`cursor-dot ${isActive ? 'active' : ''}`}
             />
         </div>
     );

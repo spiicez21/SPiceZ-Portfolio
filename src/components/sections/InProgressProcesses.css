@@ -60,19 +60,20 @@
 
 .progress-bar-container {
     flex: 1;
-    height: 4px;
-    background: var(--bg-alt);
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
     border: var(--border-width) solid var(--border);
     overflow: hidden;
+    position: relative;
+    pointer-events: none;
 }
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg,
-            rgba(178, 255, 5, 0.8) 0%,
-            rgba(178, 255, 5, 0.95) 100%);
-    box-shadow: 0 0 8px rgba(178, 255, 5, 0.4);
+    background: rgba(178, 255, 5, 0.3);
     transition: width 0.3s ease;
+    position: relative;
+    pointer-events: none;
 }
 
 .progress-label {
