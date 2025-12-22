@@ -1,7 +1,8 @@
-import { type JSX, memo, useRef } from 'react';
+import { type JSX, memo, useRef, useState } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../../lib/animations/gsapClient';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import techStackData from '../../content/techstack.json';
 import './StackTrace.css';
 import {
@@ -13,9 +14,17 @@ import {
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
-// Define a type for the icon map
+gsap.registerPlugin(ScrollTrigger);
+
+// Define types
 type IconMapType = {
     [key: string]: JSX.Element;
+};
+
+type TechItem = {
+    name: string;
+    category: string;
+    position: { x: number; y: number };
 };
 
 // Map the tech stack names to their respective icons
@@ -41,162 +50,109 @@ const iconMap: IconMapType = {
     "Docker": <FaDocker />,
 };
 
-const StackTrace = memo(() => {
-    const containerRef = useRef<HTMLDivElement>(null);
+// Predefined random positions for consistent layout
+const generatePositions = (): TechItem[] => {
+    const positions: TechItem[] = [];
+    let xOffset = 5;
 
-    useGSAP(() => {
-        if (!containerRef.current) return;
+    techStackData.categories.forEach((category) => {
+        category.items.forEach((item) => {
+            // Distribute items across horizontal space with some randomness
+            const x = xOffset + (Math.random() * 8);
+            const y = 20 + (Math.random() * 55); // Random Y between 20% and 75%
 
-        const categories = containerRef.current.querySelectorAll('.category-section');
-
-        // Animate each category section with scroll effects
-        categories.forEach((category, idx) => {
-            // MATRIX CASCADE - Drop from top like code rain
-            gsap.fromTo(category,
-                {
-                    y: -200,
-                    opacity: 0,
-                    filter: "brightness(3) saturate(0)",
-                    scale: 1.1
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    filter: "brightness(1) saturate(1)",
-                    scale: 1,
-                    duration: 1.4,
-                    delay: idx * 0.2,
-                    ease: "bounce.out",
-                    scrollTrigger: {
-                        trigger: category,
-                        start: "top 85%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
-
-            // Parallax effect on scroll
-            gsap.to(category, {
-                y: -20,
-                scrollTrigger: {
-                    trigger: category,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    scrub: 1,
-                }
+            positions.push({
+                name: item,
+                category: category.label,
+                position: { x, y }
             });
 
-            // Animate category header
-            const header = category.querySelector('.category-header');
-            gsap.fromTo(header,
+            xOffset += 6; // Closer spacing horizontally
+        });
+    });
+
+    return positions;
+};
+
+const StackTrace = memo(() => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+    const [techItems] = useState<TechItem[]>(generatePositions());
+
+    useGSAP(() => {
+        if (!containerRef.current || !scrollContainerRef.current) return;
+
+        // Horizontal scroll animation
+        const scrollWidth = scrollContainerRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+
+        gsap.to(scrollContainerRef.current, {
+            x: -(scrollWidth - viewportWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: () => `+=${scrollWidth}`,
+                scrub: 1,
+                pin: true,
+                anticipatePin: 1,
+            }
+        });
+
+        // Animate logos on scroll
+        const logos = scrollContainerRef.current.querySelectorAll('.tech-logo');
+        logos.forEach((logo, index) => {
+            gsap.fromTo(logo,
                 {
+                    scale: 0,
                     opacity: 0,
-                    x: -20
+                    rotation: -180
                 },
                 {
+                    scale: 1,
                     opacity: 1,
-                    x: 0,
+                    rotation: 0,
                     duration: 0.6,
-                    delay: 0.2,
-                    ease: "power2.out",
+                    delay: index * 0.05,
+                    ease: "back.out(1.7)",
                     scrollTrigger: {
-                        trigger: category,
+                        trigger: containerRef.current,
                         start: "top 80%",
                         toggleActions: "play none none reverse"
                     }
                 }
             );
-
-            // Animate tech cards with stagger
-            const cards = category.querySelectorAll('.tech-card');
-            gsap.fromTo(cards,
-                {
-                    scale: 0,
-                    opacity: 0,
-                    y: 30,
-                    rotateX: -90
-                },
-                {
-                    scale: 1,
-                    opacity: 1,
-                    y: 0,
-                    rotateX: 0,
-                    duration: 0.6,
-                    stagger: {
-                        amount: 0.5,
-                        from: "start",
-                        ease: "power2.out"
-                    },
-                    ease: "back.out(1.3)",
-                    scrollTrigger: {
-                        trigger: category,
-                        start: "top 75%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
-
-            // Card hover scale animation
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, {
-                        scale: 1.08,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-            });
         });
 
-        // Animate the entire container on initial scroll
-        gsap.fromTo(containerRef.current,
-            {
-                opacity: 0,
-                y: 50
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 90%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-    }, { scope: containerRef });
+    }, { scope: containerRef, dependencies: [techItems] });
 
     return (
         <SectionFrame id="stack-trace" label="STACK TRACE" number="03">
-            <div className="stack-container" ref={containerRef}>
-                {techStackData.categories.map((category) => (
-                    <div key={category.id} className="category-section">
-                        <div className="category-header">
-                            <div className="category-indicator"></div>
-                            <span className="category-label">{category.label}</span>
-                            <span className="category-count">{category.items.length}</span>
+            <div className="stack-wrapper" ref={containerRef}>
+                <div className="stack-scroll-container" ref={scrollContainerRef}>
+                    {techItems.map((tech, index) => (
+                        <div
+                            key={index}
+                            className="tech-logo"
+                            style={{
+                                left: `${tech.position.x}%`,
+                                top: `${tech.position.y}%`
+                            }}
+                            onMouseEnter={() => setHoveredTech(tech.name)}
+                            onMouseLeave={() => setHoveredTech(null)}
+                        >
+                            <div className="tech-icon-scattered">
+                                {iconMap[tech.name]}
+                            </div>
+
+                            <div className={`hover-card ${hoveredTech === tech.name ? 'active' : ''}`}>
+                                <div className="hover-card-name">{tech.name}</div>
+                                <div className="hover-card-category">{tech.category}</div>
+                            </div>
                         </div>
-                        <div className="tech-grid">
-                            {category.items.map((item, index) => (
-                                <div key={index} className="tech-card">
-                                    <div className="tech-icon">{iconMap[item]}</div>
-                                    <div className="tech-name">{item}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </SectionFrame>
     );

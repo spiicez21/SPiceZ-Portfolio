@@ -1,194 +1,159 @@
-/* Compact Dashboard Layout */
+/* Scattered Tech Stack Layout with Horizontal Scroll */
 
-.stack-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 1.5rem 0;
-}
-
-/* Category Section - Compact */
-.category-section {
+.stack-wrapper {
+    width: 100%;
+    height: 100vh;
     position: relative;
-    background: rgba(8, 8, 8, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    padding: 1rem;
     overflow: hidden;
-    backdrop-filter: blur(10px);
 }
 
-.category-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
+.stack-scroll-container {
+    width: 150vw;
     height: 100%;
-    background: linear-gradient(180deg,
-            rgba(178, 255, 5, 0.4) 0%,
-            rgba(178, 255, 5, 0) 100%);
-}
-
-/* Compact Header */
-.category-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.category-indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(178, 255, 5, 0.7);
-    box-shadow: 0 0 8px rgba(178, 255, 5, 0.5);
-}
-
-.category-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-.category-count {
-    margin-left: auto;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.3);
-    padding: 0.15rem 0.4rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 3px;
-}
-
-/* Compact Tech Grid */
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-    gap: 0.5rem;
-}
-
-/* Compact Tech Card */
-.tech-card {
     position: relative;
-    aspect-ratio: 1;
+    will-change: transform;
+}
+
+/* Tech Logo Scattered Positioning */
+.tech-logo {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+    transition: z-index 0s 0.3s;
+}
+
+.tech-logo:hover {
+    z-index: 100;
+    transition: z-index 0s 0s;
+}
+
+/* Tech Icon - Minimal */
+.tech-icon-scattered {
+    width: 80px;
+    height: 80px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
-    background: rgba(12, 12, 12, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 6px;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.tech-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center,
-            rgba(178, 255, 5, 0.08) 0%,
-            transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.tech-card:hover::after {
-    opacity: 1;
-}
-
-
-.tech-card:hover {
-    background: rgba(15, 15, 15, 0.9);
+.tech-logo:hover .tech-icon-scattered {
+    color: rgba(255, 255, 255, 0.9);
     border-color: rgba(178, 255, 5, 0.3);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow:
-        0 4px 16px rgba(178, 255, 5, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Compact Icon */
-.tech-icon {
-    font-size: 1.6rem;
-    color: rgba(255, 255, 255, 0.75);
-    transition: all 0.25s ease;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-    z-index: 1;
+/* Hover Card - Minimal Black and Green */
+.hover-card {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
+    margin-left: 10px;
+    padding: 0.6rem 1rem;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(178, 255, 5, 0.2);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 200;
 }
 
-.tech-card:hover .tech-icon {
-    transform: scale(1.15);
-    color: rgba(178, 255, 5, 0.9);
-    filter: drop-shadow(0 4px 10px rgba(178, 255, 5, 0.4));
+.hover-card.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
 }
 
-/* Compact Name */
-.tech-name {
+.hover-card-name {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.35);
-    text-align: center;
+    color: rgba(178, 255, 5, 0.9);
     letter-spacing: 0.02em;
-    transition: color 0.25s ease;
-    line-height: 1.1;
-    z-index: 1;
 }
 
-.tech-card:hover .tech-name {
-    color: rgba(255, 255, 255, 0.85);
+.hover-card-category {
+    display: none;
 }
 
-/* Responsive */
+/* Responsive Adjustments */
 @media (max-width: 1200px) {
-    .stack-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.85rem;
+    .tech-icon-scattered {
+        width: 70px;
+        height: 70px;
+        font-size: 2.5rem;
     }
 
-    .tech-grid {
-        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    .hover-card-name {
+        font-size: 1rem;
+    }
+
+    .hover-card-category {
+        font-size: 0.7rem;
     }
 }
 
 @media (max-width: 768px) {
-    .stack-container {
-        gap: 0.75rem;
-        padding: 1rem 0;
+    .stack-wrapper {
+        height: 80vh;
     }
 
-    .category-section {
-        padding: 0.85rem;
+    .stack-scroll-container {
+        width: 400vw;
     }
 
-    .tech-grid {
-        grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
-        gap: 0.45rem;
+    .tech-icon-scattered {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
     }
 
-    .tech-icon {
-        font-size: 1.4rem;
+    .hover-card {
+        padding: 0.75rem 1rem;
     }
 
-    .tech-name {
-        font-size: 0.5rem;
+    .hover-card-name {
+        font-size: 0.9rem;
     }
 
-    .category-label {
-        font-size: 0.6rem;
+    .hover-card-category {
+        font-size: 0.65rem;
+    }
+}
+
+/* Scroll Indicator */
+.stack-wrapper::after {
+    content: '→';
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 2rem;
+    color: rgba(178, 255, 5, 0.5);
+    animation: scrollHint 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes scrollHint {
+
+    0%,
+    100% {
+        transform: translateX(0);
+        opacity: 0.5;
     }
 
-    .category-count {
-        font-size: 0.55rem;
+    50% {
+        transform: translateX(10px);
+        opacity: 1;
     }
 }
