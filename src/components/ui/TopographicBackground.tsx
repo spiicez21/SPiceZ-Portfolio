@@ -10,8 +10,6 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        let animationId: number;
-        let time = 0;
         let heightMap: number[][] = [];
 
         const resize = () => {
@@ -77,7 +75,7 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
 
         const perlin = new PerlinNoise();
 
-        const getElevation = (x: number, y: number, t: number): number => {
+        const getElevation = (x: number, y: number): number => {
             const scale = 0.002;
             let elevation = 0;
             let amplitude = 1;
@@ -86,8 +84,8 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
 
             for (let i = 0; i < 3; i++) {
                 elevation += perlin.noise(
-                    x * scale * frequency + t * 0.00003,
-                    y * scale * frequency + t * 0.00002
+                    x * scale * frequency,
+                    y * scale * frequency
                 ) * amplitude;
                 maxValue += amplitude;
                 amplitude *= 0.5;
@@ -98,7 +96,7 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         const generateHeightMap = () => {
-            const resolution = 20; // Increased from 8 to 20 for better performance
+            const resolution = 20;
             const cols = Math.ceil(canvas.width / resolution);
             const rows = Math.ceil(canvas.height / resolution);
 
@@ -106,13 +104,13 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             for (let y = 0; y <= rows; y++) {
                 heightMap[y] = [];
                 for (let x = 0; x <= cols; x++) {
-                    heightMap[y][x] = getElevation(x * resolution, y * resolution, time);
+                    heightMap[y][x] = getElevation(x * resolution, y * resolution);
                 }
             }
         };
 
         const getHeight = (x: number, y: number): number => {
-            const resolution = 20; // Match the generated resolution
+            const resolution = 20;
             const col = x / resolution;
             const row = y / resolution;
 
@@ -147,12 +145,13 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.strokeStyle = lineColor;
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear before drawing
 
             for (let i = 0; i <= numContours; i++) {
                 const elevation = i * contourInterval;
 
                 const marchingSquares = (elev: number) => {
-                    const step = 20; // Match resolution for drawing step
+                    const step = 20;
 
                     for (let y = 0; y < canvas.height - step; y += step) {
                         for (let x = 0; x < canvas.width - step; x += step) {
@@ -233,21 +232,10 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             }
         };
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            generateHeightMap();
-            drawContours();
-            time += 0.02;
-            animationId = requestAnimationFrame(animate);
-        };
-
         resize();
-        animate();
-
         window.addEventListener('resize', resize);
 
         return () => {
-            cancelAnimationFrame(animationId);
             window.removeEventListener('resize', resize);
         };
     }, [lineColor]);

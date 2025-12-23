@@ -8,6 +8,8 @@ const CustomCursor = () => {
     const echo2Ref = useRef<HTMLDivElement>(null);
     const [isActive, setIsActive] = useState(false);
 
+    const currentInteractiveRef = useRef<HTMLElement | null>(null);
+
     useEffect(() => {
         if (!mainRef.current || !echo1Ref.current || !echo2Ref.current) return;
 
@@ -35,50 +37,41 @@ const CustomCursor = () => {
             echo2Y(mouseY);
         };
 
-        const handleMouseEnter = (e: Event) => {
+        const interactiveSelectors = 'button, .nav-action-btn, .mobile-toggle, .work-nav-item, .ink-button, .overlay-close-btn';
+
+        const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            setIsActive(true);
+            const interactiveEl = target.closest(interactiveSelectors) as HTMLElement;
 
-            // Apply invert effect to the element
-            target.classList.add('cursor-inverted');
-        };
+            if (interactiveEl !== currentInteractiveRef.current) {
+                // Cleanup previous
+                if (currentInteractiveRef.current) {
+                    currentInteractiveRef.current.classList.remove('cursor-inverted');
+                }
 
-        const handleMouseLeave = (e: Event) => {
-            const target = e.target as HTMLElement;
-            setIsActive(false);
+                // Setup new
+                if (interactiveEl) {
+                    interactiveEl.classList.add('cursor-inverted');
+                    setIsActive(true);
+                } else {
+                    setIsActive(false);
+                }
 
-            // Remove invert effect
-            target.classList.remove('cursor-inverted');
+                currentInteractiveRef.current = interactiveEl;
+            }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-
-        const interactiveSelectors = 'button, .nav-action-btn, .mobile-toggle, .work-nav-item, .ink-button, .overlay-close-btn';
-        const updateInteractiveListeners = () => {
-            const elements = document.querySelectorAll(interactiveSelectors);
-            elements.forEach(el => {
-                el.addEventListener('mouseenter', handleMouseEnter);
-                el.addEventListener('mouseleave', handleMouseLeave);
-            });
-        };
-
-        updateInteractiveListeners();
-
-        const observer = new MutationObserver(() => {
-            updateInteractiveListeners();
-        });
-
-        observer.observe(document.body, { childList: true, subtree: true });
+        window.addEventListener('mouseover', handleMouseOver);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            observer.disconnect();
-            const elements = document.querySelectorAll(interactiveSelectors);
-            elements.forEach(el => {
-                el.removeEventListener('mouseenter', handleMouseEnter);
-                el.removeEventListener('mouseleave', handleMouseLeave);
-                el.classList.remove('cursor-inverted');
-            });
+            window.removeEventListener('mouseover', handleMouseOver);
+
+            // Cleanup class on unmount
+            if (currentInteractiveRef.current) {
+                currentInteractiveRef.current.classList.remove('cursor-inverted');
+            }
         };
     }, []);
 

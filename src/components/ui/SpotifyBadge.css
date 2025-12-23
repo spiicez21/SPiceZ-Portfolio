@@ -9,9 +9,9 @@
 .spotify-badge {
     position: relative;
     width: 100%;
-    background: rgba(5, 5, 5, 0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(5, 5, 5, 0.95);
+    /* backdrop-filter: blur(16px); - Removed for performance */
+    /* -webkit-backdrop-filter: blur(16px); */
     border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 10px 12px;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);

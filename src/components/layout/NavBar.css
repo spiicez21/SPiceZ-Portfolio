@@ -127,7 +127,7 @@
     height: 100vh;
     background: rgba(5, 5, 5, 0.98);
     /* Near fully opaque */
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); - Removed for performance */
     z-index: 100001;
     display: flex;
     align-items: center;
