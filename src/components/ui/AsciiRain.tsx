@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const AsciiRain = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [imageLoaded, setImageLoaded] = useState(false);
     const depthMapRef = useRef<HTMLImageElement | null>(null);
     const depthDataRef = useRef<Uint8ClampedArray | null>(null);
@@ -19,130 +20,129 @@ const AsciiRain = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !imageLoaded || !depthMapRef.current) return;
+        const container = containerRef.current;
+        if (!canvas || !container || !imageLoaded || !depthMapRef.current) return;
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Container Size
-        const parent = canvas.parentElement;
-        let width = canvas.width = parent?.clientWidth || 300;
-        let height = canvas.height = parent?.clientHeight || 400;
-
-        // Create offscreen canvas to read pixel data proportional to container
-        const offCanvas = document.createElement('canvas');
-        offCanvas.width = width;
-        offCanvas.height = height;
-        const offCtx = offCanvas.getContext('2d');
-        if (!offCtx) return;
-
-        // Draw image to cover
-        // Use 'cover' like object-fit logic
-        const img = depthMapRef.current;
-        // Zoom factor 1.5x to make the subject bigger
-        const scale = Math.max(width / img.width, height / img.height) * 2;
-        const x = (width / 2) - (img.width / 2) * scale;
-        const y = (height / 2) - (img.height / 2) * scale + 100; // +40 to move down
-        offCtx.drawImage(img, x, y, img.width * scale, img.height * scale);
-
-        // Cache pixel data
-        const imageData = offCtx.getImageData(0, 0, width, height);
-        depthDataRef.current = imageData.data;
+        let animationFrameId: number;
+        let width = 0;
+        let height = 0;
 
         // Matrix Config
-        const fontSize = 10;
-        const columns = Math.ceil(width / fontSize);
-        const drops: number[] = new Array(columns).fill(0).map(() => Math.random() * -100);
-        const chars = "YUGABHARATHIJAI21";
+        // High density: lower font size
+        const fontSize = 11;
+        let columns = 0;
+        let drops: number[] = [];
+        const chars = "YUGABHARATHIJAI2101";
 
-        // Scanline Config
-        let scanY = 0;
+        const initDimensions = () => {
+            width = container.clientWidth;
+            height = container.clientHeight;
+
+            // Handle DPI
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+
+            // CSS size
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            // Recalculate Matrix columns
+            columns = Math.ceil(width / fontSize);
+            drops = new Array(columns).fill(0).map(() => Math.random() * -100);
+
+            // Update Depth Map Cache
+            updateDepthCache(width, height);
+        };
+
+        const updateDepthCache = (w: number, h: number) => {
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = w;
+            offCanvas.height = h;
+            const offCtx = offCanvas.getContext('2d');
+            if (!offCtx || !depthMapRef.current) return;
+
+            const img = depthMapRef.current;
+            // Cover logic
+            const scale = Math.max(w / img.width, h / img.height) * 1.2;
+            const x = (w / 2) - (img.width / 2) * scale;
+            const y = (h / 2) - (img.height / 2) * scale;
+
+            offCtx.drawImage(img, x, y, img.width * scale, img.height * scale);
+            depthDataRef.current = offCtx.getImageData(0, 0, w, h).data;
+        };
 
         const draw = () => {
-            // Trail effect (fade to transparent)
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            // Fade effect - using very dark green/black
+            ctx.fillStyle = 'rgba(0, 5, 0, 0.1)';
             ctx.fillRect(0, 0, width, height);
-            ctx.globalCompositeOperation = 'source-over';
 
-            ctx.font = `${fontSize}px var(--font-mono)`;
-
-            // Update Scanline
-            scanY += 4; // Faster scan speed
-            if (scanY > height) scanY = 0;
+            ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
 
             for (let i = 0; i < drops.length; i++) {
-                // Calculate position
                 const posX = i * fontSize;
                 const posY = Math.floor(drops[i] * fontSize);
 
-                // Color Logic
-                let val = 30; // Base dark grey for background/void
+                let color = 'rgba(10, 20, 10, 0.4)'; // Base subtle text
 
+                // Depth Map Interaction
                 if (depthDataRef.current && posY > 0 && posY < height && posX < width) {
                     const pixelIndex = (posY * width + posX) * 4;
-                    const brightness = depthDataRef.current[pixelIndex];
+                    if (pixelIndex < depthDataRef.current.length) {
+                        const brightness = depthDataRef.current[pixelIndex];
 
-                    // Map brightness (0-255) to a visible grey range (e.g., 30 - 255)
-                    // The user wants darker grey on blacks, brighter white on whites
-                    val = 30 + (brightness / 255) * 225;
+                        // Map brightness to Neon Lime
+                        if (brightness > 20) {
+                            const alpha = 0.2 + (brightness / 255) * 0.8;
+                            if (brightness > 220) {
+                                // Highlight high points
+                                color = '#b2ff05';
+                            } else {
+                                color = `rgba(178, 255, 5, ${alpha})`;
+                            }
+                        }
+                    }
                 }
 
-                // Scanline Effect
-                const dist = Math.abs(posY - scanY);
-                if (dist < 50) {
-                    // Boost value near scanline for a shining effect
-                    val += (1 - dist / 50) * 100;
-                }
-
-                // Clamp
-                if (val > 255) val = 255;
-
-                // Render
-                ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                ctx.fillStyle = color;
 
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, posX, posY);
 
                 // Reset drop
-                // > 0.85 makes it much more frequent (was 0.975)
-                if (drops[i] * fontSize > height && Math.random() > 0.85) {
+                if (drops[i] * fontSize > height && Math.random() > 0.96) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
+
+            animationFrameId = requestAnimationFrame(draw);
         };
 
-        const interval = setInterval(draw, 15);
+        // Initialize and Start
+        initDimensions();
+        animationFrameId = requestAnimationFrame(draw);
 
-        const handleResize = () => {
-            width = canvas.width = parent?.clientWidth || 300;
-            height = canvas.height = parent?.clientHeight || 400;
-
-            // Re-cache depth data on resize
-            offCanvas.width = width;
-            offCanvas.height = height;
-            // Recalculate cover
-            const scale = Math.max(width / img.width, height / img.height) * 1.5;
-            const x = (width / 2) - (img.width / 2) * scale;
-            const y = (height / 2) - (img.height / 2) * scale + 40;
-            offCtx?.drawImage(img, x, y, img.width * scale, img.height * scale);
-            if (offCtx) depthDataRef.current = offCtx.getImageData(0, 0, width, height).data;
-        };
-
-        window.addEventListener('resize', handleResize);
+        // Observer for Resize
+        const resizeObserver = new ResizeObserver(() => {
+            initDimensions();
+        });
+        resizeObserver.observe(container);
 
         return () => {
-            clearInterval(interval);
-            window.removeEventListener('resize', handleResize);
+            cancelAnimationFrame(animationFrameId);
+            resizeObserver.disconnect();
         };
     }, [imageLoaded]);
 
     return (
-        <canvas
-            ref={canvasRef}
-            style={{ width: '100%', height: '100%', display: 'block' }}
-        />
+        <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <canvas ref={canvasRef} style={{ display: 'block' }} />
+        </div>
     );
 };
 

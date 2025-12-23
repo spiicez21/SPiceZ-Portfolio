@@ -1,7 +1,4 @@
-import { memo } from 'react';
-import SpotifyBadge from './SpotifyBadge';
 
-const MemoizedSpotifyBadge = memo(SpotifyBadge);
 
 export default function HeroPortrait() {
     return (
@@ -29,9 +26,6 @@ export default function HeroPortrait() {
                     pointerEvents: 'none'
                 }}
             />
-
-            {/* Spotify Badge stays in its fixed corner via CSS (usually bottom-right) */}
-            <MemoizedSpotifyBadge />
         </div>
     );
 }

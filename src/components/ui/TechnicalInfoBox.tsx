@@ -14,12 +14,12 @@ const TechnicalInfoBox = () => {
     const containerStyle: React.CSSProperties = {
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: '0.75rem',
-        color: 'rgba(255, 255, 255, 0.7)',
-        background: 'rgba(0, 0, 0, 0.4)',
-        backdropFilter: 'blur(5px)',
+        color: 'rgba(255, 255, 255, 0.9)', /* Brighter text */
+        background: 'rgba(15, 16, 10, 0.95)', /* Darker, more opaque background */
+        backdropFilter: 'blur(10px)',
         padding: '1rem',
         borderRadius: '8px',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(178, 255, 5, 0.2)', /* Neon accent border */
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',

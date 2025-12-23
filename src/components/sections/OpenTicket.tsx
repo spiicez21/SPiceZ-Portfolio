@@ -4,8 +4,7 @@ import SectionFrame from '../ui/SectionFrame';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import contactData from '../../content/contact.json';
-import { Github, Linkedin, Twitter, Instagram, Mail, Coffee, Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
+import { Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
 
 
 import './OpenTicket.css';
@@ -71,17 +70,6 @@ const OpenTicket = () => {
         });
     };
 
-    const getIcon = (platform: string) => {
-        switch (platform.toLowerCase()) {
-            case 'github': return <Github size={18} />;
-            case 'linkedin': return <Linkedin size={18} />;
-            case 'twitter': return <Twitter size={18} />;
-            case 'instagram': return <Instagram size={18} />;
-            case 'buy me a coffee': return <Coffee size={18} />;
-            default: return <Mail size={18} />;
-        }
-    };
-
     return (
         <SectionFrame
             id="open-ticket"
@@ -91,35 +79,9 @@ const OpenTicket = () => {
             <div ref={containerRef} className="ticket-layout">
 
                 {/* Left: Quick Connect */}
-                <div className="ticket-info">
-                    <div className="info-header">
-                        <h3>SIGNAL CHANNEL</h3>
-                        <p>Initiate direct communication protocol.</p>
-                    </div>
+                {/* Left: Quick Connect Removed */}
 
-                    <div className="social-grid">
-                        {contactData.socials.map((social, idx) => (
-                            <a
-                                key={idx}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-chip"
-                                aria-label={social.platform}
-                            >
-                                {getIcon(social.platform)}
-                                <span>{social.platform}</span>
-                            </a>
-                        ))}
-                    </div>
-
-                    <div className="direct-link">
-                        <span className="label">DIRECT LINK://</span>
-                        <a href={`mailto:${contactData.email}`} className="email-link">
-                            {contactData.email}
-                        </a>
-                    </div>
-                </div>
+                {/* Right: The Ticket Interface */}
 
                 {/* Right: The Ticket Interface */}
                 <div className="ticket-interface-row">

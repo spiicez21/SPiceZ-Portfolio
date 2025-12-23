@@ -119,13 +119,14 @@
 
 .hero-gig-card {
     position: absolute;
-    top: 15%;
-    right: 5%;
+    top: 7%;
+    right: 3%;
     z-index: 25;
     /* Above dim overlay initially */
-    transform: rotate(5deg);
-    /* Slight jaunty angle */
+    transform: none;
+    /* Straight */
     pointer-events: auto;
+    outline: 1px solid black;
 }
 
 .hero-tech-box {
@@ -141,7 +142,8 @@
     .hero-gig-card {
         top: 10%;
         right: 2%;
-        transform: scale(0.8) rotate(5deg);
+        transform: scale(0.8);
+        /* No rotation */
     }
 
     .hero-tech-box {

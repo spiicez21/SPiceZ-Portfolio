@@ -1,9 +1,13 @@
 .spotify-anim-wrapper {
-    position: absolute;
-    bottom: 3.5rem;
-    right: 3.5rem;
-    width: 280px;
-    z-index: 100;
+    position: relative;
+    margin: 0 1 1 auto;
+    /* Closer to the timing thing */
+    width: 450px;
+    /* Much wider */
+    max-width: 90vw;
+    z-index: 10;
+    bottom: auto;
+    right: -450px;
 }
 
 .spotify-badge {
@@ -13,7 +17,8 @@
     /* backdrop-filter: blur(16px); - Removed for performance */
     /* -webkit-backdrop-filter: blur(16px); */
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 10px 12px;
+    padding: 6px 16px;
+    /* Reduced height padding */
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
     overflow: hidden;
@@ -65,7 +70,8 @@
     font-family: var(--font-mono);
     font-size: 0.5rem;
     color: var(--ink-muted);
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+    /* Tighter header */
     text-transform: uppercase;
     letter-spacing: 0.15em;
     opacity: 0.8;
@@ -80,13 +86,15 @@
 .spotify-badge-content {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 4px;
+    /* Reduced margin */
 }
 
 .spotify-badge-album {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    /* Smaller album art */
+    height: 32px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     filter: grayscale(1);
     transition: all 0.3s ease;
