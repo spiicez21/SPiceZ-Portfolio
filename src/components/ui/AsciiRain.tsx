@@ -32,7 +32,7 @@ const AsciiRain = () => {
 
         // Matrix Config
         // High density: lower font size
-        const fontSize = 11;
+        const fontSize = 7;
         let columns = 0;
         let drops: number[] = [];
         const chars = "YUGABHARATHIJAI2101";
@@ -87,7 +87,7 @@ const AsciiRain = () => {
                 const posX = i * fontSize;
                 const posY = Math.floor(drops[i] * fontSize);
 
-                let color = 'rgba(10, 20, 10, 0.4)'; // Base subtle text
+                let color = 'rgba(178, 255, 5, 0.1)'; // Base subtle text
 
                 // Depth Map Interaction
                 if (depthDataRef.current && posY > 0 && posY < height && posX < width) {
@@ -95,13 +95,25 @@ const AsciiRain = () => {
                     if (pixelIndex < depthDataRef.current.length) {
                         const brightness = depthDataRef.current[pixelIndex];
 
-                        // Map brightness to Neon Lime
+                        // Map brightness to Neon Lime and White Contours
                         if (brightness > 20) {
                             const alpha = 0.2 + (brightness / 255) * 0.8;
-                            if (brightness > 220) {
-                                // Highlight high points
+
+                            // Topographic Contours (White Lines at specific depths)
+                            // Create bands every 40 units of brightness
+                            const isContour = (brightness % 40) < 4;
+
+                            if (brightness > 245) {
+                                // Specular Highlights (Closest points)
+                                color = '#ffffff';
+                            } else if (isContour && brightness > 50) {
+                                // Depth Contours
+                                color = `rgba(255, 255, 255, ${alpha + 0.2})`;
+                            } else if (brightness > 220) {
+                                // High points
                                 color = '#b2ff05';
                             } else {
+                                // Gradient
                                 color = `rgba(178, 255, 5, ${alpha})`;
                             }
                         }

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import NavBar from './NavBar';
 import SectionTransitions from '../utils/SectionTransitions';
 
