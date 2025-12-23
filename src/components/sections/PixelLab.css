@@ -6,7 +6,8 @@
 
 .graphic-card {
     border: var(--border-width) solid var(--border);
-    background: var(--bg);
+    background: transparent;
+    /* background: var(--bg); -- REMOVED */
     transition: all 0.3s ease;
     overflow: hidden;
     display: flex;

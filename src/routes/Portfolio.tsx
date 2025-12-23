@@ -6,7 +6,7 @@ import SectionTransitions from '../components/utils/SectionTransitions';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 
-import TopographicBackground from '../components/ui/TopographicBackground';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,24 +38,23 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <div className="portfolio-page">
+        <div className="portfolio-page" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
             <NavBar />
             <SectionTransitions />
 
-            {/* Global Background Layer */}
+            {/* Global Background Layer - Scrolling Gradient */}
             <div style={{
-                position: 'fixed',
+                position: 'absolute',
                 inset: 0,
                 zIndex: 0,
                 pointerEvents: 'none',
-                // Start visible after the first view height (Hero section)
-                maskImage: 'linear-gradient(to bottom, transparent 0%, transparent 15%, black 25%, black 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, transparent 15%, black 25%, black 100%)'
-            }}>
-                <TopographicBackground lineColor="rgba(178, 255, 5, 0.15)" />
-            </div>
+                minHeight: '100vh',
+                height: '100%',
+                // Solid Dark Olive (Start) -> Solid Dark Olive (Covers Work/Projects/Graphics) -> Transparent (Open Ticket)
+                background: 'linear-gradient(to bottom, #2a2d1f 0%, #2a2d1f 50%, transparent 100%)',
+            }} />
 
-            <main>
+            <main style={{ position: 'relative', zIndex: 1 }}>
                 <HeroBootSequence />
 
                 <Suspense fallback={<div style={{ minHeight: '400px' }} />}>

@@ -1,5 +1,5 @@
 
-import NavBar from '../components/layout/NavBar';
+import SharedLayout from '../components/layout/SharedLayout';
 import FooterBar from '../components/layout/FooterBar';
 import DeployedBuilds from '../components/sections/DeployedBuilds';
 import BackButton from '../components/ui/BackButton';
@@ -8,14 +8,13 @@ import PageTransition from '../components/utils/PageTransition';
 const DeployedBuildsRoute = () => {
     return (
         <PageTransition>
-            <div className="portfolio-page">
-                <NavBar />
+            <SharedLayout>
                 <BackButton />
                 <main style={{ paddingTop: '80px', minHeight: '100vh' }}>
                     <DeployedBuilds />
                 </main>
                 <FooterBar />
-            </div>
+            </SharedLayout>
         </PageTransition>
     );
 };

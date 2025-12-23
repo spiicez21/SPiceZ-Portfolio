@@ -6,7 +6,8 @@
 
 .project-card {
     border: var(--border-width) solid var(--border);
-    background: var(--bg);
+    background: transparent;
+    /* background: var(--bg); -- REMOVED */
     padding: 1rem;
     display: flex;
     flex-direction: column;

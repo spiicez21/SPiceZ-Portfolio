@@ -21,7 +21,11 @@ const navItems = [
     { label: 'CONTACT', href: '/#open-ticket' },
 ];
 
-const NavBar = () => {
+interface NavBarProps {
+    className?: string;
+}
+
+const NavBar = ({ className = '' }: NavBarProps) => {
     const navRef = useRef<HTMLElement>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
@@ -107,7 +111,7 @@ const NavBar = () => {
     };
 
     return (
-        <nav ref={navRef} className="navbar slim-sleek">
+        <nav ref={navRef} className={`navbar slim-sleek ${className}`}>
             {/* Left Module: Name */}
             <div className="nav-module nav-left">
                 <a

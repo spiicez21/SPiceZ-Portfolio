@@ -24,9 +24,9 @@ const InProgressProcesses = () => {
                         <p className="wip-description">{project.description}</p>
 
                         <div className="wip-progress">
-                            <div className="progress-bar-container">
+                            <div className="wip-progress-container">
                                 <div
-                                    className="progress-bar-fill"
+                                    className="wip-progress-fill"
                                     style={{ width: `${project.progress}%` }}
                                 />
                             </div>

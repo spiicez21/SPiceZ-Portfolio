@@ -321,3 +321,11 @@
         padding: 0.6rem 1rem;
     }
 }
+/* Force White Text Override */
+.navbar.force-white-text .brand-firstname {
+    color: #fff;
+}
+
+.navbar.force-white-text .brand-lastname {
+    color: rgba(255, 255, 255, 0.7);
+}

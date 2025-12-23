@@ -56,9 +56,10 @@
     justify-content: center;
     font-size: 3rem;
     color: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* border: 1px solid rgba(255, 255, 255, 0.1); -- REMOVED */
     border-radius: 4px;
-    background: rgba(0, 0, 0, 0.9);
+    background: transparent;
+    /* background: rgba(0, 0, 0, 0.9); -- REMOVED */
     /* Solid dark background instead of blur */
     transition: all 0.3s ease;
     position: relative;
