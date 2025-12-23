@@ -13,7 +13,7 @@
 
 .footer-big-text {
     font-family: var(--font-heading);
-    font-size: clamp(4rem, 15vw, 20rem);
+    font-size: clamp(3rem, 10vw, 12rem);
     font-weight: 700;
     color: var(--border);
     opacity: 0.3;
@@ -84,10 +84,13 @@
     text-shadow: 0 0 5px rgba(209, 0, 209, 0.5);
 }
 
-/* Fixed width for time numbers */
+/* Fixed width for time numbers to prevent jitter */
 .telemetry-value.nums {
-    min-width: 5.5ch;
+    display: inline-block;
+    width: 8ch;
+    /* Fixed width */
     letter-spacing: 0.05em;
+    text-align: right;
 }
 
 .telemetry-sep {
@@ -273,7 +276,7 @@
     }
 
     .footer-big-text {
-        font-size: 18vw;
+        font-size: 12vw;
     }
 
     .footer-telemetry {

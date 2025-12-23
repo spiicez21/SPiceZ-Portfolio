@@ -97,11 +97,11 @@ const F1Telemetry = () => {
         // Initialize timeline
         const tl = gsap.timeline({
             repeat: -1,
-            repeatDelay: 3, // 3 seconds before next lap
+            repeatDelay: 1, // 1 second before next lap
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 95%",
-                toggleActions: "play pause resume pause"
+                start: "top bottom", // Start as soon as it enters viewport
+                toggleActions: "play none none none" // Keep running once started
             },
             onRepeat: resetAll // Ensure text resets explicitly
         });
