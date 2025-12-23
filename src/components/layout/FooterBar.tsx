@@ -1,4 +1,3 @@
-import MalakEasterEgg from '../ui/MalakEasterEgg';
 import F1Telemetry from '../ui/F1Telemetry';
 import './FooterBar.css';
 
@@ -7,7 +6,7 @@ const FooterBar = () => {
 
     return (
         <footer className="footer-bar">
-            <MalakEasterEgg />
+            {/* Malak Easter Egg removed */}
 
             <div className="footer-big-text">
                 YUGA BHARATHI

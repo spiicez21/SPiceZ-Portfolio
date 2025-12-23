@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect } from 'react';
 import NavBar from '../components/layout/NavBar';
 import FooterBar from '../components/layout/FooterBar';
 import HeroBootSequence from '../components/sections/HeroBootSequence';
-import WhoAmI from '../components/sections/WhoAmI';
 import SectionTransitions from '../components/utils/SectionTransitions';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
@@ -42,7 +41,7 @@ const Portfolio = () => {
             <SectionTransitions />
             <main>
                 <HeroBootSequence />
-                <WhoAmI />
+
                 <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
                     <StackTrace />
                 </Suspense>

@@ -1,0 +1,111 @@
+.f1-card {
+    position: absolute;
+    bottom: 4rem;
+    left: 4rem;
+    z-index: 30;
+    width: 220px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #000;
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    font-family: var(--font-heading);
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    /* Unique shape: top right cut */
+    clip-path: polygon(0 0,
+            calc(100% - 30px) 0,
+            100% 30px,
+            100% 100%,
+            0 100%);
+    /* Since clip-path removes border, we might need a wrapper or SVG border. 
+       For now, let's stick to standard border-radius if clip-path is too complex for 1px border. 
+       Actually, let's use a standard card shape for cleaner UI to match the portfolio unless specified. 
+       The user said "this kind of thing", referring to content/layout. I'll use standard rounded corners for now. */
+    clip-path: none;
+    border-top-right-radius: 40px;
+    /* Mimic the curve roughly */
+}
+
+/* Inner border/container to mimic the double line or specific layout */
+.f1-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.f1-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.track-map-svg {
+    width: 80%;
+    height: auto;
+    stroke: #000;
+    stroke-width: 1.5;
+    fill: none;
+    margin: 1rem 0;
+}
+
+.race-name {
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.divider-line {
+    width: 40px;
+    height: 2px;
+    background: #000;
+    margin: 0.5rem 0;
+}
+
+.team-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-top: 0.5rem;
+}
+
+.helmet-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.helmet-svg {
+    width: 40px;
+    height: auto;
+}
+
+.laurel-svg {
+    width: 20px;
+    height: auto;
+}
+
+.team-name {
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.since-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    opacity: 0.6;
+}

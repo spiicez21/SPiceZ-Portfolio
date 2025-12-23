@@ -44,6 +44,8 @@ const iconMap: IconMapType = {
     "Docker": <FaDocker />,
 };
 
+import TopographicBackground from '../ui/TopographicBackground';
+
 const StackTrace = memo(() => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [hoveredTech, setHoveredTech] = useState<string | null>(null);
@@ -80,6 +82,11 @@ const StackTrace = memo(() => {
 
     return (
         <SectionFrame id="stack-trace" label="STACK TRACE" number="03">
+            {/* Topographic Background layer - Subtle Greenish White */}
+            <div style={{ position: 'absolute', inset: 0, opacity: 0.5, pointerEvents: 'none' }}>
+                <TopographicBackground lineColor="rgba(178, 255, 5, 0.3)" />
+            </div>
+
             <div className="stack-container" ref={containerRef}>
                 {techStackData.categories.map((category) => (
                     <div key={category.id} className="tech-category">

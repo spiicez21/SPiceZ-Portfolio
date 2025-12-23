@@ -5,6 +5,9 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
     padding: 2rem 0;
+    position: relative;
+    background: #0a110a;
+    /* Slight greenish black */
 }
 
 .tech-category {
