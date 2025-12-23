@@ -6,6 +6,8 @@ import SignatureSVG from '../ui/SignatureSVG';
 import TopographicBackground from '../ui/TopographicBackground';
 import HeroPortrait from '../ui/HeroPortrait';
 import F1Card from '../ui/F1Card';
+import GigCard from '../ui/GigCard';
+import TechnicalInfoBox from '../ui/TechnicalInfoBox';
 import SectionFrame from '../ui/SectionFrame';
 import aboutData from '../../content/about.json';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -31,6 +33,8 @@ const HeroBootSequence = () => {
     const signaturePathRef = useRef<SVGPathElement>(null);
     const whoAmIRef = useRef<HTMLDivElement>(null);
     const f1CardRef = useRef<HTMLDivElement>(null);
+    const gigCardRef = useRef<HTMLDivElement>(null);
+    const techBoxRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
         if (!containerRef.current) return;
@@ -93,7 +97,7 @@ const HeroBootSequence = () => {
         }
 
         // 3. Hero Elements Fade Out (40% - 50%)
-        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current], {
+        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current], {
             opacity: 0,
             y: -50,
             duration: 0.1,
@@ -164,9 +168,20 @@ const HeroBootSequence = () => {
                 <div className="hero-signature-wrapper">
                     <SignatureSVG ref={signaturePathRef} />
                 </div>
+
+                {/* Updated Elements */}
                 <div ref={f1CardRef} className="hero-info-animate">
                     <F1Card />
                 </div>
+
+                <div ref={gigCardRef} className="hero-gig-card">
+                    <GigCard />
+                </div>
+
+                <div ref={techBoxRef} className="hero-tech-box">
+                    <TechnicalInfoBox />
+                </div>
+
                 <div className="hero-dim-overlay" ref={dimOverlayRef} />
                 <div className="hero-overlay-fade" />
             </div>

@@ -21,7 +21,7 @@ export default function HeroPortrait() {
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
-                    transform: 'translate(-50%, -50%) scale(1.4)',
+                    transform: 'translate(-50%, -70%) scale(1)',
                     height: '100%',
                     width: 'auto',
                     objectFit: 'contain',
