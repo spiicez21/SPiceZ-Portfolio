@@ -59,10 +59,11 @@ const AsciiRain = () => {
         let scanY = 0;
 
         const draw = () => {
-            // Trail effect (black fade)
-            // Lower opacity = longer trails = "wetter" look
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            // Trail effect (fade to transparent)
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
             ctx.fillRect(0, 0, width, height);
+            ctx.globalCompositeOperation = 'source-over';
 
             ctx.font = `${fontSize}px var(--font-mono)`;
 

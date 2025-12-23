@@ -71,7 +71,7 @@ const AnimateIn = ({
             scrollTrigger: {
                 trigger: element,
                 start: `top ${100 - (threshold * 100)}%`, // e.g. "top 80%"
-                toggleActions: 'play reverse play reverse',
+                toggleActions: 'play none none none',
             }
         };
 

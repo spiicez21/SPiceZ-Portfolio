@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import './VerifiedCredentials.css';
 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const VerifiedCredentials = () => {
@@ -46,7 +47,11 @@ const VerifiedCredentials = () => {
   }, { scope: containerRef });
 
   return (
-    <SectionFrame id="verified-credentials" label="VERIFIED CREDENTIALS" number="07">
+    <SectionFrame
+      id="verified-credentials"
+      label="VERIFIED CREDENTIALS"
+      number="07"
+    >
       <div ref={containerRef} className="certifications-list">
         {certificationsData.map((cert, index) => (
           <div key={cert.id} className="cert-item">

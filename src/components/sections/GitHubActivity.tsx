@@ -4,6 +4,7 @@ import AnimateIn from '../utils/AnimateIn';
 import { Star, GitFork } from 'lucide-react';
 import './GitHubActivity.css';
 
+
 interface GitHubRepo {
     id: number;
     name: string;
@@ -34,7 +35,11 @@ const GitHubActivity = () => {
     }, []);
 
     return (
-        <SectionFrame id="github-activity" label="GITHUB ACTIVITY" number="08">
+        <SectionFrame
+            id="github-activity"
+            label="GITHUB ACTIVITY"
+            number="08"
+        >
             <div className="github-content">
                 <AnimateIn animation="fade-up" duration={0.8} threshold={0.2}>
                     <div className="github-stats">

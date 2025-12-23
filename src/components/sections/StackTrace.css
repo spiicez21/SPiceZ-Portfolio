@@ -6,8 +6,8 @@
     gap: 3rem;
     padding: 2rem 0;
     position: relative;
-    background: #0a110a;
-    /* Slight greenish black */
+    position: relative;
+    /* background: #0a110a; - Removed to show Topographic BG */
 }
 
 .tech-category {

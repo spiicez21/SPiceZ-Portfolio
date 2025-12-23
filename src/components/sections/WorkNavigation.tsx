@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import SectionFrame from '../ui/SectionFrame';
 import './WorkNavigation.css';
 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const items = [
@@ -140,7 +141,12 @@ const WorkNavigation = () => {
     }, { scope: containerRef });
 
     return (
-        <SectionFrame id="work-navigation" label="SELECTED WORKS" number="04-06" className="work-nav-section">
+        <SectionFrame
+            id="work-navigation"
+            label="SELECTED WORKS"
+            number="04-06"
+            className="work-nav-section"
+        >
             <div ref={containerRef} className="work-navigation-container">
                 {items.map((item, index) => (
                     <div

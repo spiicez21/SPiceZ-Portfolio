@@ -3,8 +3,10 @@
     display: grid;
     grid-template-columns: 320px 1fr;
     /* Fixed width sidebar + Flex content */
-    gap: 3rem;
+    gap: 4rem;
     align-items: start;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* --- Left: Info Side --- */
@@ -81,7 +83,7 @@
 .ticket-system {
     border: 1px solid var(--border-ink);
     background: rgba(255, 255, 255, 0.03);
-    padding: 1.5rem;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
     height: 100%;
@@ -103,7 +105,7 @@
 /* Matrix Container */
 .matrix-container {
     border: 1px solid var(--border-ink);
-    background: #050505;
+    background: rgba(5, 5, 5, 0.2);
     position: relative;
     overflow: hidden;
     height: 100%;
@@ -163,6 +165,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    min-width: 0;
+    /* Flexbox fix */
 }
 
 .form-field label {
@@ -176,7 +180,8 @@
 .form-field input,
 .form-field textarea {
     width: 100%;
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(4px);
     border: 1px solid var(--border-ink);
     color: #fff;
     padding: 0.6rem;
@@ -250,7 +255,7 @@
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .ticket-layout {
         grid-template-columns: 1fr;
         gap: 2rem;

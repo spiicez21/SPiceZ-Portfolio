@@ -42,11 +42,23 @@ export const getAccessToken = async () => {
             console.error('Error getting local access token:', error);
             return null;
         }
+    } else if (import.meta.env.DEV) {
+        // In Dev but missing secrets -> Don't try Netlify endpoint (it won't exist)
+        console.warn('Spotify: Missing VITE_SPOTIFY_... secrets. Mocking or skipping.');
+        return null;
     }
 
     // METHOD 2: Production (Netlify Function)
     try {
         const response = await fetch(NETLIFY_FUNCTION_ENDPOINT);
+
+        // Ensure we got JSON back
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            // endpoint returned 404 HTML likely
+            return null;
+        }
+
         const data = await response.json();
 
         if (response.ok && data.access_token) {

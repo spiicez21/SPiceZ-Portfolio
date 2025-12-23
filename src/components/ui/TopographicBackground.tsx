@@ -16,6 +16,7 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             generateHeightMap();
+            drawContours();
         };
 
         class PerlinNoise {
@@ -233,6 +234,9 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         resize();
+        // Safety redraw to ensure it catches correct dimensions
+        setTimeout(resize, 100);
+
         window.addEventListener('resize', resize);
 
         return () => {

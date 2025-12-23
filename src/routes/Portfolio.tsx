@@ -6,6 +6,8 @@ import SectionTransitions from '../components/utils/SectionTransitions';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 
+import TopographicBackground from '../components/ui/TopographicBackground';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const VerifiedCredentials = lazy(() => import('../components/sections/VerifiedCredentials'));
@@ -39,6 +41,20 @@ const Portfolio = () => {
         <div className="portfolio-page">
             <NavBar />
             <SectionTransitions />
+
+            {/* Global Background Layer */}
+            <div style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 0,
+                pointerEvents: 'none',
+                // Start visible after the first view height (Hero section)
+                maskImage: 'linear-gradient(to bottom, transparent 0%, transparent 15%, black 25%, black 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, transparent 15%, black 25%, black 100%)'
+            }}>
+                <TopographicBackground lineColor="rgba(178, 255, 5, 0.15)" />
+            </div>
+
             <main>
                 <HeroBootSequence />
 

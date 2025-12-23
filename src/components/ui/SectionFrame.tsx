@@ -8,11 +8,19 @@ interface SectionFrameProps {
     number: string;
     children: ReactNode;
     className?: string;
+    background?: ReactNode; // New prop for full-width background
 }
 
-const SectionFrame = memo(({ id, label, number, children, className = '' }: SectionFrameProps) => {
+const SectionFrame = memo(({ id, label, number, children, className = '', background }: SectionFrameProps) => {
     return (
         <section id={id} className={`section-frame ${className}`}>
+            {/* Render full-width background if provided */}
+            {background && (
+                <div className="section-frame-background" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+                    {background}
+                </div>
+            )}
+
             <div className="section-border">
                 {/* Conditionally render header only if label or number is present */}
                 {(label || number) && (

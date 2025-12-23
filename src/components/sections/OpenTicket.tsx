@@ -6,8 +6,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import contactData from '../../content/contact.json';
 import { Github, Linkedin, Twitter, Instagram, Mail, Coffee, Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
-import './OpenTicket.css';
 
+
+import './OpenTicket.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const OpenTicket = () => {
@@ -82,7 +83,11 @@ const OpenTicket = () => {
     };
 
     return (
-        <SectionFrame id="open-ticket" label="OPEN A TICKET" number="09">
+        <SectionFrame
+            id="open-ticket"
+            label="OPEN A TICKET"
+            number="09"
+        >
             <div ref={containerRef} className="ticket-layout">
 
                 {/* Left: Quick Connect */}
