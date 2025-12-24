@@ -203,6 +203,14 @@ const HeroBootSequence = () => {
                                     <FaMapMarkerAlt className="icon" />
                                     {aboutData.stats.location}
                                 </div>
+                                <a
+                                    href="/Resume/Resume.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hero-resume-btn"
+                                >
+                                    RESUME_V2.1
+                                </a>
                             </div>
 
                             {/* Column 2: Core Bio Log */}
