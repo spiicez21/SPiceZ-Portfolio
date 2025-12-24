@@ -173,6 +173,9 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             '/Picture/Main-Depth.png',
             '/Picture/doodle.png',
             '/Spotify-Badge/batbro.gif',
+            // External Badges
+            'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441216/APEX24CDOCP_bmb3ox.png',
+            'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441217/badge_jv6dwk.svg',
             // Add other critical assets here
         ];
 

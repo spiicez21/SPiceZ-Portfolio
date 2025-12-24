@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import AsciiRain from '../ui/AsciiRain';
+import F1NameTags from '../ui/F1NameTags';
 import SectionFrame from '../ui/SectionFrame';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -149,12 +149,9 @@ const OpenTicket = () => {
                         </form>
                     </div>
 
-                    {/* Column 2: Matrix Rain */}
-                    <div className="matrix-container">
-                        <div className="matrix-overlay">
-                            <span className="matrix-label">ENCRYPTION: ACTIVE</span>
-                        </div>
-                        <AsciiRain />
+                    {/* Column 2: F1 Rivalry / Tech Visual */}
+                    <div className="matrix-container" style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}>
+                        <F1NameTags />
                     </div>
 
                 </div>
