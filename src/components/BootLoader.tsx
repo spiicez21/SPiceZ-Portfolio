@@ -34,9 +34,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
         loadSvg();
 
         const assetsToLoad = [
-            '/Picture/Background-main.png',
             '/Picture/Main-Depth.png',
-            '/Picture/doodle.png',
             '/Spotify-Badge/batbro.gif',
             'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441216/APEX24CDOCP_bmb3ox.png',
             'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441217/badge_jv6dwk.svg',

@@ -7,7 +7,7 @@
     max-width: 90vw;
     z-index: 10;
     bottom: auto;
-    right: -450px;
+    right: -340px;
 }
 
 .spotify-badge {
@@ -19,28 +19,14 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 6px 16px;
     /* Reduced height padding */
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
     overflow: hidden;
-    /* Start hidden for GSAP */
-    transform: translateX(120%);
     cursor: pointer;
     text-decoration: none;
     display: block;
 }
 
-.spotify-badge.animate-done {
-    transform: none;
-}
 
-.intro-slide {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    z-index: 110;
-    transform: translateX(-100%);
-    pointer-events: none;
-}
 
 .spotify-logo-corner {
     position: absolute;
@@ -60,7 +46,6 @@
     background: rgba(8, 8, 8, 0.75);
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
-    transform: translateY(-4px);
 }
 
 .spotify-badge-header {
@@ -149,18 +134,7 @@
 }
 
 .active .progress-bar-fill {
-    animation: simulateProgress 45s linear infinite;
     background: #fff;
-}
-
-@keyframes simulateProgress {
-    0% {
-        width: 10%;
-    }
-
-    100% {
-        width: 95%;
-    }
 }
 
 .spotify-batbro-gif {

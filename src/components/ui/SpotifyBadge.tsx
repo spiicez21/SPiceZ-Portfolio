@@ -1,11 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSpotify } from 'react-icons/fa';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import './SpotifyBadge.css';
 import { getAccessToken } from '../../services/spotify';
 
-gsap.registerPlugin(useGSAP);
+
 
 interface SpotifyTrack {
     name: string;
@@ -19,43 +17,6 @@ interface SpotifyTrack {
 const SpotifyBadge = () => {
     const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-
-    const containerRef = useRef<HTMLDivElement>(null);
-    const introRef = useRef<HTMLDivElement>(null);
-    const badgeRef = useRef<HTMLAnchorElement>(null);
-
-    useGSAP(() => {
-        if (!containerRef.current || !introRef.current || !badgeRef.current) return;
-
-        const tl = gsap.timeline({
-            delay: 1, // Wait for hero animations
-            onComplete: () => {
-                if (badgeRef.current) {
-                    gsap.set(badgeRef.current, { clearProps: 'transform' });
-                    badgeRef.current.classList.add('animate-done');
-                }
-            }
-        });
-
-        // Sophisticated entry animation
-        tl.set(badgeRef.current, { x: '120%' })
-            .set(introRef.current, { x: '-120%', opacity: 1 })
-            .to(introRef.current, {
-                x: '120%',
-                duration: 1.2,
-                ease: 'power3.inOut'
-            })
-            .to(badgeRef.current, {
-                x: '0%',
-                duration: 1,
-                ease: 'expo.out'
-            }, '-=0.8')
-            .to(introRef.current, {
-                opacity: 0,
-                duration: 0.3
-            });
-
-    }, { scope: containerRef, dependencies: [currentTrack] });
 
     const fetchCurrentlyPlaying = async () => {
         try {
@@ -125,15 +86,12 @@ const SpotifyBadge = () => {
     }
 
     return (
-        <div className="spotify-anim-wrapper" ref={containerRef}>
-            <div className="intro-slide" ref={introRef}></div>
-
+        <div className="spotify-anim-wrapper">
             <a
                 href={currentTrack.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`spotify-badge ${currentTrack.isPlaying ? 'active' : ''}`}
-                ref={badgeRef}
             >
                 <div className="spotify-badge-header">
                     <span>{currentTrack.isPlaying ? 'AUD_STREAM_ACTIVE' : 'AUD_LOG_RECENT'}</span>

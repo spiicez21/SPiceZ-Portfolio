@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect } from 'react';
+import { FaCircle, FaTerminal } from 'react-icons/fa';
 import { gsap } from '../../lib/animations/gsapClient';
-import './GigCard.css';
 
 const GigCard = () => {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -35,29 +35,25 @@ const GigCard = () => {
     }, []);
 
     return (
-        <div ref={cardRef} className="gig-card pit-window" style={{ opacity: 0 }}>
-            <div className="pit-header">
-                <span className="pit-title">COMMISSION STATUS</span>
-                <span className="pit-status">OPEN</span>
+        <div ref={cardRef} className="gig-card technical-info-box" style={{ opacity: 0 }}>
+            <div className="tech-row">
+                <span className="tech-label">COMMISSION</span>
+                <span className="tech-status">
+                    OPEN <FaCircle size={8} color="#b2ff05" className="pulse-icon" />
+                </span>
             </div>
 
-            <div className="pit-body">
-                <div className="strategy-pill">
-                    <span className="strat-icon">01</span>
-                    <span className="strat-name">UI/UX Design</span>
-                </div>
-                <div className="strategy-pill">
-                    <span className="strat-icon">02</span>
-                    <span className="strat-name">Full Stack Dev</span>
-                </div>
-                <div className="strategy-pill">
-                    <span className="strat-icon">03</span>
-                    <span className="strat-name">YT Assets</span>
+            <div className="tech-row">
+                <span className="tech-label">SERVICES</span>
+                <div className="tech-services">
+                    <div className="service-item">UI/UX Design</div>
+                    <div className="service-item">Full Stack Dev</div>
+                    <div className="service-item">YT Assets</div>
                 </div>
             </div>
 
-            <div className="pit-footer">
-                powered by <span>YUGA BHARATHI</span>
+            <div className="tech-footer">
+                <FaTerminal size={10} /> YUGA_BHARATHI // CORE_V2
             </div>
         </div>
     );
