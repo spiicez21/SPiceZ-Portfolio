@@ -1,0 +1,16 @@
+/* Fonts */
+/webfonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/* Assets */
+/Picture/*
+  Cache-Control: public, max-age=31536000, immutable
+/LH44/*
+  Cache-Control: public, max-age=31536000, immutable
+/Spotify-Badge/*
+  Cache-Control: public, max-age=31536000, immutable
+/Track/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/* SPA fallback for clean URLs */
+/* Netlify handles this via _redirects usually, but headers can coexist */

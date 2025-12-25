@@ -13,13 +13,10 @@
 .spotify-badge {
     position: relative;
     width: 100%;
-    background: rgba(5, 5, 5, 0.95);
-    /* backdrop-filter: blur(16px); - Removed for performance */
-    /* -webkit-backdrop-filter: blur(16px); */
+    background: rgba(8, 8, 8, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 6px 16px;
-    /* Reduced height padding */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
     overflow: hidden;
     cursor: pointer;
     text-decoration: none;
@@ -43,9 +40,9 @@
 }
 
 .spotify-badge:hover {
-    background: rgba(8, 8, 8, 0.75);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+    background: rgba(12, 12, 12, 0.85);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .spotify-badge-header {

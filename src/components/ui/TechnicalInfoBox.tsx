@@ -15,11 +15,11 @@ const TechnicalInfoBox = () => {
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: '0.75rem',
         color: 'rgba(255, 255, 255, 0.9)', /* Brighter text */
-        background: 'rgba(15, 16, 10, 0.95)', /* Darker, more opaque background */
+        background: 'rgba(5, 5, 5, 0.99)', /* Deep black background */
         backdropFilter: 'blur(10px)',
         padding: '1rem',
         borderRadius: '8px',
-        border: '1px solid rgba(178, 255, 5, 0.2)', /* Neon accent border */
+        border: '1px solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',

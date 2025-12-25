@@ -1,6 +1,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import { FaCircle, FaTerminal } from 'react-icons/fa';
 import { gsap } from '../../lib/animations/gsapClient';
+import './GigCard.css';
 
 const GigCard = () => {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -13,17 +14,17 @@ const GigCard = () => {
                 { opacity: 0, scale: 0.95 },
                 { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }
             )
-                .fromTo(".pit-header",
+                .fromTo(".tech-row:first-child",
                     { y: -20, opacity: 0 },
                     { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
                     "-=0.2"
                 )
-                .fromTo(".strategy-pill",
+                .fromTo(".service-item",
                     { x: -30, opacity: 0 },
-                    { x: 0, opacity: 1, duration: 0.4, stagger: 0.12, ease: "power3.out" },
+                    { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power3.out" },
                     "-=0.2"
                 )
-                .fromTo(".pit-footer",
+                .fromTo(".tech-footer",
                     { y: 10, opacity: 0 },
                     { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" },
                     "-=0.1"

@@ -69,7 +69,6 @@
     max-width: 1400px;
     margin: 0 auto;
     /* Centering fix */
-    will-change: transform, opacity;
 }
 
 /* Signature Styling - Bigger and Bolder */

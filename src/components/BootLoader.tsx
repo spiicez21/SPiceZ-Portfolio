@@ -1,5 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { gsap } from '../lib/animations/gsapClient';
+import projectsData from '../content/projects.json';
+import graphicsData from '../content/graphics.json';
+import wipData from '../content/wip.json';
+import certsData from '../content/certifications.json';
+import TopographicBackground from './ui/TopographicBackground';
 import './BootLoader.css';
 
 interface BootLoaderProps {
@@ -33,12 +38,24 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
         loadSvg();
 
-        const assetsToLoad = [
+        // Aggregate all images from JSON data
+        const contentImages = [
+            ...projectsData.map(p => p.thumbnailPublicId),
+            ...graphicsData.map(g => g.imagePublicId),
+            ...wipData.map(w => w.imagePublicId),
+            ...certsData.map(c => c.Badge)
+        ].filter(src => src && typeof src === 'string');
+
+        const localAssets = [
+            '/Picture/normal-main.png',
             '/Picture/Main-Depth.png',
             '/Spotify-Badge/batbro.gif',
-            'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441216/APEX24CDOCP_bmb3ox.png',
-            'https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441217/badge_jv6dwk.svg',
+            '/LH44/LH-helment.png',
+            '/LH44/w11-car.png',
+            '/Favicon/favicon.svg'
         ];
+
+        const assetsToLoad = Array.from(new Set([...contentImages, ...localAssets]));
 
         let loadedCount = 0;
 
@@ -75,7 +92,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                 loadedCount = assetsToLoad.length;
                 updateProgress();
             }
-        }, 5000);
+        }, 15000); // Increased timeout for many images
 
         return () => {
             isMounted = false;
@@ -83,29 +100,45 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
         };
     }, [onComplete]);
 
+    // Initialize SVG paths once data is loaded
+    useEffect(() => {
+        if (svgData.length > 0) {
+            pathRefs.current.forEach((path) => {
+                if (path) {
+                    const length = path.getTotalLength();
+                    gsap.set(path, {
+                        strokeDasharray: length,
+                        strokeDashoffset: length,
+                        fillOpacity: 0
+                    });
+                }
+            });
+        }
+    }, [svgData]);
+
     // Animate all SVG paths based on progress
     useEffect(() => {
         pathRefs.current.forEach((path) => {
             if (path) {
                 const length = path.getTotalLength();
-                gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
                 gsap.to(path, {
                     strokeDashoffset: length - (length * (progress / 100)),
-                    duration: 0.3,
-                    ease: "none"
+                    duration: 0.4,
+                    ease: "power1.out"
                 });
 
                 // Also fade in the fill as it draws
                 gsap.to(path, {
                     fillOpacity: progress / 100,
-                    duration: 0.5
+                    duration: 0.6
                 });
             }
         });
-    }, [progress, svgData]);
+    }, [progress]);
 
     return (
         <div ref={containerRef} className="boot-loader minimalist">
+            <TopographicBackground lineColor="rgba(178, 255, 5, 0.08)" />
             <div className="loader-center-content">
                 <svg
                     width="120"
