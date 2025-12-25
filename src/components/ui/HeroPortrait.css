@@ -1,0 +1,27 @@
+.portrait-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.portrait-inner-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-main-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Optional: maintain some of the previous vertical centering shift if needed */
+    transform: translateY(-450px);
+}

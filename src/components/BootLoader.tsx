@@ -46,16 +46,19 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             ...certsData.map(c => c.Badge)
         ].filter(src => src && typeof src === 'string');
 
-        const localAssets = [
+        const criticalAssets = [
             '/Picture/normal-main.png',
-            '/Picture/Main-Depth.png',
-            '/Spotify-Badge/batbro.gif',
-            '/LH44/LH-helment.png',
-            '/LH44/w11-car.png',
             '/Favicon/favicon.svg'
         ];
 
-        const assetsToLoad = Array.from(new Set([...contentImages, ...localAssets]));
+        const secondaryAssets = [
+            ...contentImages,
+            '/Spotify-Badge/batbro.gif',
+            '/LH44/LH-helment.png',
+            '/LH44/w11-car.png',
+        ];
+
+        const assetsToLoad = Array.from(new Set([...criticalAssets, ...secondaryAssets]));
 
         let loadedCount = 0;
 
@@ -73,7 +76,6 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                         ease: "power2.inOut",
                         onComplete: () => {
                             onComplete();
-                            sessionStorage.setItem('portfolio_visited', 'true');
                         }
                     });
                 }, 800);

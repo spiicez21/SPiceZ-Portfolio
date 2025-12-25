@@ -234,13 +234,17 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         resize();
-        // Safety redraw to ensure it catches correct dimensions
-        setTimeout(resize, 100);
+        let resizeTimeout: ReturnType<typeof setTimeout>;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resize, 200);
+        };
 
-        window.addEventListener('resize', resize);
+        window.addEventListener('resize', handleResize);
 
         return () => {
-            window.removeEventListener('resize', resize);
+            window.removeEventListener('resize', handleResize);
+            clearTimeout(resizeTimeout);
         };
     }, [lineColor]);
 

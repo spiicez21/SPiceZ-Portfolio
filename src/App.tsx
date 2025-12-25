@@ -11,19 +11,11 @@ import RetroGrid from './components/utils/RetroGrid';
 import CustomCursor from './components/ui/CustomCursor';
 
 function App() {
-  const [showBootLoader, setShowBootLoader] = useState(false);
+  const [showBootLoader, setShowBootLoader] = useState(true);
 
   useEffect(() => {
-    // Check if user has visited before
-    const hasVisited = sessionStorage.getItem('portfolio_visited');
-
-    if (!hasVisited) {
-      setShowBootLoader(true);
-    }
-
     // Listen for boot sequence trigger
     const handleBootTrigger = () => {
-      sessionStorage.removeItem('portfolio_visited');
       setShowBootLoader(true);
     };
 

@@ -10,8 +10,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'gsap-vendor': ['gsap', '@gsap/react'],
+          'three-vendor': ['three', '@react-three/fiber'], // Separate large 3D engine
           'ui-vendor': ['lucide-react', 'react-icons'],
         },
       },
