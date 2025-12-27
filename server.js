@@ -13,6 +13,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Health Check (for Railway)
+app.get('/health', (req, res) => res.send('OK'));
+
 // API: Contact Discord
 app.post('/api/contact-discord', async (req, res) => {
     try {
