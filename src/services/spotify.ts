@@ -4,7 +4,7 @@ const spotifyApi = new SpotifyWebApi();
 
 // Spotify API endpoints
 const SPOTIFY_TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
-const NETLIFY_FUNCTION_ENDPOINT = '/.netlify/functions/spotify-token';
+const NETLIFY_FUNCTION_ENDPOINT = '/api/spotify-token';
 
 // Local development secrets (Vite only)
 const VITE_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
