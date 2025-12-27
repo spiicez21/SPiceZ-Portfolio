@@ -37,7 +37,7 @@ const RetroGrid = memo(({ className = '', opacity = 0.1 }: RetroGridProps) => {
     return (
         <div
             className={`retro-grid-wrapper fixed inset-0 pointer-events-none z-0 ${className}`}
-            style={{ opacity: opacity }}
+            style={{ opacity: opacity, willChange: 'transform' }}
         >
             <div
                 ref={gridRef}

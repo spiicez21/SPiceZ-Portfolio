@@ -23,63 +23,55 @@ const TopoContours = () => {
 
         const draw = () => {
             // Check Resize
-            if (canvas.width !== width || canvas.height !== height) {
-                canvas.width = width;
-                canvas.height = height;
+            if (canvas.width !== width / 4 || canvas.height !== height / 4) {
+                canvas.width = width / 4;
+                canvas.height = height / 4;
             }
 
             // Clear
-            ctx.clearRect(0, 0, width, height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Config
             const scale = 0.005; // Zoom level of the map
-            const levels = 8; // Number of topo layers
+            // Wait, if we iterate fewer pixels, we need to cover the same "spatial" area.
+            // visual area = width * scale.
+            // new width = width / 4. 
+            // So to cover same noise area, spatial step must skip 4x? 
+            // Actually simpler: just input (x*4) into noise.
 
-            // Optimization: Low-res render then scale up?
-            // For now, pixel-by-pixel is okay for small areas, 
-            // but let's use a smaller buffer for performance if needed.
-            // Actually, drawing paths is better than pixels for smooth lines.
+            const levels = 8;
 
-            // Pixel-based approach (Simpler for gradients)
-            const imgData = ctx.createImageData(width, height);
+            const imgData = ctx.createImageData(canvas.width, canvas.height);
             const data = imgData.data;
 
             // Move map slightly over time
             offset += 0.2;
 
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
-                    // Generate noise value (-1 to 1)
-                    let v = noise2D((x + offset) * scale, (y + offset * 0.5) * scale);
+            for (let y = 0; y < canvas.height; y++) {
+                for (let x = 0; x < canvas.width; x++) {
+                    // Generate noise value
+                    // Multiply coords by 4 to sample the original "resolution" of noise
 
-                    // Normalize to 0-1
+                    let v = noise2D((x * 4 + offset) * scale, (y * 4 + offset * 0.5) * scale);
+
                     v = (v + 1) / 2;
 
-                    // Create sharp bands
-                    // We want white lines at specific intervals
+                    // Sharp bands
                     const band = 1 / levels;
                     const valInBand = v % band;
-
-                    // Thickness of the line (in value space)
                     const thickness = 0.005;
 
                     if (valInBand < thickness) {
-                        const index = (y * width + x) * 4;
-                        // White line
+                        const index = (y * canvas.width + x) * 4;
                         data[index] = 255;
                         data[index + 1] = 255;
                         data[index + 2] = 255;
-                        // Alpha based on height (higher = brighter/more opaque)
                         data[index + 3] = 50 + (v * 150);
                     }
                 }
             }
 
             ctx.putImageData(imgData, 0, 0);
-
-            // Optional: Draw scanline or noise grain on top?
-            // Keep it clean for now.
-
             animationFrameId = requestAnimationFrame(draw);
         };
 
@@ -99,7 +91,17 @@ const TopoContours = () => {
 
     return (
         <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
-            <canvas ref={canvasRef} style={{ display: 'block', opacity: 0.6 }} />
+            {/* CSS scales it back up with pixelation for retro look, or blur for smooth */}
+            <canvas
+                ref={canvasRef}
+                style={{
+                    display: 'block',
+                    opacity: 0.6,
+                    width: '100%',
+                    height: '100%',
+                    imageRendering: 'pixelated' /* Retro style */
+                }}
+            />
         </div>
     );
 };
