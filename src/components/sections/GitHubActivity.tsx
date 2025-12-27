@@ -23,13 +23,22 @@ const GitHubActivity = () => {
 
     useEffect(() => {
         fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=3`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to fetch');
+                return res.json();
+            })
             .then(data => {
-                setRepos(data);
+                if (Array.isArray(data)) {
+                    setRepos(data);
+                } else {
+                    console.error('GitHub API returned non-array:', data);
+                    setRepos([]);
+                }
                 setLoading(false);
             })
             .catch(err => {
                 console.error('Error fetching repos:', err);
+                setRepos([]); // Fallback to empty array
                 setLoading(false);
             });
     }, []);
