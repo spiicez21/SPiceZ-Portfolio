@@ -1,9 +1,9 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, memo } from 'react';
 import { FaCircle, FaTerminal } from 'react-icons/fa';
 import { gsap } from '../../lib/animations/gsapClient';
 import './GigCard.css';
 
-const GigCard = () => {
+const GigCard = memo(() => {
     const cardRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
@@ -58,6 +58,8 @@ const GigCard = () => {
             </div>
         </div>
     );
-};
+});
+
+
 
 export default GigCard;

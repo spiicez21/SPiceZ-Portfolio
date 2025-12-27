@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import './HeroPortrait.css';
 
-export default function HeroPortrait() {
+const HeroPortrait = memo(() => {
     return (
         <div className="portrait-container">
             <div className="portrait-inner-wrapper">
@@ -12,4 +13,6 @@ export default function HeroPortrait() {
             </div>
         </div>
     );
-}
+});
+
+export default HeroPortrait;

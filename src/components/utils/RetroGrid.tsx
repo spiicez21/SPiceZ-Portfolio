@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, memo } from 'react';
 import { gsap } from 'gsap';
 
 interface RetroGridProps {
@@ -6,7 +6,7 @@ interface RetroGridProps {
     opacity?: number;
 }
 
-const RetroGrid = ({ className = '', opacity = 0.1 }: RetroGridProps) => {
+const RetroGrid = memo(({ className = '', opacity = 0.1 }: RetroGridProps) => {
     const gridRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -18,6 +18,8 @@ const RetroGrid = ({ className = '', opacity = 0.1 }: RetroGridProps) => {
         const yTo = gsap.quickTo(grid, "y", { duration: 1, ease: "power2.out" });
 
         const handleMouseMove = (e: MouseEvent) => {
+            // Check if frame is available to throttle? useGSAP does this internally usually but here we are using vanilla listener
+            // Using requestAnimationFrame might be better, but quickTo handles interpolation well.
             const x = (e.clientX / window.innerWidth - 0.5) * 20;
             const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
@@ -51,6 +53,6 @@ const RetroGrid = ({ className = '', opacity = 0.1 }: RetroGridProps) => {
             />
         </div>
     );
-};
+});
 
 export default RetroGrid;

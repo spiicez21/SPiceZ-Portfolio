@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import SectionFrame from '../ui/SectionFrame';
 import AnimateIn from '../utils/AnimateIn';
 import { Star, GitFork } from 'lucide-react';
@@ -112,4 +112,4 @@ const GitHubActivity = () => {
     );
 };
 
-export default GitHubActivity;
+export default memo(GitHubActivity);

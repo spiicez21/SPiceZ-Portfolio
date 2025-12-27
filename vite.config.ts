@@ -12,7 +12,7 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'gsap-vendor': ['gsap', '@gsap/react'],
-          'three-vendor': ['three', '@react-three/fiber'], // Separate large 3D engine
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'], // Separate large 3D engine
           'ui-vendor': ['lucide-react', 'react-icons'],
         },
       },

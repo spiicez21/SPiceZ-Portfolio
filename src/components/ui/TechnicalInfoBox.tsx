@@ -1,7 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { FaGlobe, FaWifi } from 'react-icons/fa';
 
-const TechnicalInfoBox = () => {
+const containerStyle: React.CSSProperties = {
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: '0.75rem',
+    color: 'rgba(255, 255, 255, 0.9)', /* Brighter text */
+    background: 'rgba(5, 5, 5, 0.99)', /* Deep black background */
+    backdropFilter: 'blur(10px)',
+    padding: '1rem',
+    borderRadius: '8px',
+    border: '1px solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+    width: 'fit-content'
+};
+
+const rowStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '2rem',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+    paddingBottom: '0.25rem'
+};
+
+const labelStyle: React.CSSProperties = {
+    color: '#b2ff05', // Neon
+    fontWeight: 600,
+    textTransform: 'uppercase'
+};
+
+const TechnicalInfoBox = memo(() => {
     const [time, setTime] = useState(new Date().toLocaleTimeString());
 
     useEffect(() => {
@@ -10,36 +40,6 @@ const TechnicalInfoBox = () => {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
-
-    const containerStyle: React.CSSProperties = {
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: '0.75rem',
-        color: 'rgba(255, 255, 255, 0.9)', /* Brighter text */
-        background: 'rgba(5, 5, 5, 0.99)', /* Deep black background */
-        backdropFilter: 'blur(10px)',
-        padding: '1rem',
-        borderRadius: '8px',
-        border: '1px solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-        width: 'fit-content'
-    };
-
-    const rowStyle: React.CSSProperties = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '2rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        paddingBottom: '0.25rem'
-    };
-
-    const labelStyle: React.CSSProperties = {
-        color: '#b2ff05', // Neon
-        fontWeight: 600,
-        textTransform: 'uppercase'
-    };
 
     return (
         <div className="technical-info-box" style={containerStyle}>
@@ -62,6 +62,6 @@ const TechnicalInfoBox = () => {
             </div>
         </div>
     );
-};
+});
 
 export default TechnicalInfoBox;

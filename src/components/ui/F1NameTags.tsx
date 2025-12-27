@@ -2,7 +2,9 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TopoContours from './TopoContours';
-import SpiceZModel from './SpiceZModel';
+import { lazy, Suspense } from 'react';
+
+const SpiceZModel = lazy(() => import('./SpiceZModel'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -126,7 +128,9 @@ const F1NameTags = () => {
 
                 {/* 3D Model Layer */}
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
-                    <SpiceZModel />
+                    <Suspense fallback={null}>
+                        <SpiceZModel />
+                    </Suspense>
                 </div>
 
                 <div style={{

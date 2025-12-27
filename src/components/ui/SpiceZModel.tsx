@@ -19,7 +19,7 @@ const SpiceZModel = () => {
                 <Suspense fallback={null}>
                     {/* Floating animation for subtle movement */}
                     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                        <Stage environment={null} intensity={1} contactShadow={false}>
+                        <Stage environment={null} intensity={1} shadows={false}>
                             <Model />
                         </Stage>
                     </Float>
