@@ -41,7 +41,7 @@ const OpenTicket = () => {
         setStatus('sending');
 
         try {
-            const response = await fetch('/api/contact-discord', {
+            const response = await fetch('/.netlify/functions/contact-discord', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
