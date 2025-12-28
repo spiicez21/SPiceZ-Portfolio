@@ -17,7 +17,7 @@ interface GitHubRepo {
 }
 
 const GitHubActivity = () => {
-    const username = 'Yugabharathi21';
+    const username = 'spiicez21';
     const [repos, setRepos] = useState<GitHubRepo[]>([]);
     const [loading, setLoading] = useState(true);
 

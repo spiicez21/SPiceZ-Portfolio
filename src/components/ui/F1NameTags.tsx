@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import TopoContours from './TopoContours';
+import TopographicBackground from './TopographicBackground';
 import { lazy, Suspense } from 'react';
 
 const SpiceZModel = lazy(() => import('./SpiceZModel'));
@@ -123,7 +123,7 @@ const F1NameTags = () => {
             }}>
                 {/* Background Contours */}
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-                    <TopoContours />
+                    <TopographicBackground lineColor="rgba(255, 255, 255, 0.1)" />
                 </div>
 
                 {/* 3D Model Layer */}

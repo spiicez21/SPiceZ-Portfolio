@@ -13,7 +13,8 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'gsap-vendor': ['gsap', '@gsap/react'],
-          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'], // Separate large 3D engine
+          'three-core': ['three'], // Core engine
+          'three-bindings': ['@react-three/fiber', '@react-three/drei'], // React wrappers
           'ui-vendor': ['lucide-react', 'react-icons'],
         },
       },

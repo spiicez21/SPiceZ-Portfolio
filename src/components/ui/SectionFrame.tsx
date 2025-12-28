@@ -1,5 +1,4 @@
 import { type ReactNode, memo } from 'react';
-import ScrambleText from '../utils/ScrambleText';
 import './SectionFrame.css';
 
 interface SectionFrameProps {
@@ -30,7 +29,7 @@ const SectionFrame = memo(({ id, label, number, children, className = '', backgr
                             {number}
                         </span>
                         <h2 className="section-label">
-                            <ScrambleText text={label} revealSpeed={40} scrambleSpeed={20} />
+                            {label}
                         </h2>
                     </div>
                 )}

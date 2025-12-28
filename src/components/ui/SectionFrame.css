@@ -72,9 +72,6 @@
     z-index: 1;
 }
 
-.scanline-overlay {
-    display: none;
-}
 
 @media (max-width: 768px) {
     .section-frame {
