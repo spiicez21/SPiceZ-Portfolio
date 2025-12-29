@@ -1,5 +1,4 @@
 import { useRef, useEffect, memo } from 'react';
-import { gsap } from 'gsap';
 
 interface RetroGridProps {
     className?: string;
@@ -13,24 +12,23 @@ const RetroGrid = memo(({ className = '', opacity = 0.1 }: RetroGridProps) => {
         const grid = gridRef.current;
         if (!grid) return;
 
-        // Initialize quickTo for performance
-        const xTo = gsap.quickTo(grid, "x", { duration: 1, ease: "power2.out" });
-        const yTo = gsap.quickTo(grid, "y", { duration: 1, ease: "power2.out" });
-
+        let rafId: number;
         const handleMouseMove = (e: MouseEvent) => {
-            // Check if frame is available to throttle? useGSAP does this internally usually but here we are using vanilla listener
-            // Using requestAnimationFrame might be better, but quickTo handles interpolation well.
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            if (rafId) cancelAnimationFrame(rafId);
 
-            xTo(x);
-            yTo(y);
+            rafId = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                grid.style.setProperty('--mouse-x', `${x}px`);
+                grid.style.setProperty('--mouse-y', `${y}px`);
+            });
         };
 
         window.addEventListener('mousemove', handleMouseMove);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
+            if (rafId) cancelAnimationFrame(rafId);
         };
     }, []);
 
@@ -48,8 +46,8 @@ const RetroGrid = memo(({ className = '', opacity = 0.1 }: RetroGridProps) => {
                         linear-gradient(to bottom, rgba(var(--ink-accent-rgb), 0.3) 1px, transparent 1px)
                     `,
                     backgroundSize: '40px 40px',
-                    transform: 'perspective(500px) rotateX(20deg)', // Slight 3D tilt if desired, or flat
-                }}
+                    transform: 'perspective(500px) rotateX(20deg) translate(var(--mouse-x, 0), var(--mouse-y, 0))',
+                } as any}
             />
         </div>
     );

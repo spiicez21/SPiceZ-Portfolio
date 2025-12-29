@@ -67,8 +67,14 @@ const HeroBootSequence = () => {
 
         // 1. Scale Down & Dim (0% - 40%)
         tl.fromTo(contentWrapperRef.current,
-            { scale: 1, borderRadius: "0px", boxShadow: "0 0 0 rgba(0, 0, 0, 0)" },
-            { scale: 0.7, borderRadius: "24px", boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)", ease: "power2.out", duration: 0.4 },
+            { scale: 1, borderRadius: "0px" },
+            {
+                scale: 0.7,
+                borderRadius: "24px",
+                ease: "power2.out",
+                duration: 0.4,
+                force3D: true
+            },
             0
         );
 
@@ -79,7 +85,6 @@ const HeroBootSequence = () => {
         );
 
         // Animate NavBar text to white as background darkens (Manual Invert)
-        // Note: NavBar is outside the component scope, so we must query selector globally
         const navFirstName = document.querySelector(".brand-firstname");
         const navLastName = document.querySelector(".brand-lastname");
 
@@ -97,15 +102,15 @@ const HeroBootSequence = () => {
         }
 
         // 3. Hero Elements Fade Out (40% - 50%)
-        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current], {
+        // Combined fade outs
+        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current, ".hero-marquee-bg"], {
             opacity: 0,
-            y: -50,
+            y: -30,
             duration: 0.1,
-            ease: "power2.in"
+            ease: "power2.in",
+            stagger: 0.02
         }, 0.4);
 
-        // 3b. Fade out background marquee and content wrapper entirely
-        tl.to(".hero-marquee-bg", { opacity: 0, duration: 0.2 }, 0.45);
         tl.to(contentWrapperRef.current, { opacity: 0, scale: 0.6, duration: 0.3 }, 0.5);
 
         // --- WHOAMI SEQUENCE (50% - 100%) ---

@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { useGLTF, Float, AdaptiveDpr, AdaptiveEvents, BakeShadows } from '@react-three/drei';
+import { useGLTF, Float, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei';
 import { Suspense, useMemo, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
@@ -45,11 +45,11 @@ const SpiceZModel = () => {
     return (
         <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
             <Canvas
-                shadows
+                // shadows - Disabled for "light" version
                 // Performance optimizations
-                dpr={[1, 1.5]} // Lowering max DPR for better perf on mobile/retina
+                dpr={[1, 1.2]} // Lowering max DPR for better perf
                 gl={{
-                    antialias: false, // Turn off antialias for perf, let DPR handle it
+                    antialias: false,
                     alpha: true,
                     powerPreference: "high-performance",
                     stencil: false,
@@ -57,7 +57,7 @@ const SpiceZModel = () => {
                 }}
                 camera={{ fov: 45, position: [0, 0, 8] }}
                 style={{ pointerEvents: 'none' }}
-                performance={{ min: 0.5 }} // Allow R3F to scale down if perf drops
+                performance={{ min: 0.5 }}
                 frameloop={isInView ? 'always' : 'never'}
             >
                 <Suspense fallback={null}>
@@ -67,15 +67,14 @@ const SpiceZModel = () => {
                                 <Model />
                             </Float>
 
-                            {/* Optimized Lighting - simpler than Stage */}
-                            <ambientLight intensity={0.8} />
-                            <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={1.5} castShadow />
-                            <pointLight position={[-5, -5, -5]} intensity={1} />
+                            {/* Optimized Lighting - simpler, no shadows */}
+                            <ambientLight intensity={1.2} />
+                            <pointLight position={[5, 5, 5]} intensity={1.5} />
+                            <pointLight position={[-5, -5, -5]} intensity={0.5} />
 
                             {/* Performance helpers */}
                             <AdaptiveDpr pixelated />
                             <AdaptiveEvents />
-                            <BakeShadows />
                         </>
                     )}
                 </Suspense>

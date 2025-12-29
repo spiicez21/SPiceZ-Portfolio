@@ -1,14 +1,10 @@
 import { useState, useRef } from 'react';
 import F1NameTags from '../ui/F1NameTags';
 import SectionFrame from '../ui/SectionFrame';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
 
 
 import './OpenTicket.css';
-gsap.registerPlugin(ScrollTrigger);
 
 const OpenTicket = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -19,22 +15,7 @@ const OpenTicket = () => {
     });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-    useGSAP(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            }
-        });
-
-        tl.from(".ticket-header-line", {
-            width: 0,
-            duration: 0.8,
-            ease: "expo.inOut"
-        });
-
-    }, { scope: containerRef });
+    // Simplified: Removed GSAP ScrollTrigger for minor line animation
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

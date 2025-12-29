@@ -1,38 +1,11 @@
-import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import TopographicBackground from './TopographicBackground';
 import { lazy, Suspense } from 'react';
 
 const SpiceZModel = lazy(() => import('./SpiceZModel'));
 
-gsap.registerPlugin(ScrollTrigger);
-
 const F1NameTags = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            // Simple Slide-in
-            // Simple Slide-in with autoAlpha for safety
-            gsap.set(".driver-tag", { autoAlpha: 0, x: -20 });
-
-            gsap.to(".driver-tag", {
-                autoAlpha: 1,
-                x: 0,
-                duration: 0.6,
-                stagger: 0.2,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 90%", // Trigger slightly earlier
-                    toggleActions: "play none none reverse"
-                }
-            });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
 
     const drivers = [
         { name: "LEWIS HAMILTON", number: "44", team: "MERCEDES-AMG PETRONAS" },
@@ -46,22 +19,37 @@ const F1NameTags = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            padding: '0' // Removed padding to fit better
+            padding: '0'
         }}>
+            <style>
+                {`
+                @keyframes slideInTag {
+                    from { opacity: 0; transform: translateX(-20px); }
+                    to { opacity: 1; transform: translateX(0); }
+                }
+                .driver-tag-animate {
+                    animation: slideInTag 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+                }
+                `}
+            </style>
             {/* Driver Tags Section */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {drivers.map((driver, index) => (
-                    <div key={index} className="driver-tag" style={{
-                        borderLeft: '3px solid var(--accent)', // Slightly thinner border
-                        background: 'linear-gradient(90deg, rgba(178, 255, 5, 0.05) 0%, transparent 100%)',
-                        padding: '0.75rem 1rem', // Compact padding
-                        position: 'relative',
-                        overflow: 'hidden',
-                        height: '70px', // Fixed height (~Spotify badge)
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center'
-                    }}>
+                    <div key={index}
+                        className="driver-tag-animate"
+                        style={{
+                            borderLeft: '3px solid var(--accent)',
+                            background: 'linear-gradient(90deg, rgba(178, 255, 5, 0.05) 0%, transparent 100%)',
+                            padding: '0.75rem 1rem',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            height: '70px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            animationDelay: `${index * 0.15}s`,
+                            opacity: 0 // Start hidden for animation
+                        }}>
                         {/* Top Detail Line */}
                         <div style={{
                             display: 'flex',
