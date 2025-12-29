@@ -53,30 +53,30 @@ const StackTrace = memo(() => {
     useGSAP(() => {
         if (!containerRef.current) return;
 
-        // Animate logos on initial view
+        // Animate logos on initial view with a single ScrollTrigger
         const logos = containerRef.current.querySelectorAll('.tech-logo');
-        logos.forEach((logo, index) => {
-            gsap.fromTo(logo,
-                {
-                    scale: 0,
-                    opacity: 0,
-                    rotation: -180
-                },
-                {
-                    scale: 1,
-                    opacity: 1,
-                    rotation: 0,
-                    duration: 0.6,
-                    delay: index * 0.05,
-                    ease: "back.out(1.7)",
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse"
-                    }
+
+        gsap.fromTo(logos,
+            {
+                scale: 0,
+                autoAlpha: 0,
+                rotation: -180
+            },
+            {
+                scale: 1,
+                autoAlpha: 1,
+                rotation: 0,
+                duration: 0.6,
+                stagger: 0.05,
+                ease: "back.out(1.7)",
+                force3D: true,
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
                 }
-            );
-        });
+            }
+        );
 
     }, { scope: containerRef });
 

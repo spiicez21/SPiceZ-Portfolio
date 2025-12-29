@@ -35,31 +35,31 @@ const AnimateIn = ({
         if (!element) return;
 
         const defaultFrom: Record<string, gsap.TweenVars> = {
-            'fade-up': { opacity: 0, y: 30 },
-            'fade-in': { opacity: 0 },
-            'slide-left': { opacity: 0, x: -50 },
-            'slide-right': { opacity: 0, x: 50 },
-            'scale-up': { opacity: 0, scale: 0.9 },
-            'blur-in': { opacity: 0, filter: 'blur(10px)' },
-            '3d-flip': { opacity: 0, rotateX: 90, transformPerspective: 1000, transformOrigin: 'top center' },
-            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', opacity: 0 },
-            'blur-slide': { opacity: 0, filter: 'blur(20px)', y: 50 },
+            'fade-up': { autoAlpha: 0, y: 30 },
+            'fade-in': { autoAlpha: 0 },
+            'slide-left': { autoAlpha: 0, x: -50 },
+            'slide-right': { autoAlpha: 0, x: 50 },
+            'scale-up': { autoAlpha: 0, scale: 0.9 },
+            'blur-in': { autoAlpha: 0, filter: 'blur(4px)' }, // Reduced from 10px
+            '3d-flip': { autoAlpha: 0, rotateX: 90, transformPerspective: 1000, transformOrigin: 'top center' },
+            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', autoAlpha: 0 },
+            'blur-slide': { autoAlpha: 0, filter: 'blur(8px)', y: 50 }, // Reduced from 20px
         };
 
         const defaultTo: Record<string, gsap.TweenVars> = {
-            'fade-up': {}, // uses defaults
+            'fade-up': {},
             'fade-in': {},
             'slide-left': {},
             'slide-right': {},
             'scale-up': {},
             'blur-in': { filter: 'blur(0px)' },
-            '3d-flip': { opacity: 1, rotateX: 0, ease: 'power2.out' }, // transformPerspective persists
-            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1, ease: 'power4.inOut' },
-            'blur-slide': { opacity: 1, filter: 'blur(0px)', y: 0, ease: 'power2.out' },
+            '3d-flip': { autoAlpha: 1, rotateX: 0, ease: 'power2.out' },
+            'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', autoAlpha: 1, ease: 'power4.inOut' },
+            'blur-slide': { autoAlpha: 1, filter: 'blur(0px)', y: 0, ease: 'power2.out' },
         };
 
         const baseTo: gsap.TweenVars = {
-            opacity: 1,
+            autoAlpha: 1,
             y: 0,
             x: 0,
             scale: 1,
@@ -68,9 +68,10 @@ const AnimateIn = ({
             delay: delay,
             stagger: stagger,
             ease: 'power3.out',
+            force3D: true, // Hardware acceleration hint
             scrollTrigger: {
                 trigger: element,
-                start: `top ${100 - (threshold * 100)}%`, // e.g. "top 80%"
+                start: `top ${100 - (threshold * 100)}%`,
                 toggleActions: 'play none none none',
             }
         };

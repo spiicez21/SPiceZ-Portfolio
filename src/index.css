@@ -4,7 +4,7 @@
 /* Clash Display - Small/Regular */
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Regular.woff2') format('woff2');
+  src: url('/webfonts/ClashDisplay/ClashDisplay-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Medium.woff2') format('woff2');
+  src: url('/webfonts/ClashDisplay/ClashDisplay-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Semibold.woff2') format('woff2');
+  src: url('/webfonts/ClashDisplay/ClashDisplay-Semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;

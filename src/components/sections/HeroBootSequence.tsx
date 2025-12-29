@@ -64,7 +64,8 @@ const HeroBootSequence = () => {
                 borderRadius: "24px",
                 ease: "power2.out",
                 duration: 0.4,
-                force3D: true
+                force3D: true,
+                willChange: "transform, opacity"
             },
             0
         );
@@ -88,8 +89,7 @@ const HeroBootSequence = () => {
             gsap.set(signaturePathRef.current, {
                 strokeDasharray: length,
                 strokeDashoffset: length,
-                opacity: 1,
-                visibility: "visible"
+                autoAlpha: 1
             });
 
             tl.fromTo(signaturePathRef.current,
@@ -105,23 +105,23 @@ const HeroBootSequence = () => {
         }
 
         // 3. Hero Elements Fade Out (40% - 50%)
-        // Combined fade outs
         tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current, ".hero-marquee-bg"], {
-            opacity: 0,
+            autoAlpha: 0,
             y: -30,
             duration: 0.1,
             ease: "power2.in",
-            stagger: 0.02
+            stagger: 0.01,
+            force3D: true
         }, 0.4);
 
-        tl.to(contentWrapperRef.current, { opacity: 0, scale: 0.6, duration: 0.3 }, 0.5);
+        tl.to(contentWrapperRef.current, { autoAlpha: 0, scale: 0.6, duration: 0.3, force3D: true }, 0.5);
 
         // --- WHOAMI SEQUENCE (50% - 100%) ---
 
         // 4. WhoAmI Slides Up (50% - 70%)
         tl.fromTo(whoAmIRef.current,
-            { y: "120vh", opacity: 0 },
-            { y: "0vh", opacity: 1, ease: "power3.out", duration: 0.3 },
+            { y: "120vh", autoAlpha: 0 },
+            { y: "0vh", autoAlpha: 1, ease: "power3.out", duration: 0.3, force3D: true },
             0.5
         );
 
@@ -130,8 +130,8 @@ const HeroBootSequence = () => {
         const targets = gsap.utils.toArray([".col-label", ".identity-title", ".status-indicator", ".location-tag", ".bio-para"]);
 
         tl.fromTo(targets,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, stagger: 0.02, duration: 0.2, ease: "power2.out" },
+            { y: 30, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, stagger: 0.01, duration: 0.2, ease: "power2.out", force3D: true },
             0.7
         );
 

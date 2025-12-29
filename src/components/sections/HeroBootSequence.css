@@ -21,10 +21,8 @@
     height: 100%;
     background: #fff;
     transform-origin: center center;
-    will-change: transform;
+    will-change: transform, opacity;
     overflow: hidden;
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition: box-shadow 0.3s ease;
     z-index: 10;
 }
 
@@ -41,6 +39,7 @@
     z-index: 5;
     opacity: 0.2;
     user-select: none;
+    will-change: transform, opacity;
 }
 
 .marquee-row {
@@ -51,6 +50,7 @@
     color: #b2ff05;
     letter-spacing: -0.02em;
     line-height: 1;
+    will-change: transform;
 }
 
 .marquee-row.right {
@@ -177,6 +177,7 @@
     /* Start below screen */
     margin-top: 10vh;
     /* Adjustment for spacing */
+    will-change: transform, opacity;
 }
 
 .whoami-revamp {

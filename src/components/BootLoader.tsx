@@ -57,8 +57,6 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
         const secondaryAssets = [
             ...contentImages,
             '/Spotify-Badge/batbro.gif',
-            '/LH44/LH-helment.png',
-            '/LH44/w11-car.png',
         ];
 
         const assetsToLoad = Array.from(new Set([...criticalAssets, ...secondaryAssets]));
@@ -141,14 +139,10 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                 const length = path.getTotalLength();
                 gsap.to(path, {
                     strokeDashoffset: length - (length * (displayProgress / 100)),
-                    duration: 0.4,
-                    ease: "power1.out"
-                });
-
-                // Also fade in the fill as it draws
-                gsap.to(path, {
                     fillOpacity: displayProgress / 100,
-                    duration: 0.6
+                    duration: 0.3,
+                    ease: "none", // Linear mapping for smooth progress
+                    overwrite: "auto"
                 });
             }
         });

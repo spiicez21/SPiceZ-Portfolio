@@ -16,34 +16,29 @@ const VerifiedCredentials = () => {
   useGSAP(() => {
     const cards = gsap.utils.toArray<HTMLElement>('.cert-item');
 
-    // HOLOGRAM PROJECTION - Scan line build-up
-    cards.forEach((card, index) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
-      });
-
-      tl.fromTo(card,
-        {
-          clipPath: 'polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)',
-          opacity: 0,
-          filter: 'brightness(2) blur(3px)',
-        },
-        {
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          opacity: 1,
-          filter: 'brightness(1) blur(0px)',
-          duration: 1.2,
-          delay: index * 0.08,
-          ease: 'power2.out',
-        }
-      )
-        .to(card, { opacity: 0.8, duration: 0.05 }, '<0.5')
-        .to(card, { opacity: 1, duration: 0.05 });
+    // Single timeline for all cards in the section
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
     });
+
+    tl.fromTo(cards,
+      {
+        clipPath: 'polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)',
+        autoAlpha: 0,
+      },
+      {
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        autoAlpha: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power2.out',
+        force3D: true
+      }
+    );
   }, { scope: containerRef });
 
   return (
