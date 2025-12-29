@@ -16,8 +16,6 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'gsap-vendor': ['gsap', '@gsap/react'],
-          'three-core': ['three'],
-          'three-bindings': ['@react-three/fiber', '@react-three/drei'],
           'ui-vendor': ['lucide-react', 'react-icons'],
           'smooth-scroll': ['lenis'],
         },

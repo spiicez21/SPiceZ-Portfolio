@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import { useProgress } from '@react-three/drei';
 import { gsap } from '../lib/animations/gsapClient';
 import projectsData from '../content/projects.json';
 import graphicsData from '../content/graphics.json';
@@ -14,7 +13,6 @@ interface BootLoaderProps {
 
 const BootLoader = ({ onComplete }: BootLoaderProps) => {
     const [imageProgress, setImageProgress] = useState(0);
-    const { progress: threeProgress, active: threeActive } = useProgress();
     const [displayProgress, setDisplayProgress] = useState(0);
     const [svgData, setSvgData] = useState<{ d: string, fill: string }[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -91,17 +89,11 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
     // Combine progresses and finish
     useEffect(() => {
-        // If Three.js is not active and progress is 0, it might not have started or nothing to load
-        // If it's 100, it's finished.
-        const effectiveThreeProgress = (!threeActive && threeProgress === 0) ? 100 : threeProgress;
-
-        const totalProgress = (imageProgress + effectiveThreeProgress) / 2;
-        const finalProgress = Math.round(totalProgress);
-
+        const finalProgress = Math.round(imageProgress);
         setDisplayProgress(finalProgress);
 
-        // We finish when both are effectively 100% and three is no longer active
-        if (imageProgress === 100 && (threeProgress === 100 || !threeActive)) {
+        // We finish when images are effectively 100%
+        if (imageProgress === 100) {
             const timer = setTimeout(() => {
                 gsap.to(containerRef.current, {
                     opacity: 0,
@@ -114,7 +106,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             }, 800);
             return () => clearTimeout(timer);
         }
-    }, [imageProgress, threeProgress, threeActive, onComplete]);
+    }, [imageProgress, onComplete]);
 
     // Initialize SVG paths once data is loaded
     useEffect(() => {

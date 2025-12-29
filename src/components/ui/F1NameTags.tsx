@@ -1,8 +1,5 @@
 import { useRef } from 'react';
 import TopographicBackground from './TopographicBackground';
-import { lazy, Suspense } from 'react';
-
-const SpiceZModel = lazy(() => import('./SpiceZModel'));
 
 const F1NameTags = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -112,13 +109,6 @@ const F1NameTags = () => {
                 {/* Background Contours */}
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
                     <TopographicBackground lineColor="rgba(255, 255, 255, 0.1)" />
-                </div>
-
-                {/* 3D Model Layer */}
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
-                    <Suspense fallback={null}>
-                        <SpiceZModel />
-                    </Suspense>
                 </div>
 
                 <div style={{
