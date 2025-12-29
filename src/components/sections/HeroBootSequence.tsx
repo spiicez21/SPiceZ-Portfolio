@@ -52,20 +52,11 @@ const HeroBootSequence = () => {
 
         // --- HERO SEQUENCE (0% - 45%) ---
 
-        // Set up signature stroke animation
-        if (signaturePathRef.current) {
-            const pathLength = signaturePathRef.current.getTotalLength();
-            gsap.set(signaturePathRef.current, {
-                strokeDasharray: pathLength,
-                strokeDashoffset: pathLength
-            });
-        }
-
-        // Marquee moves constantly
+        // 1. Marquee moves constantly
         tl.to(marqueeLeftRef.current, { xPercent: -50, ease: "none" }, 0);
         tl.to(marqueeRightRef.current, { xPercent: 50, ease: "none" }, 0);
 
-        // 1. Scale Down & Dim (0% - 40%)
+        // 2. Scale Down & Dim (0% - 40%)
         tl.fromTo(contentWrapperRef.current,
             { scale: 1, borderRadius: "0px" },
             {
@@ -84,19 +75,31 @@ const HeroBootSequence = () => {
             0
         );
 
-        // Animate NavBar text to white as background darkens (Manual Invert)
+        // Animate NavBar text to white as background darkens
         const navFirstName = document.querySelector(".brand-firstname");
         const navLastName = document.querySelector(".brand-lastname");
-
         if (navFirstName) tl.to(navFirstName, { color: "#ffffff", duration: 0.4 }, 0);
         if (navLastName) tl.to(navLastName, { color: "rgba(255, 255, 255, 0.4)", duration: 0.4 }, 0);
 
-        // 2. Signature Draw (0% - 40%)
+        // 3. Signature Draw (0% - 40%)
         if (signaturePathRef.current) {
-            const pathLength = signaturePathRef.current.getTotalLength();
+            const length = signaturePathRef.current.getTotalLength();
+            // Explicitly set initial state outside timeline for robustness
+            gsap.set(signaturePathRef.current, {
+                strokeDasharray: length,
+                strokeDashoffset: length,
+                opacity: 1,
+                visibility: "visible"
+            });
+
             tl.fromTo(signaturePathRef.current,
-                { strokeDashoffset: pathLength },
-                { strokeDashoffset: 0, ease: "power2.inOut", duration: 0.4 },
+                { strokeDashoffset: length },
+                {
+                    strokeDashoffset: 0,
+                    ease: "power2.inOut",
+                    duration: 0.4,
+                    immediateRender: true
+                },
                 0
             );
         }
