@@ -44,7 +44,8 @@
 
 .marquee-row {
     font-family: var(--font-heading);
-    font-size: 22vh;
+    font-size: clamp(8vh, 18vw, 22vh);
+    /* Fluid scaling */
     font-weight: 900;
     white-space: nowrap;
     color: #b2ff05;
@@ -84,9 +85,10 @@
 }
 
 .hero-signature-svg {
-    width: 50%;
+    width: 60%;
     height: auto;
-    filter: drop-shadow(0 0 5px rgba(97, 138, 0, 0.8)) drop-shadow(0 0 3px rgb(124, 177, 0));
+    filter: drop-shadow(0 0 4px rgba(178, 255, 5, 0.4));
+    /* Simplified shadow */
 }
 
 /* Dim Overlay - Olive green tint */
@@ -212,11 +214,13 @@
 /* Col 1: Identity */
 .identity-title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(2rem, 8vw, 5rem);
+    /* Fluid scaling */
     color: #fff;
     line-height: 0.95;
     margin: 0;
     pointer-events: auto;
+    word-break: break-word;
 }
 
 .status-indicator {
@@ -303,31 +307,29 @@
 @media (max-width: 1024px) {
     .revamp-grid {
         grid-template-columns: 1fr;
-        gap: 4rem;
-    }
-
-    .identity-title {
-        font-size: 4rem;
-    }
-}
-
-@media (max-width: 900px) {
-    .marquee-row {
-        font-size: 15vh;
+        gap: clamp(2rem, 5vh, 4rem);
     }
 
     .hero-signature-wrapper {
-        width: 95vw;
+        left: 50%;
+        /* Center signature on small screens */
+        width: 100vw;
     }
 
-    .hero-portrait-container {
-        max-width: 100%;
+    .bio-para {
+        font-size: clamp(1rem, 1.2vw + 0.8rem, 1.25rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .whoami-section {
+        padding: 0 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
-    .marquee-row {
-        font-size: 12vh;
+    .whoami-section {
+        padding: 0 1rem;
     }
 }
 

@@ -12,14 +12,27 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
 
         let heightMap: number[][] = [];
 
+        const isMobile = window.innerWidth <= 768;
+        // Increase step size on mobile to reduce computation
+        const step = isMobile ? 30 : 20;
+        const resolution = step;
+
         const resize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            // Limit canvas size for performance on high-DPI screens
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+
             generateHeightMap();
-            drawContours();
+            requestAnimationFrame(drawContours);
         };
 
         class PerlinNoise {
+            // ... (rest of the class remains same)
             private permutation: number[];
 
             constructor(seed = Math.random()) {
@@ -97,9 +110,9 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         const generateHeightMap = () => {
-            const resolution = 20;
-            const cols = Math.ceil(canvas.width / resolution);
-            const rows = Math.ceil(canvas.height / resolution);
+            // Buffer of 2 to handle bilinear sampling at right/bottom edges safely
+            const cols = Math.ceil(window.innerWidth / resolution) + 2;
+            const rows = Math.ceil(window.innerHeight / resolution) + 2;
 
             heightMap = [];
             for (let y = 0; y <= rows; y++) {
@@ -111,21 +124,20 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         const getHeight = (x: number, y: number): number => {
-            const resolution = 20;
             const col = x / resolution;
             const row = y / resolution;
 
-            if (row < 0 || row >= heightMap.length - 1 || col < 0 || !heightMap[Math.floor(row)] || col >= heightMap[0].length - 1) {
-                return 0;
-            }
+            // Robust clamping to map indices
+            const maxCol = heightMap[0].length - 1;
+            const maxRow = heightMap.length - 1;
 
-            const x0 = Math.floor(col);
-            const y0 = Math.floor(row);
+            const x0 = Math.max(0, Math.min(Math.floor(col), maxCol - 1));
+            const y0 = Math.max(0, Math.min(Math.floor(row), maxRow - 1));
             const x1 = x0 + 1;
             const y1 = y0 + 1;
 
-            const fx = col - x0;
-            const fy = row - y0;
+            const fx = (x / resolution) - x0;
+            const fy = (y / resolution) - y0;
 
             const h00 = heightMap[y0][x0];
             const h10 = heightMap[y0][x1];
@@ -142,20 +154,21 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             const contourInterval = 0.05;
             const numContours = Math.floor(1 / contourInterval);
 
-            ctx.lineWidth = 1.5;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            ctx.lineWidth = 1.1; // Slightly thinner for cleaner lines
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.strokeStyle = lineColor;
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear before drawing
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             for (let i = 0; i <= numContours; i++) {
                 const elevation = i * contourInterval;
 
                 const marchingSquares = (elev: number) => {
-                    const step = 20;
-
-                    for (let y = 0; y < canvas.height - step; y += step) {
-                        for (let x = 0; x < canvas.width - step; x += step) {
+                    for (let y = 0; y < height; y += step) {
+                        for (let x = 0; x < width; x += step) {
                             const tl = getHeight(x, y) > elev ? 1 : 0;
                             const tr = getHeight(x + step, y) > elev ? 1 : 0;
                             const br = getHeight(x + step, y + step) > elev ? 1 : 0;
@@ -183,6 +196,8 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
                             const bottom = interpolate(h_bl, h_br, [x, y + step], [x + step, y + step]);
                             const left = interpolate(h_tl, h_bl, [x, y], [x, y + step]);
 
+                            const average = (h_tl + h_tr + h_br + h_bl) / 4;
+
                             ctx.beginPath();
 
                             switch (cellValue) {
@@ -203,10 +218,17 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
                                     ctx.lineTo(right[0], right[1]);
                                     break;
                                 case 5:
-                                    ctx.moveTo(top[0], top[1]);
-                                    ctx.lineTo(left[0], left[1]);
-                                    ctx.moveTo(bottom[0], bottom[1]);
-                                    ctx.lineTo(right[0], right[1]);
+                                    if (average < elev) {
+                                        ctx.moveTo(top[0], top[1]);
+                                        ctx.lineTo(right[0], right[1]);
+                                        ctx.moveTo(bottom[0], bottom[1]);
+                                        ctx.lineTo(left[0], left[1]);
+                                    } else {
+                                        ctx.moveTo(top[0], top[1]);
+                                        ctx.lineTo(left[0], left[1]);
+                                        ctx.moveTo(bottom[0], bottom[1]);
+                                        ctx.lineTo(right[0], right[1]);
+                                    }
                                     break;
                                 case 6: case 9:
                                     ctx.moveTo(top[0], top[1]);
@@ -217,10 +239,17 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
                                     ctx.lineTo(left[0], left[1]);
                                     break;
                                 case 10:
-                                    ctx.moveTo(top[0], top[1]);
-                                    ctx.lineTo(right[0], right[1]);
-                                    ctx.moveTo(left[0], left[1]);
-                                    ctx.lineTo(bottom[0], bottom[1]);
+                                    if (average < elev) {
+                                        ctx.moveTo(top[0], top[1]);
+                                        ctx.lineTo(left[0], left[1]);
+                                        ctx.moveTo(bottom[0], bottom[1]);
+                                        ctx.lineTo(right[0], right[1]);
+                                    } else {
+                                        ctx.moveTo(top[0], top[1]);
+                                        ctx.lineTo(right[0], right[1]);
+                                        ctx.moveTo(left[0], left[1]);
+                                        ctx.lineTo(bottom[0], bottom[1]);
+                                    }
                                     break;
                             }
 

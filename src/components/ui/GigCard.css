@@ -3,8 +3,7 @@
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.9);
     background: #080808 !important;
-    /* Solid black background */
-    backdrop-filter: blur(8px);
+    /* Solid black background for better performance */
     padding: 1.2rem;
     border-radius: 8px;
     border: 1px solid rgba(178, 255, 5, 0.4);
@@ -14,7 +13,7 @@
     gap: 0.75rem;
     width: 267px;
     /* Slight increase in width */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     z-index: 30;
     transition: transform 0.3s ease;
 }
