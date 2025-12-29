@@ -8,6 +8,13 @@
     z-index: 100000;
 }
 
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .custom-cursor-container {
+        display: none !important;
+    }
+}
+
 .cursor-dot {
     position: fixed;
     top: 0;

@@ -25,3 +25,13 @@
     /* Optional: maintain some of the previous vertical centering shift if needed */
     transform: translateY(-450px);
 }
+
+@media (max-width: 768px) {
+    .hero-main-image {
+        transform: translateY(-5%);
+        /* Use percentage for better mobile scaling */
+        width: 140%;
+        /* Slightly oversized for better framing on narrow screens */
+        max-width: none;
+    }
+}
