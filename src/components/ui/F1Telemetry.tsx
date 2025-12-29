@@ -206,13 +206,11 @@ const F1Telemetry = () => {
             <div className="telemetry-data">
                 <div className="telemetry-group">
                     <span className="telemetry-label">DRIVER</span>
-                    <img src="/LH44/LH-helment.png" alt="Helmet" style={{ height: '24px', margin: '0 8px' }} />
                     <span className="telemetry-value text-neon">HAM</span>
                 </div>
                 <div className="telemetry-sep">/</div>
                 <div className="telemetry-group">
                     <span className="telemetry-label">NO.</span>
-                    <img src="/LH44/w11-car.png" alt="Car" style={{ height: '16px', margin: '0 8px' }} />
                     <span className="telemetry-value text-purple">44</span>
                 </div>
 
