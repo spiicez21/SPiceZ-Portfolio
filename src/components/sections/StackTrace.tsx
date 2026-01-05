@@ -69,7 +69,6 @@ const StackTrace = memo(() => {
                 duration: 0.6,
                 stagger: 0.05,
                 ease: "back.out(1.7)",
-                force3D: true,
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: "top 80%",

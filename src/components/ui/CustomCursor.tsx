@@ -22,14 +22,14 @@ const CustomCursor = () => {
         let mouseX = 0;
         let mouseY = 0;
 
-        const mainX = gsap.quickTo(mainRef.current, "x", { duration: 0.15, ease: "power3", force3D: true });
-        const mainY = gsap.quickTo(mainRef.current, "y", { duration: 0.15, ease: "power3", force3D: true });
+        const mainX = gsap.quickTo(mainRef.current, "x", { duration: 0.15, ease: "power3" });
+        const mainY = gsap.quickTo(mainRef.current, "y", { duration: 0.15, ease: "power3" });
 
-        const echo1X = gsap.quickTo(echo1Ref.current, "x", { duration: 0.3, ease: "power2", force3D: true });
-        const echo1Y = gsap.quickTo(echo1Ref.current, "y", { duration: 0.3, ease: "power2", force3D: true });
+        const echo1X = gsap.quickTo(echo1Ref.current, "x", { duration: 0.3, ease: "power2" });
+        const echo1Y = gsap.quickTo(echo1Ref.current, "y", { duration: 0.3, ease: "power2" });
 
-        const echo2X = gsap.quickTo(echo2Ref.current, "x", { duration: 0.45, ease: "power2", force3D: true });
-        const echo2Y = gsap.quickTo(echo2Ref.current, "y", { duration: 0.45, ease: "power2", force3D: true });
+        const echo2X = gsap.quickTo(echo2Ref.current, "x", { duration: 0.45, ease: "power2" });
+        const echo2Y = gsap.quickTo(echo2Ref.current, "y", { duration: 0.45, ease: "power2" });
 
         const handleMouseMove = (e: MouseEvent) => {
             mouseX = e.clientX;

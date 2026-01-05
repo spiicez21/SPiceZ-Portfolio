@@ -36,7 +36,6 @@ const VerifiedCredentials = () => {
         duration: 0.8,
         stagger: 0.1,
         ease: 'power2.out',
-        force3D: true
       }
     );
   }, { scope: containerRef });

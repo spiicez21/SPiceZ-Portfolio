@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger, setWillChange, clearWillChange, shouldReduceMotion } from '../../lib/animations/gsapClient';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +22,7 @@ const AnimateIn = ({
     delay = 0,
     duration = 0.6,
     stagger = 0,
-    threshold = 0.2, // 20% visible
+    threshold = 0.2,
     className = '',
     from,
     to
@@ -34,16 +33,22 @@ const AnimateIn = ({
         const element = ref.current;
         if (!element) return;
 
+        // Skip animations for users who prefer reduced motion
+        if (shouldReduceMotion()) {
+            gsap.set(element.children, { autoAlpha: 1 });
+            return;
+        }
+
         const defaultFrom: Record<string, gsap.TweenVars> = {
-            'fade-up': { autoAlpha: 0, y: 30 },
+            'fade-up': { autoAlpha: 0, y: 20 },
             'fade-in': { autoAlpha: 0 },
-            'slide-left': { autoAlpha: 0, x: -50 },
-            'slide-right': { autoAlpha: 0, x: 50 },
-            'scale-up': { autoAlpha: 0, scale: 0.9 },
-            'blur-in': { autoAlpha: 0, filter: 'blur(4px)' }, // Reduced from 10px
-            '3d-flip': { autoAlpha: 0, rotateX: 90, transformPerspective: 1000, transformOrigin: 'top center' },
+            'slide-left': { autoAlpha: 0, x: -30 },
+            'slide-right': { autoAlpha: 0, x: 30 },
+            'scale-up': { autoAlpha: 0, scale: 0.95 },
+            'blur-in': { autoAlpha: 0, filter: 'blur(2px)' },
+            '3d-flip': { autoAlpha: 0, rotateX: 45, transformPerspective: 1000, transformOrigin: 'top center' },
             'clip-reveal': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', autoAlpha: 0 },
-            'blur-slide': { autoAlpha: 0, filter: 'blur(8px)', y: 50 }, // Reduced from 20px
+            'blur-slide': { autoAlpha: 0, filter: 'blur(4px)', y: 30 },
         };
 
         const defaultTo: Record<string, gsap.TweenVars> = {
@@ -68,11 +73,16 @@ const AnimateIn = ({
             delay: delay,
             stagger: stagger,
             ease: 'power3.out',
-            force3D: true, // Hardware acceleration hint
             scrollTrigger: {
                 trigger: element,
                 start: `top ${100 - (threshold * 100)}%`,
                 toggleActions: 'play none none none',
+                onEnter: () => {
+                    setWillChange(element.children, 'transform, opacity');
+                },
+                onLeave: () => {
+                    clearWillChange(element.children);
+                },
             }
         };
 
@@ -81,14 +91,19 @@ const AnimateIn = ({
         const specificTo = defaultTo[animationType] || {};
         const toVars = { ...baseTo, ...specificTo, ...to };
 
-        // Handle specific styles needed for 3D/Clip
+        // Handle specific styles for 3D animations
         if (animationType === '3d-flip') {
             gsap.set(element.children, { transformStyle: 'preserve-3d' });
         }
 
-        gsap.fromTo(element.children, fromVars, toVars);
+        const tween = gsap.fromTo(element.children, fromVars, toVars);
+        
+        // Clear willChange after animation completes
+        tween.eventCallback('onComplete', () => {
+            clearWillChange(element.children);
+        });
 
-    }, { scope: ref });
+    }, { scope: ref, dependencies: [animation, delay, duration, stagger, threshold] });
 
     return (
         <div ref={ref} className={className}>

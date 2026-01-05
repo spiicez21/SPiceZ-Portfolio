@@ -52,21 +52,23 @@ const HeroBootSequence = () => {
 
         // --- HERO SEQUENCE (0% - 45%) ---
 
-        // 1. Marquee moves constantly
+        // Set up signature stroke animation
+        if (signaturePathRef.current) {
+            const pathLength = signaturePathRef.current.getTotalLength();
+            gsap.set(signaturePathRef.current, {
+                strokeDasharray: pathLength,
+                strokeDashoffset: pathLength
+            });
+        }
+
+        // Marquee moves constantly
         tl.to(marqueeLeftRef.current, { xPercent: -50, ease: "none" }, 0);
         tl.to(marqueeRightRef.current, { xPercent: 50, ease: "none" }, 0);
 
-        // 2. Scale Down & Dim (0% - 40%)
+        // 1. Scale Down & Dim (0% - 40%)
         tl.fromTo(contentWrapperRef.current,
-            { scale: 1, borderRadius: "0px" },
-            {
-                scale: 0.7,
-                borderRadius: "24px",
-                ease: "power2.out",
-                duration: 0.4,
-                force3D: true,
-                willChange: "transform, opacity"
-            },
+            { scale: 1, borderRadius: "0px", boxShadow: "0 0 0 rgba(0, 0, 0, 0)" },
+            { scale: 0.7, borderRadius: "24px", boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)", ease: "power2.out", duration: 0.4 },
             0
         );
 
@@ -76,52 +78,42 @@ const HeroBootSequence = () => {
             0
         );
 
-        // Animate NavBar text to white as background darkens
+        // Animate NavBar text to white as background darkens (Manual Invert)
+        // Note: NavBar is outside the component scope, so we must query selector globally
         const navFirstName = document.querySelector(".brand-firstname");
         const navLastName = document.querySelector(".brand-lastname");
+
         if (navFirstName) tl.to(navFirstName, { color: "#ffffff", duration: 0.4 }, 0);
         if (navLastName) tl.to(navLastName, { color: "rgba(255, 255, 255, 0.4)", duration: 0.4 }, 0);
 
-        // 3. Signature Draw (0% - 40%)
+        // 2. Signature Draw (0% - 40%)
         if (signaturePathRef.current) {
-            const length = signaturePathRef.current.getTotalLength();
-            // Explicitly set initial state outside timeline for robustness
-            gsap.set(signaturePathRef.current, {
-                strokeDasharray: length,
-                strokeDashoffset: length,
-                autoAlpha: 1
-            });
-
+            const pathLength = signaturePathRef.current.getTotalLength();
             tl.fromTo(signaturePathRef.current,
-                { strokeDashoffset: length },
-                {
-                    strokeDashoffset: 0,
-                    ease: "power2.inOut",
-                    duration: 0.4,
-                    immediateRender: true
-                },
+                { strokeDashoffset: pathLength },
+                { strokeDashoffset: 0, ease: "power2.inOut", duration: 0.4 },
                 0
             );
         }
 
         // 3. Hero Elements Fade Out (40% - 50%)
-        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current, ".hero-marquee-bg"], {
-            autoAlpha: 0,
-            y: -30,
+        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current], {
+            opacity: 0,
+            y: -50,
             duration: 0.1,
-            ease: "power2.in",
-            stagger: 0.01,
-            force3D: true
+            ease: "power2.in"
         }, 0.4);
 
-        tl.to(contentWrapperRef.current, { autoAlpha: 0, scale: 0.6, duration: 0.3, force3D: true }, 0.5);
+        // 3b. Fade out background marquee and content wrapper entirely
+        tl.to(".hero-marquee-bg", { opacity: 0, duration: 0.2 }, 0.45);
+        tl.to(contentWrapperRef.current, { opacity: 0, scale: 0.6, duration: 0.3 }, 0.5);
 
         // --- WHOAMI SEQUENCE (50% - 100%) ---
 
         // 4. WhoAmI Slides Up (50% - 70%)
         tl.fromTo(whoAmIRef.current,
-            { y: "120vh", autoAlpha: 0 },
-            { y: "0vh", autoAlpha: 1, ease: "power3.out", duration: 0.3, force3D: true },
+            { y: "120vh", opacity: 0 },
+            { y: "0vh", opacity: 1, ease: "power3.out", duration: 0.3 },
             0.5
         );
 
@@ -130,8 +122,8 @@ const HeroBootSequence = () => {
         const targets = gsap.utils.toArray([".col-label", ".identity-title", ".status-indicator", ".location-tag", ".bio-para"]);
 
         tl.fromTo(targets,
-            { y: 30, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, stagger: 0.01, duration: 0.2, ease: "power2.out", force3D: true },
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.02, duration: 0.2, ease: "power2.out" },
             0.7
         );
 

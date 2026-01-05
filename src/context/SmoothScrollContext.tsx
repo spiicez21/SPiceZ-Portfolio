@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import Lenis from 'lenis';
-import { gsap } from '../lib/animations/gsapClient';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger, shouldReduceMotion } from '../lib/animations/gsapClient';
 
 const SmoothScrollContext = createContext<Lenis | null>(null);
 
@@ -11,12 +10,15 @@ export const SmoothScrollProvider = ({ children }: { children: React.ReactNode }
     const [lenis, setLenis] = useState<Lenis | null>(null);
 
     useEffect(() => {
+        // Disable smooth scroll for reduced motion preference
+        const smoothScrollEnabled = !shouldReduceMotion();
+
         const lenisInstance = new Lenis({
-            lerp: 0.1, // Using lerp for smoother fixed-rate damping
-            duration: 1.2,
+            lerp: smoothScrollEnabled ? 0.1 : 1,
+            duration: smoothScrollEnabled ? 1.2 : 0,
             orientation: 'vertical',
             gestureOrientation: 'vertical',
-            smoothWheel: true,
+            smoothWheel: smoothScrollEnabled,
             wheelMultiplier: 1,
             touchMultiplier: 2,
         });
@@ -25,13 +27,19 @@ export const SmoothScrollProvider = ({ children }: { children: React.ReactNode }
 
         // Sync with GSAP ScrollTrigger
         lenisInstance.on('scroll', ScrollTrigger.update);
+        
+        // ScrollTrigger will use window by default with Lenis
 
         const update = (time: number) => {
             lenisInstance.raf(time * 1000);
         };
 
         gsap.ticker.add(update);
-        gsap.ticker.lagSmoothing(0);
+
+        // Refresh ScrollTrigger after Lenis is ready
+        requestAnimationFrame(() => {
+            ScrollTrigger.refresh();
+        });
 
         return () => {
             lenisInstance.destroy();

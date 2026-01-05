@@ -21,8 +21,10 @@
     height: 100%;
     background: #fff;
     transform-origin: center center;
-    will-change: transform, opacity;
+    will-change: transform;
     overflow: hidden;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: box-shadow 0.3s ease;
     z-index: 10;
 }
 
@@ -39,19 +41,16 @@
     z-index: 5;
     opacity: 0.2;
     user-select: none;
-    will-change: transform, opacity;
 }
 
 .marquee-row {
     font-family: var(--font-heading);
-    font-size: clamp(8vh, 18vw, 22vh);
-    /* Fluid scaling */
+    font-size: 22vh;
     font-weight: 900;
     white-space: nowrap;
     color: #b2ff05;
     letter-spacing: -0.02em;
     line-height: 1;
-    will-change: transform;
 }
 
 .marquee-row.right {
@@ -85,10 +84,9 @@
 }
 
 .hero-signature-svg {
-    width: 60%;
+    width: 50%;
     height: auto;
-    filter: drop-shadow(0 0 4px rgba(178, 255, 5, 0.4));
-    /* Simplified shadow */
+    filter: drop-shadow(0 0 5px rgba(97, 138, 0, 0.8)) drop-shadow(0 0 3px rgb(124, 177, 0));
 }
 
 /* Dim Overlay - Olive green tint */
@@ -172,14 +170,13 @@
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 0rem;
+    padding: 0 2rem;
     opacity: 0;
     /* Hidden initially */
     transform: translateY(100vh);
     /* Start below screen */
     margin-top: 10vh;
     /* Adjustment for spacing */
-    will-change: transform, opacity;
 }
 
 .whoami-revamp {
@@ -214,13 +211,11 @@
 /* Col 1: Identity */
 .identity-title {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 8vw, 5rem);
-    /* Fluid scaling */
+    font-size: clamp(3rem, 6vw, 5rem);
     color: #fff;
     line-height: 0.95;
     margin: 0;
     pointer-events: auto;
-    word-break: break-word;
 }
 
 .status-indicator {
@@ -307,29 +302,31 @@
 @media (max-width: 1024px) {
     .revamp-grid {
         grid-template-columns: 1fr;
-        gap: clamp(2rem, 5vh, 4rem);
+        gap: 4rem;
     }
 
-    .hero-signature-wrapper {
-        left: 50%;
-        /* Center signature on small screens */
-        width: 100vw;
-    }
-
-    .bio-para {
-        font-size: clamp(1rem, 1.2vw + 0.8rem, 1.25rem);
+    .identity-title {
+        font-size: 4rem;
     }
 }
 
-@media (max-width: 768px) {
-    .whoami-section {
-        padding: 0 1.5rem;
+@media (max-width: 900px) {
+    .marquee-row {
+        font-size: 15vh;
+    }
+
+    .hero-signature-wrapper {
+        width: 95vw;
+    }
+
+    .hero-portrait-container {
+        max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .whoami-section {
-        padding: 0 1rem;
+    .marquee-row {
+        font-size: 12vh;
     }
 }
 
