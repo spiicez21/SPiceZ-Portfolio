@@ -172,11 +172,23 @@
     text-shadow: 0 0 1.25rem rgba(178, 255, 5, 0.3);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
     .work-nav-text,
     .work-nav-hover-text {
-        font-size: 2.5rem;
+        font-size: 4rem;
+    }
+
+    .work-navigation-container {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .work-nav-text,
+    .work-nav-hover-text {
+        font-size: 2.2rem;
     }
 
     .work-nav-hover-text .char {
@@ -184,6 +196,6 @@
     }
 
     .work-navigation-container {
-        padding: 3rem 0;
+        padding: 2.5rem 0;
     }
 }

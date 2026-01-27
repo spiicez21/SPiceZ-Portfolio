@@ -4,10 +4,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     position: relative;
-    position: relative;
-    /* background: #0a110a; - Removed to show Topographic BG */
 }
 
 .tech-category {
@@ -116,7 +114,11 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
+    .stack-container {
+        gap: 2rem;
+    }
+
     .tech-grid {
         grid-template-columns: repeat(auto-fill, minmax(5.625rem, 1fr));
         gap: 1.25rem;
@@ -129,32 +131,25 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .stack-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        padding: 1.5rem 0;
     }
 
     .tech-grid {
-        grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
         gap: 1rem;
     }
 
     .tech-icon-scattered {
-        width: 5rem;
-        height: 5rem;
-        font-size: 2rem;
+        width: 4.5rem;
+        height: 4.5rem;
+        font-size: 1.8rem;
     }
 
     .hover-card {
-        padding: 0.6rem 1rem;
-    }
-
-    .hover-card-name {
-        font-size: 0.8rem;
-    }
-
-    .hover-card-category {
-        font-size: 0.65rem;
+        display: none;
+        /* Hide hover cards on mobile touch */
     }
 }

@@ -9,6 +9,19 @@
     align-items: center;
     padding: 2rem 4rem;
     pointer-events: none;
+    transition: padding 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (max-width: 1024px) {
+    .navbar.slim-sleek {
+        padding: 1.5rem 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar.slim-sleek {
+        padding: 1rem 1.5rem;
+    }
 }
 
 .nav-module {
@@ -34,6 +47,7 @@
     color: #000;
     text-transform: uppercase;
     letter-spacing: -0.02em;
+    transition: font-size 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .brand-lastname {
@@ -205,7 +219,7 @@
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 1;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .overlay-link:hover .link-text {
@@ -289,12 +303,28 @@
 }
 
 @media (max-width: 1024px) {
-    .navbar.slim-sleek {
-        padding: 1.5rem 2rem;
+
+    /* Tablet refinements */
+    .brand-firstname,
+    .brand-lastname {
+        font-size: 1.35rem;
+    }
+
+    .submenu {
+        right: -56.25rem;
+        /* Adjusted for tablet */
+    }
+
+    .submenu.active {
+        transform: translateY(-50%) translateX(-43.75rem);
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+    .navbar.slim-sleek {
+        padding: 0.5rem 1rem;
+        /* Ultra tight for mobile */
+    }
 
     .nav-action-btn {
         display: none;
@@ -302,23 +332,23 @@
 
     .brand-firstname,
     .brand-lastname {
-        font-size: 1.2rem;
-    }
-
-    .submenu {
-        right: -43.75rem;
-    }
-
-    .submenu.active {
-        transform: translateY(-50%) translateX(-45rem);
-    }
-
-    .submenu-text {
         font-size: 1rem;
+        /* Slightly smaller for mobile */
     }
 
-    .submenu-link {
-        padding: 0.6rem 1rem;
+    /* Submenu on mobile should probably be integrated or handled differently, 
+       but for now we'll just hide it or stack it if it ever appears in mobile menu context */
+    .submenu {
+        display: none;
+    }
+
+    .mobile-toggle {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .link-text {
+        font-size: 2.2rem;
     }
 }
 

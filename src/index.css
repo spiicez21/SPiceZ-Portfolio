@@ -62,46 +62,47 @@
   cursor: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   :root {
-    --section-padding: 3rem;
+    --section-padding: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --section-padding: 2rem;
   }
 }
 
 html {
   /* 
-     Fluid base font size:
-     At 1920px width, this is 16px.
-     This counteracts browser zoom effects on layout proportions.
+     Fluid base font size using interpolation:
+     - Minimum: 14px (Mobile ready)
+     - Preferred: 0.8333vw (Desktop standard 16px @ 1920)
+     - Maximum: 21px (Ultrawide cap)
   */
-  font-size: 0.8333vw;
+  font-size: clamp(14px, 0.8333vw, 21px);
   scroll-padding-top: 6.25rem;
   scroll-behavior: smooth;
-}
-
-/* Cap scaling for ultra-wide and mobile fallbacks */
-@media (min-width: 2560px) {
-  html {
-    font-size: 21px;
-  }
+  transition: font-size 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (max-width: 1440px) {
   html {
-    font-size: 1.1vw;
+    font-size: clamp(14px, 1vw, 18px);
   }
 }
 
 @media (max-width: 1024px) {
   html {
-    font-size: 1.5vw;
+    font-size: clamp(15px, 1.4vw, 18px);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   html {
-    /* Reset to standard scaling for mobile */
     font-size: 16px;
+    /* Return to legible static 16px on mobile */
   }
 }
 
@@ -109,6 +110,16 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Smoothen out layout shifts during resize and state changes */
+  transition: padding 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    margin 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    gap 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    left 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    right 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    bottom 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 body {

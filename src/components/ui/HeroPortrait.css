@@ -12,7 +12,8 @@
     position: relative;
     width: 100%;
     max-width: 53.125rem;
-    height: auto;
+    height: 100%;
+    /* Force height to allow child percentage height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,14 +25,21 @@
     object-fit: contain;
     /* Optional: maintain some of the previous vertical centering shift if needed */
     transform: translateY(-28.125rem);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+        width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .hero-main-image {
-        transform: translateY(-5%);
-        /* Use percentage for better mobile scaling */
-        width: 140%;
-        /* Slightly oversized for better framing on narrow screens */
+        transform: translateY(-30%);
+        /* Final Lift: from -22% to -30% */
+        width: auto;
+        height: 90vh;
+        object-fit: contain;
         max-width: none;
+    }
+
+    .portrait-container {
+        align-items: center;
     }
 }

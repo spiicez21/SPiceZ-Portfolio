@@ -225,11 +225,30 @@
         border: 0.0625rem solid var(--border-ink);
         height: auto;
         border-right: 0.0625rem solid var(--border-ink);
+        padding: 2.5rem;
         /* Restore right border if hidden */
     }
 
     .matrix-container {
         height: 25rem;
         border: 0.0625rem solid var(--border-ink);
+    }
+}
+
+@media (max-width: 640px) {
+    .ticket-system {
+        padding: 1.5rem;
+    }
+
+    .ticket-header {
+        margin-bottom: 2rem;
+    }
+
+    .ticket-form {
+        gap: 1.5rem;
+    }
+
+    .matrix-container {
+        height: 20rem;
     }
 }
