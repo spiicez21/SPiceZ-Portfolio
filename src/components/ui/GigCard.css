@@ -5,15 +5,15 @@
     background: #080808 !important;
     /* Solid black background for better performance */
     padding: 1.2rem;
-    border-radius: 8px;
-    border: 1px solid rgba(178, 255, 5, 0.4);
+    border-radius: 0.5rem;
+    border: 0.0625rem solid rgba(178, 255, 5, 0.4);
     /* Stronger border */
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    width: 267px;
+    width: 16.6875rem;
     /* Slight increase in width */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.8);
     z-index: 30;
     transition: transform 0.3s ease;
 }
@@ -23,7 +23,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.1);
     padding-bottom: 0.5rem;
 }
 

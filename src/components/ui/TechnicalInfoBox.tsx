@@ -8,8 +8,8 @@ const containerStyle: React.CSSProperties = {
     background: 'rgba(5, 5, 5, 0.99)', /* Deep black background */
     backdropFilter: 'blur(10px)',
     padding: '1rem',
-    borderRadius: '8px',
-    border: '1px solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
+    borderRadius: '0.5rem',
+    border: '0.0625rem solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
     display: 'flex',
     flexDirection: 'column',
     gap: '0.5rem',
@@ -21,7 +21,7 @@ const rowStyle: React.CSSProperties = {
     justifyContent: 'space-between',
     alignItems: 'center',
     gap: '2rem',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+    borderBottom: '0.0625rem solid rgba(255, 255, 255, 0.1)',
     paddingBottom: '0.25rem'
 };
 

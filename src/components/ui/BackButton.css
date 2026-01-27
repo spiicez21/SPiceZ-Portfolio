@@ -1,6 +1,6 @@
 .back-button {
     position: fixed;
-    top: 110px;
+    top: 6.875rem;
     left: 4rem;
     z-index: 100;
     display: flex;
@@ -22,8 +22,8 @@
     border-color: rgba(178, 255, 5, 0.6);
     background: rgba(178, 255, 5, 0.05);
     color: rgba(178, 255, 5, 0.9);
-    transform: translateX(-4px);
-    box-shadow: 4px 4px 0 rgba(178, 255, 5, 0.2);
+    transform: translateX(-0.25rem);
+    box-shadow: 0.25rem 0.25rem 0 rgba(178, 255, 5, 0.2);
 }
 
 .back-button svg {
@@ -31,7 +31,7 @@
 }
 
 .back-button:hover svg {
-    transform: translateX(-2px);
+    transform: translateX(-0.125rem);
 }
 
 .back-transition-mask {
@@ -50,14 +50,14 @@
 
 @media (max-width: 768px) {
     .back-button {
-        top: 95px;
+        top: 5.9375rem;
         left: 1rem;
         padding: 0.6rem 1rem;
         font-size: 0.75rem;
     }
 
     .back-button svg {
-        width: 16px;
-        height: 16px;
+        width: 1rem;
+        height: 1rem;
     }
 }

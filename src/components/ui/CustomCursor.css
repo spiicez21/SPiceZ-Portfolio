@@ -19,8 +19,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     background-color: var(--accent);
     border-radius: 50%;
     /* Let GSAP handle the centring via xPercent/yPercent */
@@ -37,7 +37,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    border: 2px solid var(--accent);
+    border: 0.125rem solid var(--accent);
     border-radius: 50%;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -45,13 +45,13 @@
 }
 
 .cursor-echo.echo-1 {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .cursor-echo.echo-2 {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
     opacity: 0.5;
 }
 
@@ -60,10 +60,10 @@
 }
 
 .cursor-dot.active {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
     background-color: rgba(178, 255, 5, 0.3);
-    border: 2px solid var(--accent);
+    border: 0.125rem solid var(--accent);
 }
 
 .cursor-dot.active::after {
@@ -71,8 +71,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 8px;
-    height: 8px;
+    width: 0.5rem;
+    height: 0.5rem;
     background: var(--accent);
     border-radius: 50%;
     transform: translate(-50%, -50%);

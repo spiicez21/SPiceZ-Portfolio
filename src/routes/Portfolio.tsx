@@ -57,22 +57,22 @@ const Portfolio = () => {
             <main style={{ position: 'relative', zIndex: 1 }}>
                 <HeroBootSequence />
 
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <StackTrace />
                 </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <WorkNavigation />
                 </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <VerifiedCredentials />
                 </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <BossesDefeated />
                 </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <GitHubActivity />
                 </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <OpenTicket />
                 </Suspense>
             </main>

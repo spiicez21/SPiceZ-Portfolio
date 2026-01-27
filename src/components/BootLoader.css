@@ -1,51 +1,74 @@
-.boot-loader.minimalist {
+.boot-loader-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0a0a0a;
-    /* Deep black for clean look */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    font-family: var(--font-mono);
-}
-
-.loader-center-content {
+    inset: 0;
+    background: #000;
+    z-index: 10000;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    overflow: hidden;
 }
 
-.loader-logo-svg {
-    filter: drop-shadow(0 0 15px rgba(178, 255, 5, 0.3));
+.loader-logo {
+    margin-bottom: 2rem;
 }
 
-.loader-progress-text {
+.loader-logo svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 0.9375rem rgba(178, 255, 5, 0.3));
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0.625rem rgba(178, 255, 5, 0.2));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 1.25rem rgba(178, 255, 5, 0.4));
+    }
+}
+
+.loader-progress-wrapper {
+    width: 20rem;
+    max-width: 80vw;
+}
+
+.loader-progress-bar {
+    height: 0.125rem;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--accent);
+    box-shadow: 0 0 0.9375rem var(--accent);
+}
+
+.loader-status {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     color: var(--accent);
-    font-size: 1rem;
+    text-transform: uppercase;
     letter-spacing: 0.2em;
     opacity: 0.8;
 }
 
-/* Subtle pulse for the filling logo */
-@keyframes logoPulse {
-    0% {
-        filter: drop-shadow(0 0 10px rgba(178, 255, 5, 0.2));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 20px rgba(178, 255, 5, 0.4));
-    }
-
-    100% {
-        filter: drop-shadow(0 0 10px rgba(178, 255, 5, 0.2));
-    }
-}
-
-.loader-logo-svg {
-    animation: logoPulse 2s infinite ease-in-out;
+.loader-percentage {
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 700;
 }

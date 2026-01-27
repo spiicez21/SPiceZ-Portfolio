@@ -67,8 +67,8 @@ const HeroBootSequence = () => {
 
         // 1. Scale Down & Dim (0% - 40%)
         tl.fromTo(contentWrapperRef.current,
-            { scale: 1, borderRadius: "0px", boxShadow: "0 0 0 rgba(0, 0, 0, 0)" },
-            { scale: 0.7, borderRadius: "24px", boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)", ease: "power2.out", duration: 0.4 },
+            { scale: 1, borderRadius: "0", boxShadow: "0 0 0 rgba(0, 0, 0, 0)" },
+            { scale: 0.7, borderRadius: "1.5rem", boxShadow: "0 1.25rem 3.75rem rgba(0, 0, 0, 0.3)", ease: "power2.out", duration: 0.4 },
             0
         );
 

@@ -173,7 +173,7 @@ const F1Telemetry = () => {
     return (
         <div ref={containerRef} className="footer-telemetry">
             {/* SVG Track Map */}
-            <div className="track-map" style={{ position: 'absolute', bottom: '100%', marginBottom: '1rem', right: '0', width: '100px', height: '150px', zIndex: 0, opacity: 0.8 }}>
+            <div className="track-map" style={{ position: 'absolute', bottom: '100%', marginBottom: '1rem', right: '0', width: '6.25rem', height: '9.375rem', zIndex: 0, opacity: 0.8 }}>
                 <svg viewBox="0 0 629.8 1031.3" style={{ height: '100%', width: 'auto', overflow: 'visible' }}>
                     {/* Full Track Ghost */}
                     <path className="st0" d="M32.7,797.6c12.9-131.4,26.7-263,37.1-394.4c1.7-11.2,0.5-23,4.2-33.8

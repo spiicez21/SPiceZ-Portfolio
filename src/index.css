@@ -54,7 +54,7 @@
   /* Using Clash as primary regular font */
 
   /* Spacing */
-  --border-width: 1px;
+  --border-width: 0.0625rem;
   --section-padding: 6rem;
 }
 
@@ -69,8 +69,40 @@
 }
 
 html {
-  scroll-padding-top: 100px;
+  /* 
+     Fluid base font size:
+     At 1920px width, this is 16px.
+     This counteracts browser zoom effects on layout proportions.
+  */
+  font-size: 0.8333vw;
+  scroll-padding-top: 6.25rem;
   scroll-behavior: smooth;
+}
+
+/* Cap scaling for ultra-wide and mobile fallbacks */
+@media (min-width: 2560px) {
+  html {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 1440px) {
+  html {
+    font-size: 1.1vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 1.5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    /* Reset to standard scaling for mobile */
+    font-size: 16px;
+  }
 }
 
 * {
@@ -102,7 +134,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -14,11 +14,11 @@
 /* --- SIGNAL CHANNEL BAR --- */
 .footer-signals {
     width: 100%;
-    max-width: 1400px;
+    max-width: 87.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.0625rem solid var(--border);
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     font-family: var(--font-mono);
@@ -58,8 +58,8 @@
 
 .signal-links a:hover {
     color: #fff;
-    transform: translateY(-2px);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: translateY(-0.125rem);
+    text-shadow: 0 0 0.625rem rgba(255, 255, 255, 0.5);
 }
 
 .signal-direct {
@@ -133,7 +133,7 @@
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--ink-muted);
-    border: 1px solid var(--border);
+    border: 0.0625rem solid var(--border);
     padding: 0.5rem 1rem;
     background: var(--bg-alt);
 }
@@ -164,13 +164,13 @@
 .telemetry-value.text-neon {
     color: #ccff00;
     /* LH44 Neon */
-    text-shadow: 0 0 5px rgba(204, 255, 0, 0.5);
+    text-shadow: 0 0 0.3125rem rgba(204, 255, 0, 0.5);
 }
 
 .telemetry-value.text-purple {
     color: #d100d1;
     /* LH44 Purple */
-    text-shadow: 0 0 5px rgba(209, 0, 209, 0.5);
+    text-shadow: 0 0 0.3125rem rgba(209, 0, 209, 0.5);
 }
 
 /* Fixed width for time numbers to prevent jitter */
@@ -215,7 +215,7 @@
     right: 0;
     bottom: 0;
     height: 100%;
-    width: 1px;
+    width: 0.0625rem;
     background: linear-gradient(to top, var(--border) 10%, transparent);
 }
 
@@ -229,7 +229,7 @@
 
 .sector-bar {
     width: 100%;
-    height: 4px;
+    height: 0.25rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 0;
     /* Flat ends for joining */
@@ -242,7 +242,7 @@
     height: 100%;
     background: #d100d1;
     width: 0;
-    box-shadow: 0 0 10px #d100d1;
+    box-shadow: 0 0 0.625rem #d100d1;
     /* Animation handled by GSAP */
     position: relative;
 }
@@ -254,7 +254,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 2.5rem;
     /* Glow up into the text */
     background: linear-gradient(to top, rgba(209, 0, 209, 0.3) 0%, transparent 100%);
     pointer-events: none;
@@ -288,14 +288,14 @@
 
 .flash-purple {
     animation: flash-purple 0.3s ease-out;
-    border-radius: 2px;
+    border-radius: 0.125rem;
 }
 
 .sector-total {
-    border: 1px solid #d100d1;
+    border: 0.0625rem solid #d100d1;
     padding: 0.25rem 0.75rem;
-    border-radius: 2px;
-    box-shadow: 0 0 15px rgba(209, 0, 209, 0.3);
+    border-radius: 0.125rem;
+    box-shadow: 0 0 0.9375rem rgba(209, 0, 209, 0.3);
     margin-bottom: 0.25rem;
     margin-left: 1.5rem;
     /* Separate from the joined track */
@@ -307,7 +307,7 @@
         margin-left: 0;
         padding-left: 0;
         border-left: none;
-        border-top: 1px solid var(--border);
+        border-top: 0.0625rem solid var(--border);
         padding-top: 1rem;
         width: 100%;
         justify-content: center;
@@ -325,7 +325,7 @@
     }
 
     .sector-bar {
-        border-radius: 2px;
+        border-radius: 0.125rem;
     }
 
     .sector-total {
@@ -335,7 +335,7 @@
 
 .footer-content {
     width: 100%;
-    max-width: 1400px;
+    max-width: 87.5rem;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

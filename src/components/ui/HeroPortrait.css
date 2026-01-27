@@ -11,7 +11,7 @@
 .portrait-inner-wrapper {
     position: relative;
     width: 100%;
-    max-width: 850px;
+    max-width: 53.125rem;
     height: auto;
     display: flex;
     justify-content: center;
@@ -23,7 +23,7 @@
     height: auto;
     object-fit: contain;
     /* Optional: maintain some of the previous vertical centering shift if needed */
-    transform: translateY(-450px);
+    transform: translateY(-28.125rem);
 }
 
 @media (max-width: 768px) {
