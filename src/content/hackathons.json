@@ -6,5 +6,13 @@
         "project": "AI-Powered Study Help [thinkforge]",
         "team": "ThinkForge",
         "description": "An study Analyzer with Asking MQC backed with Ollama Local LLM"
+    },
+    {
+        "id": "hack-2",
+        "event": "Open Source Contribution",
+        "position": "Contributor",
+        "project": "SimpMusic (v1.0.2)",
+        "team": "SimpMusic Dev Team",
+        "description": "Implemented Mini Floating Player for Linux/Windows/macOS in v1.0.2 release."
     }
 ]
