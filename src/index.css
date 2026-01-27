@@ -54,7 +54,7 @@
   /* Using Clash as primary regular font */
 
   /* Spacing */
-  --border-width: 1px;
+  --border-width: 0.0625rem;
   --section-padding: 6rem;
 }
 
@@ -62,21 +62,64 @@
   cursor: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   :root {
-    --section-padding: 3rem;
+    --section-padding: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --section-padding: 2rem;
   }
 }
 
 html {
-  scroll-padding-top: 100px;
+  /* 
+     Fluid base font size using interpolation:
+     - Minimum: 14px (Mobile ready)
+     - Preferred: 0.8333vw (Desktop standard 16px @ 1920)
+     - Maximum: 21px (Ultrawide cap)
+  */
+  font-size: clamp(14px, 0.8333vw, 21px);
+  scroll-padding-top: 6.25rem;
   scroll-behavior: smooth;
+  transition: font-size 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (max-width: 1440px) {
+  html {
+    font-size: clamp(14px, 1vw, 18px);
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: clamp(15px, 1.4vw, 18px);
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 16px;
+    /* Return to legible static 16px on mobile */
+  }
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Smoothen out layout shifts during resize and state changes */
+  transition: padding 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    margin 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    gap 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    left 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    right 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    bottom 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 body {
@@ -102,7 +145,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {

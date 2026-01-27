@@ -1,7 +1,20 @@
 .graphics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .graphics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .graphics-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 }
 
 .graphic-card {
@@ -17,8 +30,8 @@
 
 .graphic-card:hover {
     border-color: rgba(178, 255, 5, 0.6);
-    transform: translateY(-4px);
-    box-shadow: 4px 4px 0 rgba(178, 255, 5, 0.2);
+    transform: translateY(-0.25rem);
+    box-shadow: 0.25rem 0.25rem 0 rgba(178, 255, 5, 0.2);
 }
 
 .graphic-image {
@@ -108,14 +121,14 @@
     background: var(--bg);
     border: var(--border-width) solid var(--border);
     width: 100%;
-    max-width: 900px;
+    max-width: 56.25rem;
     max-height: 90vh;
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     position: relative;
     overflow: hidden;
     animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 1.25rem 1.25rem 0 rgba(0, 0, 0, 0.2);
 }
 
 .preview-close-btn {
@@ -125,8 +138,8 @@
     background: var(--bg);
     border: var(--border-width) solid var(--border);
     color: var(--ink);
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,7 +223,7 @@
 @keyframes scaleIn {
     from {
         opacity: 0;
-        transform: scale(0.95) translateY(20px);
+        transform: scale(0.95) translateY(1.25rem);
     }
 
     to {
@@ -219,7 +232,7 @@
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .graphic-preview-content {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
@@ -233,7 +246,7 @@
         border-right: none;
         border-bottom: var(--border-width) solid var(--border);
         flex-shrink: 0;
-        max-height: 50vh;
+        max-height: 40vh;
     }
 
     .preview-info {
@@ -242,10 +255,6 @@
 }
 
 @media (max-width: 640px) {
-    .graphics-grid {
-        grid-template-columns: 1fr;
-    }
-
     .graphic-info {
         padding: 1rem;
     }

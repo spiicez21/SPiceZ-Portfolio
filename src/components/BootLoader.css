@@ -1,19 +1,19 @@
-.boot-loader.minimalist {
+.boot-loader {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0a0a0a;
-    /* Deep black for clean look */
+    inset: 0;
+    background: #050505;
+    z-index: 10000;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    z-index: 9999;
-    font-family: var(--font-mono);
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .loader-center-content {
+    position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,31 +21,29 @@
 }
 
 .loader-logo-svg {
-    filter: drop-shadow(0 0 15px rgba(178, 255, 5, 0.3));
+    width: 7.5rem;
+    height: auto;
+    filter: drop-shadow(0 0 0.9375rem rgba(178, 255, 5, 0.3));
+    animation: loader-glow 2s ease-in-out infinite;
 }
 
-.loader-progress-text {
-    color: var(--accent);
-    font-size: 1rem;
-    letter-spacing: 0.2em;
-    opacity: 0.8;
-}
+@keyframes loader-glow {
 
-/* Subtle pulse for the filling logo */
-@keyframes logoPulse {
-    0% {
-        filter: drop-shadow(0 0 10px rgba(178, 255, 5, 0.2));
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0.625rem rgba(178, 255, 5, 0.2));
     }
 
     50% {
-        filter: drop-shadow(0 0 20px rgba(178, 255, 5, 0.4));
-    }
-
-    100% {
-        filter: drop-shadow(0 0 10px rgba(178, 255, 5, 0.2));
+        filter: drop-shadow(0 0 1.25rem rgba(178, 255, 5, 0.4));
     }
 }
 
-.loader-logo-svg {
-    animation: logoPulse 2s infinite ease-in-out;
+.loader-progress-text {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
 }

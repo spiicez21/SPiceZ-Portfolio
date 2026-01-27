@@ -45,7 +45,7 @@ const RetroGrid = memo(({ className = '', opacity = 0.1 }: RetroGridProps) => {
                         linear-gradient(to right, rgba(var(--ink-accent-rgb), 0.3) 1px, transparent 1px),
                         linear-gradient(to bottom, rgba(var(--ink-accent-rgb), 0.3) 1px, transparent 1px)
                     `,
-                    backgroundSize: '40px 40px',
+                    backgroundSize: '2.5rem 2.5rem',
                     transform: 'perspective(500px) rotateX(20deg) translate(var(--mouse-x, 0), var(--mouse-y, 0))',
                 } as any}
             />

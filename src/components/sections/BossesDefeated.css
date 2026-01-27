@@ -1,11 +1,11 @@
 .hackathons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
     gap: 2rem;
 }
 
 .hack-card {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 0.0625rem solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
     background: rgba(0, 0, 0, 0.5);
     display: flex;

@@ -10,7 +10,7 @@ const PixelLabRoute = () => {
         <PageTransition>
             <SharedLayout>
                 <BackButton />
-                <main style={{ paddingTop: '80px', minHeight: '100vh' }}>
+                <main style={{ paddingTop: '5rem', minHeight: '100vh' }}>
                     <PixelLab />
                 </main>
                 <FooterBar />

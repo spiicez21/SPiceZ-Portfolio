@@ -35,12 +35,12 @@ const F1NameTags = () => {
                     <div key={index}
                         className="driver-tag-animate"
                         style={{
-                            borderLeft: '3px solid var(--accent)',
+                            borderLeft: '0.1875rem solid var(--accent)',
                             background: 'linear-gradient(90deg, rgba(178, 255, 5, 0.05) 0%, transparent 100%)',
                             padding: '0.75rem 1rem',
                             position: 'relative',
                             overflow: 'hidden',
-                            height: '70px',
+                            height: '4.375rem',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -83,7 +83,7 @@ const F1NameTags = () => {
                                 fontSize: '1.8rem', // Smaller Number
                                 fontWeight: '900',
                                 color: 'transparent',
-                                WebkitTextStroke: '1px var(--accent)',
+                                WebkitTextStroke: '0.0625rem var(--accent)',
                                 opacity: 0.5,
                                 lineHeight: 0.8,
                                 fontStyle: 'italic'
@@ -98,7 +98,7 @@ const F1NameTags = () => {
             {/* Topographic Encrypted Box */}
             <div className="topo-box" style={{
                 flex: 1, // Fill remaining space
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '0.0625rem solid rgba(255, 255, 255, 0.1)',
                 position: 'relative',
                 overflow: 'hidden',
                 background: 'rgba(0,0,0,0.2)',
@@ -118,8 +118,8 @@ const F1NameTags = () => {
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.7rem',
                     color: 'var(--accent)',
-                    border: '1px solid var(--accent)',
-                    padding: '2px 6px',
+                    border: '0.0625rem solid var(--accent)',
+                    padding: '0.125rem 0.375rem',
                     background: 'rgba(0,0,0,0.8)',
                     zIndex: 10
                 }}>
@@ -130,7 +130,7 @@ const F1NameTags = () => {
                     color: 'rgba(255,255,255,0.3)',
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.8rem',
-                    letterSpacing: '2px',
+                    letterSpacing: '0.125rem',
                     textAlign: 'center',
                     zIndex: 10
                 }}>
