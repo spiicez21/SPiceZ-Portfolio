@@ -1,4 +1,6 @@
 import { useEffect, useRef, memo } from 'react';
+import { contours } from 'd3-contour';
+import { range } from 'd3-array';
 
 const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,11 +13,15 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         if (!ctx) return;
 
         let heightMap: number[][] = [];
+        let animationFrameId: number;
+        let timeOffset = 0;
+        let startTime = Date.now();
 
         const isMobile = window.innerWidth <= 768;
         // Increase step size on mobile to reduce computation
         const step = isMobile ? 30 : 20;
         const resolution = step;
+        const animationSpeed = 0.00015; // Control flow speed
 
         const resize = () => {
             const width = window.innerWidth;
@@ -28,7 +34,7 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             ctx.scale(dpr, dpr);
 
             generateHeightMap();
-            requestAnimationFrame(drawContours);
+            animate();
         };
 
         class PerlinNoise {
@@ -89,17 +95,25 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
 
         const perlin = new PerlinNoise();
 
-        const getElevation = (x: number, y: number): number => {
+        const getElevation = (x: number, y: number, time: number = 0): number => {
             const scale = 0.002;
             let elevation = 0;
             let amplitude = 1;
             let frequency = 1;
             let maxValue = 0;
 
+            // Create flowing wave effect with multiple directional movements
+            const wave1 = Math.sin(time * 0.0008 + x * 0.001) * 30;
+            const wave2 = Math.cos(time * 0.0006 + y * 0.0012) * 25;
+            const wave3 = Math.sin(time * 0.0004 + (x + y) * 0.0008) * 20;
+
+            const flowX = x + wave1 + wave3;
+            const flowY = y + wave2 - wave3;
+
             for (let i = 0; i < 3; i++) {
                 elevation += perlin.noise(
-                    x * scale * frequency,
-                    y * scale * frequency
+                    flowX * scale * frequency + time * animationSpeed,
+                    flowY * scale * frequency + time * animationSpeed * 0.7
                 ) * amplitude;
                 maxValue += amplitude;
                 amplitude *= 0.5;
@@ -110,156 +124,95 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         };
 
         const generateHeightMap = () => {
-            // Buffer of 2 to handle bilinear sampling at right/bottom edges safely
-            const cols = Math.ceil(window.innerWidth / resolution) + 2;
-            const rows = Math.ceil(window.innerHeight / resolution) + 2;
+            // Generate height map using optimized d3-contour compatible format
+            const cols = Math.ceil(window.innerWidth / resolution);
+            const rows = Math.ceil(window.innerHeight / resolution);
 
             heightMap = [];
             for (let y = 0; y <= rows; y++) {
                 heightMap[y] = [];
                 for (let x = 0; x <= cols; x++) {
-                    heightMap[y][x] = getElevation(x * resolution, y * resolution);
+                    heightMap[y][x] = getElevation(x * resolution, y * resolution, timeOffset);
                 }
             }
         };
 
-        const getHeight = (x: number, y: number): number => {
-            const col = x / resolution;
-            const row = y / resolution;
-
-            // Robust clamping to map indices
-            const maxCol = heightMap[0].length - 1;
-            const maxRow = heightMap.length - 1;
-
-            const x0 = Math.max(0, Math.min(Math.floor(col), maxCol - 1));
-            const y0 = Math.max(0, Math.min(Math.floor(row), maxRow - 1));
-            const x1 = x0 + 1;
-            const y1 = y0 + 1;
-
-            const fx = (x / resolution) - x0;
-            const fy = (y / resolution) - y0;
-
-            const h00 = heightMap[y0][x0];
-            const h10 = heightMap[y0][x1];
-            const h01 = heightMap[y1][x0];
-            const h11 = heightMap[y1][x1];
-
-            const h0 = h00 * (1 - fx) + h10 * fx;
-            const h1 = h01 * (1 - fx) + h11 * fx;
-
-            return h0 * (1 - fy) + h1 * fy;
+        const animate = () => {
+            const currentTime = Date.now() - startTime;
+            timeOffset = currentTime;
+            
+            generateHeightMap();
+            drawContours();
+            animationFrameId = requestAnimationFrame(animate);
         };
 
         const drawContours = () => {
-            const contourInterval = 0.05;
-            const numContours = Math.floor(1 / contourInterval);
-
             const width = window.innerWidth;
             const height = window.innerHeight;
 
-            ctx.lineWidth = 1.1; // Slightly thinner for cleaner lines
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.strokeStyle = lineColor;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let i = 0; i <= numContours; i++) {
-                const elevation = i * contourInterval;
-
-                const marchingSquares = (elev: number) => {
-                    for (let y = 0; y < height; y += step) {
-                        for (let x = 0; x < width; x += step) {
-                            const tl = getHeight(x, y) > elev ? 1 : 0;
-                            const tr = getHeight(x + step, y) > elev ? 1 : 0;
-                            const br = getHeight(x + step, y + step) > elev ? 1 : 0;
-                            const bl = getHeight(x, y + step) > elev ? 1 : 0;
-
-                            const cellValue = tl * 8 + tr * 4 + br * 2 + bl * 1;
-
-                            if (cellValue === 0 || cellValue === 15) continue;
-
-                            const interpolate = (v1: number, v2: number, p1: [number, number], p2: [number, number]): [number, number] => {
-                                const t = (elev - v1) / (v2 - v1);
-                                return [
-                                    p1[0] + t * (p2[0] - p1[0]),
-                                    p1[1] + t * (p2[1] - p1[1])
-                                ];
-                            };
-
-                            const h_tl = getHeight(x, y);
-                            const h_tr = getHeight(x + step, y);
-                            const h_br = getHeight(x + step, y + step);
-                            const h_bl = getHeight(x, y + step);
-
-                            const top = interpolate(h_tl, h_tr, [x, y], [x + step, y]);
-                            const right = interpolate(h_tr, h_br, [x + step, y], [x + step, y + step]);
-                            const bottom = interpolate(h_bl, h_br, [x, y + step], [x + step, y + step]);
-                            const left = interpolate(h_tl, h_bl, [x, y], [x, y + step]);
-
-                            const average = (h_tl + h_tr + h_br + h_bl) / 4;
-
-                            ctx.beginPath();
-
-                            switch (cellValue) {
-                                case 1: case 14:
-                                    ctx.moveTo(left[0], left[1]);
-                                    ctx.lineTo(bottom[0], bottom[1]);
-                                    break;
-                                case 2: case 13:
-                                    ctx.moveTo(bottom[0], bottom[1]);
-                                    ctx.lineTo(right[0], right[1]);
-                                    break;
-                                case 3: case 12:
-                                    ctx.moveTo(left[0], left[1]);
-                                    ctx.lineTo(right[0], right[1]);
-                                    break;
-                                case 4: case 11:
-                                    ctx.moveTo(top[0], top[1]);
-                                    ctx.lineTo(right[0], right[1]);
-                                    break;
-                                case 5:
-                                    if (average < elev) {
-                                        ctx.moveTo(top[0], top[1]);
-                                        ctx.lineTo(right[0], right[1]);
-                                        ctx.moveTo(bottom[0], bottom[1]);
-                                        ctx.lineTo(left[0], left[1]);
-                                    } else {
-                                        ctx.moveTo(top[0], top[1]);
-                                        ctx.lineTo(left[0], left[1]);
-                                        ctx.moveTo(bottom[0], bottom[1]);
-                                        ctx.lineTo(right[0], right[1]);
-                                    }
-                                    break;
-                                case 6: case 9:
-                                    ctx.moveTo(top[0], top[1]);
-                                    ctx.lineTo(bottom[0], bottom[1]);
-                                    break;
-                                case 7: case 8:
-                                    ctx.moveTo(top[0], top[1]);
-                                    ctx.lineTo(left[0], left[1]);
-                                    break;
-                                case 10:
-                                    if (average < elev) {
-                                        ctx.moveTo(top[0], top[1]);
-                                        ctx.lineTo(left[0], left[1]);
-                                        ctx.moveTo(bottom[0], bottom[1]);
-                                        ctx.lineTo(right[0], right[1]);
-                                    } else {
-                                        ctx.moveTo(top[0], top[1]);
-                                        ctx.lineTo(right[0], right[1]);
-                                        ctx.moveTo(left[0], left[1]);
-                                        ctx.lineTo(bottom[0], bottom[1]);
-                                    }
-                                    break;
-                            }
-
-                            ctx.stroke();
-                        }
+            // Convert heightMap to a flat array for d3-contour
+            const cols = Math.ceil(width / resolution);
+            const rows = Math.ceil(height / resolution);
+            const values = new Float32Array(cols * rows);
+            
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (heightMap[y] && heightMap[y][x] !== undefined) {
+                        values[y * cols + x] = heightMap[y][x];
                     }
-                };
-
-                marchingSquares(elevation);
+                }
             }
+
+            // Generate contours using d3-contour
+            const contourGenerator = contours()
+                .size([cols, rows])
+                .smooth(true)
+                .thresholds(range(0.1, 1, 0.05));
+
+            const contourData = contourGenerator(values);
+
+            // Draw each contour with animated opacity
+            contourData.forEach((contour, index) => {
+                if (!contour.coordinates || contour.coordinates.length === 0) return;
+
+                // Create pulsing opacity effect
+                const pulsePhase = (timeOffset * 0.0005 + index * 0.1) % (Math.PI * 2);
+                const opacityMultiplier = 0.7 + Math.sin(pulsePhase) * 0.3;
+                
+                // Parse the lineColor to add dynamic opacity
+                const baseOpacity = parseFloat(lineColor.match(/[\d.]+\)$/)?.[0] || '1');
+                const dynamicOpacity = baseOpacity * opacityMultiplier;
+                
+                ctx.strokeStyle = lineColor.includes('rgba') 
+                    ? lineColor.replace(/[\d.]+\)$/, `${dynamicOpacity})`)
+                    : lineColor.replace('rgb', 'rgba').replace(')', `, ${dynamicOpacity})`);
+                
+                ctx.lineWidth = 0.8 + Math.sin(pulsePhase) * 0.3;
+
+                // Draw all MultiPolygon coordinates
+                contour.coordinates.forEach((polygon) => {
+                    polygon.forEach((ring) => {
+                        ctx.beginPath();
+                        ring.forEach((point, index) => {
+                            // Scale coordinates from grid space to canvas space
+                            const x = point[0] * resolution;
+                            const y = point[1] * resolution;
+                            
+                            if (index === 0) {
+                                ctx.moveTo(x, y);
+                            } else {
+                                ctx.lineTo(x, y);
+                            }
+                        });
+                        ctx.closePath();
+                        ctx.stroke();
+                    });
+                });
+            });
         };
 
         resize();
@@ -274,6 +227,9 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
         return () => {
             window.removeEventListener('resize', handleResize);
             clearTimeout(resizeTimeout);
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
         };
     }, [lineColor]);
 
