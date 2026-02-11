@@ -16,6 +16,7 @@ const OpenTicket = lazy(() => import('../components/sections/OpenTicket'));
 const StackTrace = lazy(() => import('../components/sections/StackTrace'));
 const BossesDefeated = lazy(() => import('../components/sections/BossesDefeated'));
 const ProjectShowcase = lazy(() => import('../components/sections/ProjectShowcase'));
+const CreativeShowcase = lazy(() => import('../components/sections/CreativeShowcase'));
 const InProgressProcesses = lazy(() => import('../components/sections/InProgressProcesses'));
 
 const Portfolio = () => {
@@ -69,6 +70,9 @@ const Portfolio = () => {
                 </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
                     <ProjectShowcase />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '50rem' }} />}>
+                    <CreativeShowcase />
                 </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <InProgressProcesses />
