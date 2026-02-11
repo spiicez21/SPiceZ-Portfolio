@@ -44,7 +44,7 @@ const VerifiedCredentials = () => {
     <SectionFrame
       id="verified-credentials"
       label="VERIFIED CREDENTIALS"
-      number="07"
+      number="04"
     >
       <div ref={containerRef} className="certifications-list">
         {certificationsData.map((cert, index) => (

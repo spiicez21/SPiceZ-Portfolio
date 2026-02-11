@@ -14,8 +14,9 @@ const VerifiedCredentials = lazy(() => import('../components/sections/VerifiedCr
 const GitHubActivity = lazy(() => import('../components/sections/GitHubActivity'));
 const OpenTicket = lazy(() => import('../components/sections/OpenTicket'));
 const StackTrace = lazy(() => import('../components/sections/StackTrace'));
-const WorkNavigation = lazy(() => import('../components/sections/WorkNavigation'));
 const BossesDefeated = lazy(() => import('../components/sections/BossesDefeated'));
+const ProjectShowcase = lazy(() => import('../components/sections/ProjectShowcase'));
+const InProgressProcesses = lazy(() => import('../components/sections/InProgressProcesses'));
 
 const Portfolio = () => {
     // Refresh ScrollTrigger on mount and resize to prevent section hiding
@@ -38,7 +39,7 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <div className="portfolio-page" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+        <div className="portfolio-page" style={{ position: 'relative', minHeight: '100vh' }}>
             <NavBar />
             <SectionTransitions />
 
@@ -50,8 +51,8 @@ const Portfolio = () => {
                 pointerEvents: 'none',
                 minHeight: '100vh',
                 height: '100%',
-                // Solid Dark Olive (Start) -> Solid Dark Olive (Covers Work/Projects/Graphics) -> Transparent (Open Ticket)
-                background: 'linear-gradient(to bottom, #2a2d1f 0%, #2a2d1f 50%, transparent 100%)',
+                // Solid Dark Olive (Start) -> Covers sections -> Transparent (Open Ticket)
+                background: 'linear-gradient(to bottom, #2a2d1f 0%, #2a2d1f 60%, transparent 100%)',
             }} />
 
             <main style={{ position: 'relative', zIndex: 1 }}>
@@ -61,13 +62,16 @@ const Portfolio = () => {
                     <StackTrace />
                 </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
-                    <WorkNavigation />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <VerifiedCredentials />
                 </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <BossesDefeated />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+                    <ProjectShowcase />
+                </Suspense>
+                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                    <InProgressProcesses />
                 </Suspense>
                 <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
                     <GitHubActivity />

@@ -122,6 +122,10 @@ html {
     bottom 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--bg);
   color: var(--ink);
@@ -129,7 +133,6 @@ body {
   font-weight: 300;
   /* Slim Variant Default */
   line-height: 1.6;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

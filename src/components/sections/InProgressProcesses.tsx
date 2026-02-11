@@ -13,7 +13,7 @@ const InProgressProcesses = () => {
     };
 
     return (
-        <SectionFrame id="in-progress" label="IN-PROGRESS PROCESSES" number="06">
+        <SectionFrame id="in-progress" label="IN-PROGRESS PROCESSES" number="07">
             <div className="wip-list">
                 {wipData.map((project) => (
                     <div key={project.id} className="wip-item">

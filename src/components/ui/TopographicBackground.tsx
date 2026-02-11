@@ -173,7 +173,7 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
                 .smooth(true)
                 .thresholds(range(0.1, 1, 0.05));
 
-            const contourData = contourGenerator(values);
+            const contourData = contourGenerator(Array.from(values));
 
             // Draw each contour with animated opacity
             contourData.forEach((contour, index) => {
