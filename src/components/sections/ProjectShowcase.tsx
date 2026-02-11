@@ -11,7 +11,7 @@ function seededRandom(seed: number) {
 
 // Pre-defined zigzag layout slots
 // Each slot: { top: %, scale, marginLeft offset }
-function getCardLayout(index: number, total: number) {
+function getCardLayout(index: number) {
     const seed = index + 1;
 
     // Zigzag: alternate between top-heavy and bottom-heavy positions
@@ -135,7 +135,7 @@ const ProjectShowcase = () => {
                     style={{ transform: `translateX(${translateX}px)` }}
                 >
                     {showcaseItems.map((item, index) => {
-                        const layout = getCardLayout(index, showcaseItems.length);
+                        const layout = getCardLayout(index);
                         const cardStyle: React.CSSProperties = {
                             marginTop: `${layout.top}px`,
                             transform: `scale(${layout.scale})`,

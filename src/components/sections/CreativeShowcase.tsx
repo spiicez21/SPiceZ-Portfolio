@@ -3,12 +3,6 @@ import graphicsData from '../../content/graphics.json';
 import { X } from 'lucide-react';
 import './CreativeShowcase.css';
 
-// Seeded random for deterministic layout
-function seededRandom(seed: number) {
-    const x = Math.sin(seed * 9301 + 49297) * 49297;
-    return x - Math.floor(x);
-}
-
 // Size variation — some cards are tall (span 2 rows)
 function getGridLayout(index: number) {
     // Make specific cards large for visual variety
