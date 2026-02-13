@@ -24,6 +24,33 @@ const Model = () => {
     );
 };
 
+const RotatingLights = () => {
+    const lightsRef = useRef<Group>(null);
+
+    useFrame(({ clock }) => {
+        if (lightsRef.current) {
+            lightsRef.current.rotation.y = clock.getElapsedTime() * 0.4;
+        }
+    });
+
+    return (
+        <group ref={lightsRef}>
+            {/* Key light */}
+            <directionalLight
+                position={[4, 4, 5]}
+                intensity={5}
+                castShadow
+                shadow-mapSize-width={512}
+                shadow-mapSize-height={512}
+            />
+            {/* Fill light */}
+            <directionalLight position={[-4, 2, 4]} intensity={3} />
+            {/* Rim light */}
+            <spotLight position={[0, 3, -5]} intensity={4} penumbra={0.6} angle={0.5} color="#b2ff05" />
+        </group>
+    );
+};
+
 const FunkoModel = memo(() => {
     return (
         <div className="funko-model-wrapper">
@@ -42,22 +69,15 @@ const FunkoModel = memo(() => {
                     frameloop="always"
                     performance={{ min: 0.5 }}
                 >
-                    {/* Key light */}
-                    <directionalLight
-                        position={[4, 4, 5]}
-                        intensity={5}
-                        castShadow
-                        shadow-mapSize-width={512}
-                        shadow-mapSize-height={512}
-                    />
+                    <RotatingLights />
 
-                    {/* Fill light */}
-                    <directionalLight position={[-4, 2, 4]} intensity={3} />
+                    {/* Back light */}
+                    <spotLight position={[0, 2, -5]} intensity={4} penumbra={0.5} angle={0.6} color="#b2ff05" />
 
-                    {/* Rim light */}
-                    <spotLight position={[0, 3, -5]} intensity={4} penumbra={0.6} angle={0.5} color="#b2ff05" />
+                    {/* Left side light */}
+                    <directionalLight position={[-5, 2, 0]} intensity={3} color="#ffffff" />
 
-                    {/* Ambient fill */}
+                    {/* Ambient fill (stays static) */}
                     <ambientLight intensity={0.8} />
 
                     <Suspense fallback={null}>
