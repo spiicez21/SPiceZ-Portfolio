@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import F1NameTags from '../ui/F1NameTags';
+import FunkoModel from '../ui/FunkoModel';
 import SectionFrame from '../ui/SectionFrame';
 import { Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
 
@@ -127,9 +127,9 @@ const OpenTicket = () => {
                         </form>
                     </div>
 
-                    {/* Column 2: F1 Rivalry / Tech Visual */}
+                    {/* Column 2: 3D Model Viewer */}
                     <div className="matrix-container" style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}>
-                        <F1NameTags />
+                        <FunkoModel />
                     </div>
 
                 </div>
