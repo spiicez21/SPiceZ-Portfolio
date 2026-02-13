@@ -22,7 +22,7 @@ const OpenTicket = () => {
         setStatus('sending');
 
         try {
-            const response = await fetch('/.netlify/functions/contact-discord', {
+            const response = await fetch('https://formspree.io/f/mbdaganb', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -33,9 +33,6 @@ const OpenTicket = () => {
                 setFormData({ name: '', email: '', message: '' });
                 setTimeout(() => setStatus('idle'), 3000);
             } else {
-                if (response.status === 404) {
-                    alert("⚠️ Developer Note: This feature uses Netlify Functions.\nIt will not work on 'localhost' unless you run 'netlify dev'.");
-                }
                 setStatus('error');
             }
         } catch (error) {
