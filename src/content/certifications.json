@@ -14,5 +14,13 @@
         "date": "2025",
         "link": "https://developers.google.com/profile/badges/playlists/android/android-basics-compose-unit-2-pathway-1/",
         "Badge": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1765441217/badge_jv6dwk.svg"
+    },
+    {
+        "id": "cert-2",
+        "title": "Machine Learning Techniques in MATLAB",
+        "issuer": "MATLAB - MathWorks | Training Services",
+        "date": "2025",
+        "link": "https://matlabacademy.mathworks.com/progress/share/learningpath/certificate.html?id=d4fd6b76-be78-4042-a7ef-bde5f48b96c9&",
+        "Badge": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1770962035/ml-badge_eadoas.png"
     }
 ]

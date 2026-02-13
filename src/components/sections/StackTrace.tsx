@@ -10,8 +10,10 @@ import {
 } from 'react-icons/fa';
 import {
     SiTypescript, SiTailwindcss, SiGreensock, SiVite, SiMongodb, SiPostgresql,
-    SiAdobephotoshop, SiAdobeillustrator, SiAdobeaftereffects, SiKotlin, SiOracle
+    SiAdobephotoshop, SiAdobeillustrator, SiAdobeaftereffects, SiKotlin, SiOracle,
+    SiJenkins, SiGooglecloud
 } from 'react-icons/si';
+import { FaAws } from 'react-icons/fa';
 import { VscVscode } from 'react-icons/vsc';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -42,6 +44,9 @@ const iconMap: IconMapType = {
     "VS Code": <VscVscode />,
     "Linux": <FaLinux />,
     "Docker": <FaDocker />,
+    "Jenkins": <SiJenkins />,
+    "AWS": <FaAws />,
+    "GCP": <SiGooglecloud />,
 };
 
 

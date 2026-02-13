@@ -92,7 +92,7 @@
     {
         "id": "project-6",
         "title": "PhaGen Agentic",
-        "subtitle": "Agentic Pharma R&D Platform · 2025",
+        "subtitle": "Agentic Pharma R&D Platform · 2026",
         "description": "An enterprise-grade multi-worker platform that leverages AI agents, vector databases, and advanced analytics to compress pharmaceutical repurposing research from months to minutes.",
         "tech": [
             "Next.js",
@@ -114,7 +114,7 @@
     {
         "id": "project-7",
         "title": "Intelligent DCA Management Platform (IDMP)",
-        "subtitle": "Enterprise R&D Solution · FedEx · 2025",
+        "subtitle": "Enterprise R&D Solution · FedEx · 2026",
         "description": "An AI-powered governance and compliance platform for FedEx to manage External Debt Collection Agencies, featuring predictive recovery scores and automated SLA workflows.",
         "tech": [
             "React",
@@ -136,7 +136,7 @@
     {
         "id": "project-8",
         "title": "College Freelancers Portfolio Platform",
-        "subtitle": "Freelance Portfolio Platform · 2024",
+        "subtitle": "Freelance Portfolio Platform · 2026",
         "description": "A premium portfolio platform for college freelancers featuring Discord-style profile layouts, glassmorphism UI, and a unified projects gallery.",
         "tech": [
             "React 19",
@@ -156,7 +156,7 @@
     {
         "id": "project-9",
         "title": "WANTED",
-        "subtitle": "AI & Crowdfunded Micro-Bounties · 2025",
+        "subtitle": "AI & Crowdfunded Micro-Bounties · 2026",
         "description": "A decentralized bug bounty platform designed to gamify open-source contributions using AI to rank and price issues from GitHub.",
         "tech": [
             "Next.js 15",
@@ -174,5 +174,65 @@
             "repo": "https://github.com/spiicez21/wanted"
         },
         "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1769507794/Screenshot_2026-01-27_152303_l0yiul.png"
+    },
+    {
+        "id": "project-10",
+        "title": "SpiceZ Cam ",
+        "subtitle": "An Video calling and screen Sharing Site · 2026",
+        "description": "An website for video calling and screen sharing built with Next.js, Tailwind CSS, and WebRTC, designed for seamless communication and collaboration.",
+        "tech": [
+            "Next.js 15",
+            "TypeScript",
+            "Tailwind CSS v4",
+            "Node.js",
+            "webRTC",
+            "Socket.IO"
+        ],
+        "role": "Lead Developer & Designer",
+        "links": {
+            "demo": "https://spicez-cam.vercel.app",
+            "repo": "https://github.com/spiicez21/spicez-cam"
+        },
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1770962399/Screenshot_2026-02-13_112637_kvfdw3.png"
+    },
+    {
+        "id": "project-11",
+        "title": "SpiceZ-Chexx",
+        "subtitle": "A Chess Platform with StockFish AI Integration · 2026",
+        "description": "An advanced chess platform featuring StockFish AI integration, built with Next.js, Tailwind CSS, and WebRTC for seamless gameplay and analysis.",
+        "tech": [
+            "Next.js 15",
+            "TypeScript",
+            "Tailwind CSS v4",
+            "Node.js",
+            "webRTC",
+            "Socket.IO",
+            "StockFish",
+            "Chess.js"
+        ],
+        "role": "Lead Developer & Designer",
+        "links": {
+            "demo": "#",
+            "repo": "https://github.com/spiicez21/spicez-chexx"
+        },
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1770962491/Screenshot_2026-02-13_113106_cshu68.png"
+    },
+    {
+        "id": "project-12",
+        "title": "Cresita-2k26-Event-Website",
+        "subtitle": "College Event promotional website· 2026",
+        "description": "An website for Promoting Cresita-2k26 an KEC , CSE depts flagship Event.",
+        "tech": [
+            "Next.js 15",
+            "TypeScript",
+            "Tailwind CSS v4",
+            "Node.js"
+        ],
+        "role": "Lead Developer & Designer",
+        "links": {
+            "demo": "https://crescita2k26.vercel.app/",
+            "repo": "https://github.com/spiicez21/crescita"
+        },
+        "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1770962962/Screenshot_2026-02-13_113605_zc1iuo.png"
     }
 ]

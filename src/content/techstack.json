@@ -7,8 +7,7 @@
                 "React",
                 "TypeScript",
                 "Tailwind CSS",
-                "GSAP",
-                "Vite"
+                "GSAP"
             ]
         },
         {
@@ -40,7 +39,10 @@
                 "Git",
                 "VS Code",
                 "Linux",
-                "Docker"
+                "Docker",
+                "Jenkins",
+                "AWS",
+                "GCP"
             ]
         }
     ]
