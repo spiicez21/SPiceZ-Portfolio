@@ -12,10 +12,9 @@ const DeployedBuilds = () => {
                     <div key={project.id} className="project-card">
                         {project.thumbnailPublicId && (
                             <div className="project-image">
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={project.thumbnailPublicId}
-                                    alt={project.title}
-                                    loading="lazy"
+                                    alt={project.title}
                                 />
                             </div>
                         )}

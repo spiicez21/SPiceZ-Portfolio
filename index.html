@@ -31,8 +31,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Content images are served from Cloudinary; open the connection early. -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self-hosted fonts used above the fold: fetch in parallel with the CSS
+       instead of waiting for the stylesheet to be parsed first. -->
+  <link rel="preload" as="font" type="font/woff2" href="/webfonts/ClashDIsplay/ClashDisplay-Regular.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/webfonts/Stardom/Stardom-Regular.woff2" crossorigin>
+  <link rel="preload" as="image" href="/Picture/normal-main.png" fetchpriority="high">
+
+  <!-- JetBrains Mono is decorative and used in two components. Load it without
+       blocking first render. -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  </noscript>
 </head>
 
 <body>

@@ -1,4 +1,4 @@
-import { Suspense, useRef, memo } from 'react';
+import { Suspense, useEffect, useRef, useState, memo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import type { Group } from 'three';
@@ -36,13 +36,7 @@ const RotatingLights = () => {
     return (
         <group ref={lightsRef}>
             {/* Key light */}
-            <directionalLight
-                position={[4, 4, 5]}
-                intensity={5}
-                castShadow
-                shadow-mapSize-width={512}
-                shadow-mapSize-height={512}
-            />
+            <directionalLight position={[4, 4, 5]} intensity={5} />
             {/* Fill light */}
             <directionalLight position={[-4, 2, 4]} intensity={3} />
             {/* Rim light */}
@@ -52,8 +46,51 @@ const RotatingLights = () => {
 };
 
 const FunkoModel = memo(() => {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    // `mounted` is one-way: once the GL context exists we keep it, and only
+    // gate the render loop. Tearing down/recreating WebGL contexts on scroll
+    // is far more expensive than an idle canvas.
+    const [mounted, setMounted] = useState(false);
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        const el = wrapperRef.current;
+        if (!el) return;
+
+        if (typeof IntersectionObserver === 'undefined') {
+            setMounted(true);
+            setActive(true);
+            return;
+        }
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                const visible = entries.some((e) => e.isIntersecting);
+                if (visible) {
+                    // Warm the 1.9MB model only once the viewer is actually near.
+                    useGLTF.preload(MODEL_PATH);
+                    setMounted(true);
+                }
+                setActive(visible);
+            },
+            { rootMargin: '200px' }
+        );
+
+        io.observe(el);
+        return () => io.disconnect();
+    }, []);
+
+    // Pause the loop with the tab, not just with the viewport.
+    useEffect(() => {
+        const onVisibility = () => {
+            if (document.hidden) setActive(false);
+        };
+        document.addEventListener('visibilitychange', onVisibility);
+        return () => document.removeEventListener('visibilitychange', onVisibility);
+    }, []);
+
     return (
-        <div className="funko-model-wrapper">
+        <div className="funko-model-wrapper" ref={wrapperRef}>
             <div className="funko-model-header">
                 <span className="funko-model-label">3D VIEWPORT</span>
                 <span className="funko-model-status">LIVE</span>
@@ -62,43 +99,52 @@ const FunkoModel = memo(() => {
                 <div className="funko-contour-bg">
                     <TopographicBackground lineColor="#b2ff05" />
                 </div>
-                <Canvas
-                    camera={{ position: [0, 1, 4], fov: 45 }}
-                    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-                    dpr={[1, 1.5]}
-                    frameloop="always"
-                    performance={{ min: 0.5 }}
-                >
-                    <RotatingLights />
+                {mounted && (
+                    <Canvas
+                        camera={{ position: [0, 1, 4], fov: 45 }}
+                        gl={{
+                            antialias: true,
+                            alpha: true,
+                            powerPreference: 'high-performance',
+                            // Nothing reads the buffer back; letting the driver
+                            // discard it saves a copy every frame.
+                            preserveDrawingBuffer: false,
+                        }}
+                        dpr={[1, 1.5]}
+                        frameloop={active ? 'always' : 'never'}
+                        performance={{ min: 0.5 }}
+                    >
+                        <RotatingLights />
 
-                    {/* Back light */}
-                    <spotLight position={[0, 2, -5]} intensity={4} penumbra={0.5} angle={0.6} color="#b2ff05" />
+                        {/* Back light */}
+                        <spotLight position={[0, 2, -5]} intensity={4} penumbra={0.5} angle={0.6} color="#b2ff05" />
 
-                    {/* Left side light */}
-                    <directionalLight position={[-5, 2, 0]} intensity={3} color="#ffffff" />
+                        {/* Left side light */}
+                        <directionalLight position={[-5, 2, 0]} intensity={3} color="#ffffff" />
 
-                    {/* Ambient fill (stays static) */}
-                    <ambientLight intensity={0.8} />
+                        {/* Ambient fill (stays static) */}
+                        <ambientLight intensity={0.8} />
 
-                    <Suspense fallback={null}>
-                        <Model />
-                        <ContactShadows
-                            position={[0, -1, 0]}
-                            opacity={0.4}
-                            scale={6}
-                            blur={2}
-                            far={4}
-                            frames={1}
-                        />
-                        <Environment
-                            files="/HDR/syferfontein_1d_clear_puresky_1k.hdr"
-                            background={false}
-                            environmentIntensity={2.5}
-                        />
-                    </Suspense>
+                        <Suspense fallback={null}>
+                            <Model />
+                            <ContactShadows
+                                position={[0, -1, 0]}
+                                opacity={0.4}
+                                scale={6}
+                                blur={2}
+                                far={4}
+                                frames={1}
+                            />
+                            <Environment
+                                files="/HDR/syferfontein_1d_clear_puresky_1k.hdr"
+                                background={false}
+                                environmentIntensity={2.5}
+                            />
+                        </Suspense>
 
-                    <OrbitControls enableZoom={false} enablePan={false} />
-                </Canvas>
+                        <OrbitControls enableZoom={false} enablePan={false} />
+                    </Canvas>
+                )}
             </div>
             <div className="funko-model-footer">
                 <span>DRAG TO ROTATE</span>
@@ -108,8 +154,5 @@ const FunkoModel = memo(() => {
         </div>
     );
 });
-
-// Preload on module load
-useGLTF.preload(MODEL_PATH);
 
 export default FunkoModel;

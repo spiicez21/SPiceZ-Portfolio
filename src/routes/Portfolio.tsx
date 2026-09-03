@@ -1,12 +1,12 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import NavBar from '../components/layout/NavBar';
 import FooterBar from '../components/layout/FooterBar';
 import HeroBootSequence from '../components/sections/HeroBootSequence';
 import SectionTransitions from '../components/utils/SectionTransitions';
+import LazyMount from '../components/utils/LazyMount';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
-
-
+import { scheduleScrollTriggerRefresh } from '../lib/scrollRefresh';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,20 +22,21 @@ const InProgressProcesses = lazy(() => import('../components/sections/InProgress
 const Portfolio = () => {
     // Refresh ScrollTrigger on mount and resize to prevent section hiding
     useEffect(() => {
-        const refreshScrollTrigger = () => {
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 100);
+        scheduleScrollTriggerRefresh();
+
+        // Ignore the vertical-only resizes phones fire when the URL bar hides;
+        // each one would otherwise trigger a full re-measure mid-scroll.
+        let lastWidth = window.innerWidth;
+        const handleResize = () => {
+            if (window.innerWidth === lastWidth) return;
+            lastWidth = window.innerWidth;
+            scheduleScrollTriggerRefresh(200);
         };
 
-        // Refresh after initial load
-        refreshScrollTrigger();
-
-        // Refresh on window resize
-        window.addEventListener('resize', refreshScrollTrigger);
+        window.addEventListener('resize', handleResize, { passive: true });
 
         return () => {
-            window.removeEventListener('resize', refreshScrollTrigger);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
@@ -59,30 +60,30 @@ const Portfolio = () => {
             <main style={{ position: 'relative', zIndex: 1 }}>
                 <HeroBootSequence />
 
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                <LazyMount>
                     <StackTrace />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                </LazyMount>
+                <LazyMount>
                     <VerifiedCredentials />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                </LazyMount>
+                <LazyMount>
                     <BossesDefeated />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+                </LazyMount>
+                <LazyMount minHeight="100vh">
                     <ProjectShowcase />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '50rem' }} />}>
+                </LazyMount>
+                <LazyMount minHeight="50rem">
                     <CreativeShowcase />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                </LazyMount>
+                <LazyMount>
                     <InProgressProcesses />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                </LazyMount>
+                <LazyMount>
                     <GitHubActivity />
-                </Suspense>
-                <Suspense fallback={<div style={{ minHeight: '25rem' }} />}>
+                </LazyMount>
+                <LazyMount>
                     <OpenTicket />
-                </Suspense>
+                </LazyMount>
             </main>
             <FooterBar />
         </div>

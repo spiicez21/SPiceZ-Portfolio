@@ -53,10 +53,9 @@ const CreativeShowcase = () => {
                             onClick={() => openPreview(graphic)}
                         >
                             <div className="creative-card__image">
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={graphic.imagePublicId}
-                                    alt={graphic.title}
-                                    loading="lazy"
+                                    alt={graphic.title}
                                 />
                             </div>
                             <div className="creative-card__info">
@@ -84,7 +83,7 @@ const CreativeShowcase = () => {
                 <div className="creative-lightbox" onClick={closePreview}>
                     <div className="creative-lightbox__content" onClick={(e) => e.stopPropagation()}>
                         <div className="creative-lightbox__image-box">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={selectedGraphic.imagePublicId}
                                 alt={selectedGraphic.title}
                             />

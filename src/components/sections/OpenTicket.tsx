@@ -1,6 +1,10 @@
-import { useState, useRef } from 'react';
-import FunkoModel from '../ui/FunkoModel';
+import { useState, useRef, lazy } from 'react';
+import LazyMount from '../utils/LazyMount';
 import SectionFrame from '../ui/SectionFrame';
+
+// three.js + @react-three/fiber + drei is ~1MB of JS. Keep it out of this
+// section's chunk and only fetch it when the viewport reaches the model.
+const FunkoModel = lazy(() => import('../ui/FunkoModel'));
 import { Send, Check, AlertTriangle, Loader2 } from 'lucide-react';
 
 
@@ -129,7 +133,9 @@ const OpenTicket = () => {
 
                     {/* Column 2: 3D Model Viewer */}
                     <div className="matrix-container" style={{ padding: 0, background: 'transparent', boxShadow: 'none' }}>
-                        <FunkoModel />
+                        <LazyMount minHeight="30rem" margin={250}>
+                            <FunkoModel />
+                        </LazyMount>
                     </div>
 
                 </div>

@@ -10,8 +10,20 @@ import { SmoothScrollProvider } from './context/SmoothScrollContext';
 import RetroGrid from './components/utils/RetroGrid';
 import CustomCursor from './components/ui/CustomCursor';
 
+// Custom cursor and the parallax grid are mouse-only decorations. On touch
+// devices they cost listeners and a full-viewport composited layer for nothing.
+const hasFinePointer = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(pointer: fine)').matches;
+
 function App() {
   const [showBootLoader, setShowBootLoader] = useState(true);
+  const [pointerFine, setPointerFine] = useState(false);
+
+  useEffect(() => {
+    setPointerFine(hasFinePointer());
+  }, []);
 
   useEffect(() => {
     // Listen for boot sequence trigger
@@ -33,7 +45,7 @@ function App() {
   return (
     <SmoothScrollProvider>
       <RetroGrid opacity={0.05} />
-      <CustomCursor />
+      {pointerFine && <CustomCursor />}
       {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
       <Router>
         <Routes>

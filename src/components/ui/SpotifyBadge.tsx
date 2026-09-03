@@ -99,7 +99,7 @@ const SpotifyBadge = () => {
                 </div>
 
                 <div className="spotify-badge-content">
-                    <img
+                    <img loading="lazy" decoding="async"
                         src={currentTrack.image}
                         alt=""
                         className="spotify-badge-album"
@@ -112,7 +112,7 @@ const SpotifyBadge = () => {
                 </div>
 
                 <div className="progress-bar-fill"></div>
-                <img src="/Spotify-Badge/batbro.gif" alt="" className="spotify-batbro-gif" />
+                <img loading="lazy" decoding="async" src="/Spotify-Badge/batbro.gif" alt="" className="spotify-batbro-gif" />
             </a>
         </div>
     );

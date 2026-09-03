@@ -1,26 +1,16 @@
-/* ── Wrapper: tall div that creates vertical scroll room ── */
-.showcase-wrapper {
+/* ── Section shell ── */
+.showcase {
     position: relative;
-    width: 100%;
-    background: linear-gradient(135deg, #1a1d14 0%, #2a2d1f 100%);
     z-index: 1;
-}
-
-/* ── Sticky panel: locks to viewport while wrapper scrolls behind ── */
-.showcase-sticky {
-    position: sticky;
-    top: 0;
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    padding: 5rem 4rem 6rem;
+    background: linear-gradient(135deg, #1a1d14 0%, #2a2d1f 100%);
+    box-sizing: border-box;
 }
 
 /* ── Header ── */
 .showcase-header {
-    position: absolute;
-    top: 2rem;
-    left: 4rem;
-    z-index: 10;
+    margin-bottom: 3rem;
     color: #b2ff05;
 }
 
@@ -32,7 +22,7 @@
     font-weight: 900;
     letter-spacing: 0.05em;
     margin: 0;
-    font-family: 'Clash Display', sans-serif;
+    font-family: 'ClashDisplay', sans-serif;
 }
 
 .title-number {
@@ -41,68 +31,54 @@
 }
 
 .showcase-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     font-size: 0.875rem;
     color: rgba(178, 255, 5, 0.7);
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     letter-spacing: 0.15em;
 }
 
-/* ── Horizontal track: scattered zigzag layout ── */
-.showcase-track {
+.showcase-count {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid rgba(178, 255, 5, 0.25);
+    border-radius: 3px;
+    font-size: 0.65rem;
+    color: rgba(178, 255, 5, 0.6);
+}
+
+/* ── Grid ── */
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1.5rem;
+}
+
+/* ── Card ── */
+.project-card {
     display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 7rem 6rem 4rem;
-    position: relative;
-    height: 100vh;
-    width: max-content;
-    will-change: transform;
-    box-sizing: border-box;
-}
-
-.showcase-track::before {
-    content: '';
-    display: block;
-    width: 20vw;
-    flex-shrink: 0;
-}
-
-.showcase-track::after {
-    content: '';
-    display: block;
-    width: 20vw;
-    flex-shrink: 0;
-}
-
-/* ── Cards: positioned with inline top% for zigzag ── */
-.showcase-card {
-    position: relative;
-    flex-shrink: 0;
+    flex-direction: column;
     background: rgba(20, 23, 15, 0.9);
     border: 1px solid rgba(178, 255, 5, 0.15);
     border-radius: 8px;
     overflow: hidden;
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transform-origin: center center;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    /* Isolate each card so hovering one never repaints the rest of the grid. */
+    contain: layout paint style;
 }
 
-.showcase-card:hover {
+.project-card:hover {
     border-color: rgba(178, 255, 5, 0.5);
-    box-shadow: 0 20px 60px rgba(178, 255, 5, 0.15),
-        0 8px 25px rgba(0, 0, 0, 0.5);
-}
-
-/* Project cards — wider with text content */
-.project-card {
-    width: 380px;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 /* ── Card image ── */
 .card-image {
     width: 100%;
-    height: 220px;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.3);
 }
@@ -111,15 +87,19 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.showcase-card:hover .card-image img {
-    transform: scale(1.08);
+.project-card:hover .card-image img {
+    transform: scale(1.05);
 }
 
 /* ── Card content ── */
 .card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     padding: 1.25rem;
 }
 
@@ -128,11 +108,11 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .card-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: #b2ff05;
     margin: 0;
@@ -143,11 +123,12 @@
 .card-links {
     display: flex;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .card-icon-link {
     color: rgba(178, 255, 5, 0.6);
-    transition: all 0.3s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,7 +136,7 @@
 
 .card-icon-link:hover {
     color: #b2ff05;
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 .card-subtitle {
@@ -163,16 +144,17 @@
     color: rgba(178, 255, 5, 0.5);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .card-description {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.5;
-    margin-bottom: 0.75rem;
+    margin: 0 0 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -181,6 +163,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    /* Pin the tech row to the bottom so cards of unequal text length align. */
+    margin-top: auto;
 }
 
 .tech-tag {
@@ -194,83 +178,74 @@
     letter-spacing: 0.05em;
 }
 
-/* ── Scroll indicator ── */
-.showcase-scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    right: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+.tech-tag--more {
+    background: transparent;
     color: rgba(178, 255, 5, 0.5);
+}
+
+/* ── Show more / less ── */
+.showcase-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+}
+
+.showcase-toggle {
+    padding: 0.7rem 2rem;
+    background: transparent;
+    border: 1px solid rgba(178, 255, 5, 0.3);
+    border-radius: 4px;
+    color: #b2ff05;
+    font-family: inherit;
     font-size: 0.75rem;
     letter-spacing: 0.15em;
-    animation: pulse 2s ease-in-out infinite;
-    z-index: 10;
-    pointer-events: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.scroll-arrow {
-    font-size: 1.25rem;
-    animation: slideRight 1.5s ease-in-out infinite;
+.showcase-toggle:hover {
+    background: rgba(178, 255, 5, 0.1);
+    border-color: rgba(178, 255, 5, 0.6);
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .showcase {
+        padding: 4rem 2rem 5rem;
+    }
 }
 
-@keyframes slideRight {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(8px); }
-}
-
-/* ── Mobile: vertical stack ── */
 @media (max-width: 768px) {
-    .showcase-wrapper {
-        height: auto !important;
-    }
-
-    .showcase-sticky {
-        position: relative;
-        height: auto;
-        overflow: visible;
-    }
-
-    .showcase-header {
-        position: relative;
-        left: auto;
-        top: auto;
-        padding: 2rem 1.5rem 0;
+    .showcase {
+        padding: 3rem 1.5rem 4rem;
     }
 
     .showcase-title {
         font-size: 1.75rem;
     }
 
-    .showcase-track {
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        padding: 1.5rem;
-        gap: 1.5rem;
-        align-items: stretch;
-        transform: none !important;
+    .showcase-subtitle {
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
-    .showcase-track::before,
-    .showcase-track::after {
-        display: none;
+    .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .card-image img {
+        transition: none;
     }
 
-    .showcase-card {
-        width: 100% !important;
-        top: auto !important;
-        transform: none !important;
-        margin-left: 0 !important;
+    .project-card:hover {
+        transform: none;
     }
 
-    .showcase-scroll-indicator {
-        display: none;
+    .project-card:hover .card-image img {
+        transform: none;
     }
 }

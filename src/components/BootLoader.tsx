@@ -39,51 +39,71 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
         loadSvg();
 
-        // Aggregate all images from JSON data
-        const contentImages = [
-            ...projectsData.map(p => p.thumbnailPublicId),
-            ...graphicsData.map(g => g.imagePublicId),
-            ...wipData.map(w => w.imagePublicId),
-            ...certsData.map(c => c.Badge)
-        ].filter(src => src && typeof src === 'string');
-
+        // Only above-the-fold assets gate the loader. Previously all 41 content
+        // images - most of them remote (Cloudinary, GitHub) and none visible on
+        // the first screen - had to finish before the site was revealed, so the
+        // loader lasted as long as the slowest third-party request.
         const criticalAssets = [
             '/Picture/normal-main.png',
             '/Favicon/favicon.svg'
         ];
 
-        const secondaryAssets = [
-            ...contentImages,
+        // Everything else is warmed in the background, after the reveal.
+        const secondaryAssets = Array.from(new Set([
+            ...projectsData.map(p => p.thumbnailPublicId),
+            ...graphicsData.map(g => g.imagePublicId),
+            ...wipData.map(w => w.imagePublicId),
+            ...certsData.map(c => c.Badge),
             '/Spotify-Badge/batbro.gif',
-        ];
-
-        const assetsToLoad = Array.from(new Set([...criticalAssets, ...secondaryAssets]));
+        ].filter((src): src is string => !!src && typeof src === 'string')));
 
         let loadedCount = 0;
 
         const updateImageProgress = () => {
             if (!isMounted) return;
-            const newProgress = Math.min(Math.round((loadedCount / assetsToLoad.length) * 100), 100);
+            const newProgress = Math.min(Math.round((loadedCount / criticalAssets.length) * 100), 100);
             setImageProgress(newProgress);
         };
 
-        assetsToLoad.forEach(src => {
+        criticalAssets.forEach(src => {
             const img = new Image();
+            img.decoding = 'async';
             img.src = src;
-            img.onload = () => { loadedCount++; updateImageProgress(); };
-            img.onerror = () => { loadedCount++; updateImageProgress(); };
+            const done = () => { loadedCount++; updateImageProgress(); };
+            img.onload = done;
+            img.onerror = done;
         });
 
+        // Hard ceiling on how long the loader can hold the page hostage.
         const failsafe = setTimeout(() => {
-            if (loadedCount < assetsToLoad.length) {
-                loadedCount = assetsToLoad.length;
+            if (loadedCount < criticalAssets.length) {
+                loadedCount = criticalAssets.length;
                 updateImageProgress();
             }
-        }, 15000);
+        }, 2500);
+
+        // Prefetch the rest once the browser is idle, at low priority so it
+        // never competes with the first paint or the hero animation.
+        const warmSecondary = () => {
+            if (!isMounted) return;
+            secondaryAssets.forEach(src => {
+                const img = new Image();
+                img.decoding = 'async';
+                (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = 'low';
+                img.src = src;
+            });
+        };
+
+        const hasIdle = typeof window.requestIdleCallback === 'function';
+        const idleHandle = hasIdle
+            ? window.requestIdleCallback(warmSecondary, { timeout: 4000 })
+            : window.setTimeout(warmSecondary, 2000);
 
         return () => {
             isMounted = false;
             clearTimeout(failsafe);
+            if (hasIdle) window.cancelIdleCallback(idleHandle);
+            else clearTimeout(idleHandle);
         };
     }, []);
 
@@ -97,13 +117,13 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             const timer = setTimeout(() => {
                 gsap.to(containerRef.current, {
                     opacity: 0,
-                    duration: 0.8,
+                    duration: 0.5,
                     ease: "power2.inOut",
                     onComplete: () => {
                         onComplete();
                     }
                 });
-            }, 800);
+            }, 300);
             return () => clearTimeout(timer);
         }
     }, [imageProgress, onComplete]);

@@ -54,7 +54,7 @@ const GitHubActivity = () => {
                     <div className="github-stats">
                         <h3 className="github-heading">Contribution Graph</h3>
                         <div className="github-graph-wrapper">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={`https://ghchart.rshah.org/${username}`}
                                 alt="GitHub Contribution Graph"
                                 className="github-graph"

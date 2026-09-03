@@ -9,6 +9,8 @@ const HeroPortrait = memo(() => {
                     src="/Picture/normal-main.png"
                     alt="Hero Portrait"
                     className="hero-main-image"
+                    decoding="async"
+                    fetchPriority="high"
                 />
             </div>
         </div>

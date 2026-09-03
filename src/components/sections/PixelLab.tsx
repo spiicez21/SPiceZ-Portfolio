@@ -27,11 +27,10 @@ const PixelLab = () => {
                         onClick={() => openPreview(graphic)}
                     >
                         <div className="graphic-image">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={graphic.imagePublicId}
                                 alt={graphic.title}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
+                                className="w-full h-full object-cover"
                             />
                         </div>
                         <div className="graphic-info">
@@ -53,7 +52,7 @@ const PixelLab = () => {
                         </button>
 
                         <div className="preview-image-container">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={selectedGraphic.imagePublicId}
                                 alt={selectedGraphic.title}
                             />

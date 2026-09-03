@@ -1,44 +1,45 @@
 import { useEffect, useRef, memo } from 'react';
 import { contours } from 'd3-contour';
-import { range } from 'd3-array';
 
 const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas) return;
+        const wrapper = wrapperRef.current;
+        if (!canvas || !wrapper) return;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
 
-        let heightMap: number[][] = [];
-        let animationFrameId: number;
-        let timeOffset = 0;
-        let startTime = Date.now();
+        const reduceMotion =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const isMobile = window.innerWidth <= 768;
-        // Increase step size on mobile to reduce computation
-        const step = isMobile ? 30 : 20;
-        const resolution = step;
-        const animationSpeed = 0.00015; // Control flow speed
+        // Grid resolution: coarser grid == quadratically less noise + contour work.
+        const resolution = isMobile ? 40 : 28;
+        // Contour bands: each band is a full marching-squares pass over the grid.
+        const thresholds: number[] = [];
+        for (let t = 0.1; t < 1; t += isMobile ? 0.1 : 0.06) thresholds.push(t);
+        // Redraw budget. The visual is a slow drift, so 60fps buys nothing.
+        const frameInterval = reduceMotion ? Infinity : isMobile ? 100 : 50;
+        const animationSpeed = 0.00015;
 
-        const resize = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            // Limit canvas size for performance on high-DPI screens
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
-
-            generateHeightMap();
-            animate();
-        };
+        let cols = 0;
+        let rows = 0;
+        let cssWidth = 0;
+        let cssHeight = 0;
+        let values = new Float32Array(0);
+        let rafId = 0;
+        let lastDraw = 0;
+        let visible = true;
+        let running = false;
+        const startTime = performance.now();
+        let timeOffset = 0;
 
         class PerlinNoise {
-            // ... (rest of the class remains same)
             private permutation: number[];
 
             constructor(seed = Math.random()) {
@@ -95,14 +96,13 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
 
         const perlin = new PerlinNoise();
 
-        const getElevation = (x: number, y: number, time: number = 0): number => {
+        const getElevation = (x: number, y: number, time: number): number => {
             const scale = 0.002;
             let elevation = 0;
             let amplitude = 1;
             let frequency = 1;
             let maxValue = 0;
 
-            // Create flowing wave effect with multiple directional movements
             const wave1 = Math.sin(time * 0.0008 + x * 0.001) * 30;
             const wave2 = Math.cos(time * 0.0006 + y * 0.0012) * 25;
             const wave3 = Math.sin(time * 0.0004 + (x + y) * 0.0008) * 20;
@@ -123,129 +123,171 @@ const TopographicBackground = ({ lineColor = '#000000' }: { lineColor?: string }
             return (elevation / maxValue + 1) / 2;
         };
 
-        const generateHeightMap = () => {
-            // Generate height map using optimized d3-contour compatible format
-            const cols = Math.ceil(window.innerWidth / resolution);
-            const rows = Math.ceil(window.innerHeight / resolution);
+        // Colour string is parsed once instead of once per contour band.
+        const isRgba = lineColor.includes('rgba');
+        const baseOpacity = parseFloat(lineColor.match(/[\d.]+\)$/)?.[0] || '1');
+        const strokeFor = (opacity: number) =>
+            isRgba
+                ? lineColor.replace(/[\d.]+\)$/, `${opacity})`)
+                : lineColor.replace('rgb', 'rgba').replace(')', `, ${opacity})`);
 
-            heightMap = [];
-            for (let y = 0; y <= rows; y++) {
-                heightMap[y] = [];
-                for (let x = 0; x <= cols; x++) {
-                    heightMap[y][x] = getElevation(x * resolution, y * resolution, timeOffset);
-                }
-            }
-        };
+        const measure = () => {
+            // Size to the container, not the viewport. Most instances live inside
+            // a card far smaller than the window.
+            const rect = wrapper.getBoundingClientRect();
+            const width = Math.max(1, Math.round(rect.width || window.innerWidth));
+            const height = Math.max(1, Math.round(rect.height || window.innerHeight));
+            if (width === cssWidth && height === cssHeight) return false;
 
-        const animate = () => {
-            const currentTime = Date.now() - startTime;
-            timeOffset = currentTime;
-            
-            generateHeightMap();
-            drawContours();
-            animationFrameId = requestAnimationFrame(animate);
-        };
+            cssWidth = width;
+            cssHeight = height;
 
-        const drawContours = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
+            const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            // setTransform, not scale: scale() compounds across resizes.
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Convert heightMap to a flat array for d3-contour
-            const cols = Math.ceil(width / resolution);
-            const rows = Math.ceil(height / resolution);
-            const values = new Float32Array(cols * rows);
-            
+            cols = Math.max(2, Math.ceil(width / resolution));
+            rows = Math.max(2, Math.ceil(height / resolution));
+            if (values.length !== cols * rows) values = new Float32Array(cols * rows);
+            return true;
+        };
+
+        const contourGenerator = () =>
+            contours().size([cols, rows]).smooth(true).thresholds(thresholds);
+
+        const draw = () => {
+            // One pass fills the typed array directly - no intermediate 2D array,
+            // no Array.from copy before handing it to d3-contour.
             for (let y = 0; y < rows; y++) {
+                const py = y * resolution;
+                const rowOffset = y * cols;
                 for (let x = 0; x < cols; x++) {
-                    if (heightMap[y] && heightMap[y][x] !== undefined) {
-                        values[y * cols + x] = heightMap[y][x];
-                    }
+                    values[rowOffset + x] = getElevation(x * resolution, py, timeOffset);
                 }
             }
 
-            // Generate contours using d3-contour
-            const contourGenerator = contours()
-                .size([cols, rows])
-                .smooth(true)
-                .thresholds(range(0.1, 1, 0.05));
+            ctx.clearRect(0, 0, cssWidth, cssHeight);
 
-            const contourData = contourGenerator(Array.from(values));
+            const contourData = contourGenerator()(values as unknown as number[]);
 
-            // Draw each contour with animated opacity
-            contourData.forEach((contour, index) => {
-                if (!contour.coordinates || contour.coordinates.length === 0) return;
+            for (let index = 0; index < contourData.length; index++) {
+                const contour = contourData[index];
+                if (!contour.coordinates || contour.coordinates.length === 0) continue;
 
-                // Create pulsing opacity effect
                 const pulsePhase = (timeOffset * 0.0005 + index * 0.1) % (Math.PI * 2);
-                const opacityMultiplier = 0.7 + Math.sin(pulsePhase) * 0.3;
-                
-                // Parse the lineColor to add dynamic opacity
-                const baseOpacity = parseFloat(lineColor.match(/[\d.]+\)$/)?.[0] || '1');
-                const dynamicOpacity = baseOpacity * opacityMultiplier;
-                
-                ctx.strokeStyle = lineColor.includes('rgba') 
-                    ? lineColor.replace(/[\d.]+\)$/, `${dynamicOpacity})`)
-                    : lineColor.replace('rgb', 'rgba').replace(')', `, ${dynamicOpacity})`);
-                
-                ctx.lineWidth = 0.8 + Math.sin(pulsePhase) * 0.3;
+                const pulse = Math.sin(pulsePhase);
+                ctx.strokeStyle = strokeFor(baseOpacity * (0.7 + pulse * 0.3));
+                ctx.lineWidth = 0.8 + pulse * 0.3;
 
-                // Draw all MultiPolygon coordinates
-                contour.coordinates.forEach((polygon) => {
-                    polygon.forEach((ring) => {
-                        ctx.beginPath();
-                        ring.forEach((point, index) => {
-                            // Scale coordinates from grid space to canvas space
-                            const x = point[0] * resolution;
-                            const y = point[1] * resolution;
-                            
-                            if (index === 0) {
-                                ctx.moveTo(x, y);
-                            } else {
-                                ctx.lineTo(x, y);
-                            }
-                        });
+                // Batch every ring of a band into a single path -> one stroke call
+                // per band instead of one per ring.
+                ctx.beginPath();
+                for (const polygon of contour.coordinates) {
+                    for (const ring of polygon) {
+                        for (let i = 0; i < ring.length; i++) {
+                            const x = ring[i][0] * resolution;
+                            const y = ring[i][1] * resolution;
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
                         ctx.closePath();
-                        ctx.stroke();
-                    });
-                });
-            });
+                    }
+                }
+                ctx.stroke();
+            }
         };
 
-        resize();
+        const tick = (now: number) => {
+            rafId = requestAnimationFrame(tick);
+            if (now - lastDraw < frameInterval) return;
+            lastDraw = now;
+            timeOffset = now - startTime;
+            draw();
+        };
+
+        const start = () => {
+            if (running || reduceMotion) return;
+            running = true;
+            lastDraw = 0;
+            rafId = requestAnimationFrame(tick);
+        };
+
+        const stop = () => {
+            running = false;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = 0;
+        };
+
+        const sync = () => {
+            if (visible && !document.hidden) start();
+            else stop();
+        };
+
+        measure();
+        draw();
+        sync();
+
+        // Stop burning frames while the section is scrolled out of view.
+        let io: IntersectionObserver | undefined;
+        if (typeof IntersectionObserver !== 'undefined') {
+            io = new IntersectionObserver(
+                (entries) => {
+                    visible = entries.some((e) => e.isIntersecting);
+                    sync();
+                },
+                { rootMargin: '100px' }
+            );
+            io.observe(wrapper);
+        }
+
+        const onVisibility = () => sync();
+        document.addEventListener('visibilitychange', onVisibility);
+
         let resizeTimeout: ReturnType<typeof setTimeout>;
-        const handleResize = () => {
+        const onResize = () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(resize, 200);
+            resizeTimeout = setTimeout(() => {
+                if (measure()) draw();
+            }, 200);
         };
 
-        window.addEventListener('resize', handleResize);
+        let ro: ResizeObserver | undefined;
+        if (typeof ResizeObserver !== 'undefined') {
+            ro = new ResizeObserver(onResize);
+            ro.observe(wrapper);
+        } else {
+            window.addEventListener('resize', onResize);
+        }
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            stop();
             clearTimeout(resizeTimeout);
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
+            io?.disconnect();
+            ro?.disconnect();
+            window.removeEventListener('resize', onResize);
+            document.removeEventListener('visibilitychange', onVisibility);
         };
     }, [lineColor]);
 
     return (
-        <div className="topographic-bg" style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 0,
-            pointerEvents: 'none',
-            overflow: 'hidden',
-            background: 'transparent'
-        }}>
-            <canvas
-                ref={canvasRef}
-                style={{ width: '100%', height: '100%' }}
-            />
+        <div
+            ref={wrapperRef}
+            className="topographic-bg"
+            style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 0,
+                pointerEvents: 'none',
+                overflow: 'hidden',
+                background: 'transparent',
+                contain: 'layout paint style',
+            }}
+        >
+            <canvas ref={canvasRef} style={{ width: '100%', height: '100%', display: 'block' }} />
         </div>
     );
 };
