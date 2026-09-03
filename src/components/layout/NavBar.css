@@ -83,6 +83,34 @@
     box-shadow: 0 0.3125rem 0.9375rem var(--accent);
 }
 
+/* Secondary action: white pill (same trick as .mobile-toggle) so it stays
+   legible over both the light hero and the dark sections below it, while
+   leaving lime as the primary HIRE ME call. */
+.nav-action-btn--ghost {
+    background: #fff;
+    color: #000;
+    white-space: nowrap;
+}
+
+.nav-action-btn--ghost:hover {
+    background: #000;
+    color: var(--accent);
+    box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.35);
+}
+
+/* Too wide to sit next to HIRE ME below desktop; lives in the overlay there. */
+@media (max-width: 1024px) {
+    .nav-action-btn--ghost {
+        display: none;
+    }
+}
+
+.link-external-mark {
+    margin-left: 0.5rem;
+    font-size: 0.6em;
+    opacity: 0.6;
+}
+
 .mobile-toggle {
     background: #fff;
     border: none;

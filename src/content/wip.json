@@ -1,4 +1,3 @@
-
 [
     {
         "id": "wip-1",
@@ -27,6 +26,23 @@
             "MongoDB"
         ],
         "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835667/4_jilxlq.jpg"
+    },
+    {
+        "id": "wip-3",
+        "title": "Cut Adi Mame",
+        "description": "Currently in active development. Full write-up coming soon.",
+        "status": "dev",
+        "progress": 60,
+        "tech": [],
+        "imagePublicId": ""
+    },
+    {
+        "id": "wip-4",
+        "title": "SpiceZ-Core",
+        "description": "Currently in active development. Full write-up coming soon.",
+        "status": "dev",
+        "progress": 90,
+        "tech": [],
+        "imagePublicId": ""
     }
 ]
-

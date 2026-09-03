@@ -21,6 +21,9 @@ const navItems = [
     { label: 'CONTACT', href: '/#open-ticket' },
 ];
 
+// Separate creative/design portfolio, hosted independently.
+const CREATIVE_PORTFOLIO_URL = 'https://spicez21.netlify.app';
+
 interface NavBarProps {
     className?: string;
 }
@@ -128,6 +131,15 @@ const NavBar = ({ className = '' }: NavBarProps) => {
             {/* Right Module: Action & Menu */}
             <div className="nav-module nav-right">
                 <a
+                    href={CREATIVE_PORTFOLIO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nav-action-btn nav-action-btn--ghost"
+                >
+                    OTHER SIDE OF ME
+                </a>
+
+                <a
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -186,6 +198,22 @@ const NavBar = ({ className = '' }: NavBarProps) => {
                             )}
                         </div>
                     ))}
+
+                    {/* External: the desktop button is hidden on small screens,
+                        so the link has to exist in the overlay too. */}
+                    <div className="nav-item-wrapper">
+                        <a
+                            href={CREATIVE_PORTFOLIO_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="overlay-link overlay-link--external"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <span className="link-num">0{navItems.length + 1}</span>
+                            <span className="link-text">OTHER SIDE OF ME</span>
+                            <span className="link-external-mark" aria-hidden="true">&#8599;</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
