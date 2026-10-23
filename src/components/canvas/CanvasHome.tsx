@@ -11,6 +11,7 @@ import { useSmoothScroll } from '../../context/SmoothScrollContext';
 import StickerStage from './StickerStage';
 import SpotifyPlayer from './SpotifyPlayer';
 import LitPortrait from './LitPortrait';
+import SiteLoader from './SiteLoader';
 import { dishes, dockApps, footerDrivers, featuredCapabilities, interests, journey, partnerMarks, profileDetails, type InterestCard } from './canvasData';
 import './canvas.css';
 
@@ -544,6 +545,7 @@ const CanvasHome = () => {
 
     return (
         <div className="cv" data-theme={theme}>
+            <SiteLoader />
             <div className="cv-rail cv-rail--l" aria-hidden="true" />
             <div className="cv-rail cv-rail--r" aria-hidden="true" />
             <CanvasNav theme={theme} onToggle={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))} />
