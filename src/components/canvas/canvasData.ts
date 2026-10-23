@@ -92,7 +92,6 @@ export const interests: InterestCard[] = [
         eyebrow: 'Music',
         title: 'Nothing ships without a soundtrack.',
         body: 'Live from my Spotify, right now. I also contributed the mini floating player to SimpMusic, so music literally follows me.',
-        image: `${A}/cassette.webp`,
         accent: '#1db954',
         span: 'tall',
     },

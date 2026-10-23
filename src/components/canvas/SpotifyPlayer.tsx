@@ -29,9 +29,51 @@ const useLiveProgress = (track: SpotifyTrack | null) => {
     return Math.min(track.progressMs + (now - track.fetchedAt), track.durationMs);
 };
 
+
+// Dominant colour of the album cover (skipping near-black/white/grey pixels),
+// lifted so it stays readable as an accent on the dark card. Spotify's CDN
+// sends CORS headers; if a cover can't be read we keep Spotify green.
+const FALLBACK = '#1db954';
+const useCoverColor = (src?: string) => {
+    const [color, setColor] = useState(FALLBACK);
+    useEffect(() => {
+        if (!src) return;
+        let cancelled = false;
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            try {
+                const c = document.createElement('canvas');
+                c.width = c.height = 24;
+                const ctx = c.getContext('2d', { willReadFrequently: true })!;
+                ctx.drawImage(img, 0, 0, 24, 24);
+                const px = ctx.getImageData(0, 0, 24, 24).data;
+                let r = 0, g = 0, b = 0, w = 0;
+                for (let i = 0; i < px.length; i += 4) {
+                    const max = Math.max(px[i], px[i + 1], px[i + 2]);
+                    const min = Math.min(px[i], px[i + 1], px[i + 2]);
+                    const sat = max ? (max - min) / max : 0;
+                    if (max < 40 || sat < 0.25) continue;
+                    const weight = sat * sat;
+                    r += px[i] * weight; g += px[i + 1] * weight; b += px[i + 2] * weight; w += weight;
+                }
+                if (!w || cancelled) return;
+                const lift = (v: number) => Math.round(Math.min(255, (v / w) * 1.25 + 30));
+                setColor(`rgb(${lift(r)}, ${lift(g)}, ${lift(b)})`);
+            } catch {
+                /* tainted canvas: keep the fallback */
+            }
+        };
+        img.src = src;
+        return () => { cancelled = true; };
+    }, [src]);
+    return color;
+};
+
 const SpotifyPlayer = () => {
     const { track, isLoading } = useSpotifyTrack(15000);
     const progress = useLiveProgress(track);
+    const accent = useCoverColor(track?.image);
 
     if (!track) {
         return (
@@ -45,7 +87,7 @@ const SpotifyPlayer = () => {
     const pct = track.durationMs ? (progress / track.durationMs) * 100 : 0;
 
     return (
-        <div className={`cv-player ${track.isPlaying ? 'is-live' : ''}`}>
+        <div className={`cv-player ${track.isPlaying ? 'is-live' : ''}`} style={{ '--np': accent } as React.CSSProperties}>
             <div className="cv-player__status">
                 {track.isPlaying ? (
                     <span className="cv-player__live"><i className="cv-eq"><b /><b /><b /></i> Listening now</span>
@@ -61,16 +103,14 @@ const SpotifyPlayer = () => {
                     <span>{fmt(track.durationMs)}</span>
                 </div>
             )}
-            {/* Official embed: visitors can play the track themselves (a preview, or full if logged in). */}
-            <iframe
-                key={track.id}
-                className="cv-player__embed"
-                title={`${track.name} by ${track.artist} on Spotify`}
-                src={`https://open.spotify.com/embed/track/${track.id}?utm_source=generator`}
-                height="152"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-            />
+            <a className="cv-player__card" href={track.url} target="_blank" rel="noopener noreferrer" aria-label={`${track.name} by ${track.artist}, open in Spotify`}>
+                <span className="cv-player__art">
+                    <img src={track.image} alt="" loading="lazy" />
+                </span>
+                <span className="cv-player__title">{track.name}</span>
+                <span className="cv-player__artist">{track.artist}</span>
+                <span className="cv-player__open"><FaSpotify /> Open in Spotify</span>
+            </a>
         </div>
     );
 };
