@@ -6,7 +6,7 @@ const HeroPortrait = memo(() => {
         <div className="portrait-container">
             <div className="portrait-inner-wrapper">
                 <img
-                    src="/Picture/normal-main.png"
+                    src="/images/portrait/yuga.webp"
                     alt="Hero Portrait"
                     className="hero-main-image"
                     decoding="async"

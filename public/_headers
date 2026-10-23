@@ -1,26 +1,18 @@
 /* Fonts */
-/webfonts/*
+/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-/* Assets */
-/Picture/*
+/* Brand, images and 3D payloads: rename the file to bust the cache */
+/brand/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/images/*
   Cache-Control: public, max-age=31536000, immutable
-/Spotify-Badge/*
+/models/*
   Cache-Control: public, max-age=31536000, immutable
 
-/* 3D payloads - large and never change without a filename change */
-/fonko-spz/*
-  Cache-Control: public, max-age=31536000, immutable
-/HDR/*
-  Cache-Control: public, max-age=31536000, immutable
-/Favicon/*
-  Cache-Control: public, max-age=31536000, immutable
-/Resume/*
+/resume.pdf
   Cache-Control: public, max-age=604800
 
 /* Hashed build output */
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-
-/* SPA fallback for clean URLs */
-/* Netlify handles this via _redirects usually, but headers can coexist */

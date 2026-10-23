@@ -5,7 +5,7 @@ import type { Group } from 'three';
 import TopographicBackground from './TopographicBackground';
 import './FunkoModel.css';
 
-const MODEL_PATH = '/fonko-spz/fonk-spz.glb';
+const MODEL_PATH = '/models/funko-spz.glb';
 
 const Model = () => {
     const { scene } = useGLTF(MODEL_PATH);
@@ -40,7 +40,7 @@ const RotatingLights = () => {
             {/* Fill light */}
             <directionalLight position={[-4, 2, 4]} intensity={3} />
             {/* Rim light */}
-            <spotLight position={[0, 3, -5]} intensity={4} penumbra={0.6} angle={0.5} color="#b2ff05" />
+            <spotLight position={[0, 3, -5]} intensity={4} penumbra={0.6} angle={0.5} color="#e5483f" />
         </group>
     );
 };
@@ -97,7 +97,7 @@ const FunkoModel = memo(() => {
             </div>
             <div className="funko-model-canvas">
                 <div className="funko-contour-bg">
-                    <TopographicBackground lineColor="#b2ff05" />
+                    <TopographicBackground lineColor="var(--accent)" />
                 </div>
                 {mounted && (
                     <Canvas
@@ -117,7 +117,7 @@ const FunkoModel = memo(() => {
                         <RotatingLights />
 
                         {/* Back light */}
-                        <spotLight position={[0, 2, -5]} intensity={4} penumbra={0.5} angle={0.6} color="#b2ff05" />
+                        <spotLight position={[0, 2, -5]} intensity={4} penumbra={0.5} angle={0.6} color="#e5483f" />
 
                         {/* Left side light */}
                         <directionalLight position={[-5, 2, 0]} intensity={3} color="#ffffff" />
@@ -136,7 +136,7 @@ const FunkoModel = memo(() => {
                                 frames={1}
                             />
                             <Environment
-                                files="/HDR/syferfontein_1d_clear_puresky_1k.hdr"
+                                files="/models/sky-1k.hdr"
                                 background={false}
                                 environmentIntensity={2.5}
                             />

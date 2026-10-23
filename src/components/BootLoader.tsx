@@ -23,13 +23,13 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
         const loadSvg = async () => {
             try {
-                const response = await fetch('/Favicon/favicon.svg');
+                const response = await fetch('/brand/favicon.svg');
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'image/svg+xml');
                 const paths = Array.from(doc.querySelectorAll('path')).map(p => ({
                     d: p.getAttribute('d') || '',
-                    fill: p.getAttribute('fill') || '#b2ff05'
+                    fill: p.getAttribute('fill') || 'var(--accent)'
                 }));
                 if (isMounted) setSvgData(paths);
             } catch (err) {
@@ -44,8 +44,8 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
         // the first screen - had to finish before the site was revealed, so the
         // loader lasted as long as the slowest third-party request.
         const criticalAssets = [
-            '/Picture/normal-main.png',
-            '/Favicon/favicon.svg'
+            '/images/portrait/yuga.webp',
+            '/brand/favicon.svg'
         ];
 
         // Everything else is warmed in the background, after the reveal.
@@ -54,7 +54,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
             ...graphicsData.map(g => g.imagePublicId),
             ...wipData.map(w => w.imagePublicId),
             ...certsData.map(c => c.Badge),
-            '/Spotify-Badge/batbro.gif',
+            '/images/stickers/batbro.gif',
         ].filter((src): src is string => !!src && typeof src === 'string')));
 
         let loadedCount = 0;
@@ -162,7 +162,7 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
 
     return (
         <div ref={containerRef} className="boot-loader minimalist">
-            <TopographicBackground lineColor="rgba(178, 255, 5, 0.08)" />
+            <TopographicBackground lineColor="rgb(var(--accent-rgb) / 0.08)" />
             <div className="loader-center-content">
                 <svg
                     width="120"
@@ -177,9 +177,9 @@ const BootLoader = ({ onComplete }: BootLoaderProps) => {
                             key={i}
                             ref={el => { pathRefs.current[i] = el; }}
                             d={path.d}
-                            stroke={path.fill === 'black' ? 'transparent' : '#b2ff05'}
+                            stroke={path.fill === 'black' ? 'transparent' : 'var(--accent)'}
                             strokeWidth="1"
-                            fill={path.fill === 'black' ? '#0a0a0a' : '#b2ff05'}
+                            fill={path.fill === 'black' ? '#0a0a0a' : 'var(--accent)'}
                             fillOpacity="0"
                             strokeLinecap="round"
                             strokeLinejoin="round"

@@ -1,238 +1,45 @@
-import { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SignatureSVG from '../ui/SignatureSVG';
-import TopographicBackground from '../ui/TopographicBackground';
-import HeroPortrait from '../ui/HeroPortrait';
-import F1Card from '../ui/F1Card';
-import GigCard from '../ui/GigCard';
-import TechnicalInfoBox from '../ui/TechnicalInfoBox';
-import SectionFrame from '../ui/SectionFrame';
 import aboutData from '../../content/about.json';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { BubbleText } from '../ui/BubbleText';
+import SpotifyBadge from '../ui/SpotifyBadge';
 import './HeroBootSequence.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Keywords to highlight - from WhoAmI
-const KEYWORDS = [
-    "Computer Science", "building things", "debugging", "3 AM",
-    "designing graphics", "hackathons", "learning by doing",
-    "robust", "scalable", "full-stack", "creativity"
-];
-
-const HeroBootSequence = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const contentWrapperRef = useRef<HTMLDivElement>(null);
-    const dimOverlayRef = useRef<HTMLDivElement>(null);
-    const marqueeLeftRef = useRef<HTMLDivElement>(null);
-    const marqueeRightRef = useRef<HTMLDivElement>(null);
-    const portraitRef = useRef<HTMLDivElement>(null);
-    const signaturePathRef = useRef<SVGPathElement>(null);
-    const whoAmIRef = useRef<HTMLDivElement>(null);
-    const f1CardRef = useRef<HTMLDivElement>(null);
-    const gigCardRef = useRef<HTMLDivElement>(null);
-    const techBoxRef = useRef<HTMLDivElement>(null);
-
-    useGSAP(() => {
-        if (!containerRef.current) return;
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: "+=200%", // Extended for 2 sections
-                scrub: 1, // Smooth scrub
-                pin: true,
-                anticipatePin: 1
-            }
-        });
-
-        // --- HERO SEQUENCE (0% - 45%) ---
-
-        // Set up signature stroke animation
-        if (signaturePathRef.current) {
-            const pathLength = signaturePathRef.current.getTotalLength();
-            gsap.set(signaturePathRef.current, {
-                strokeDasharray: pathLength,
-                strokeDashoffset: pathLength
-            });
-        }
-
-        // Marquee moves constantly
-        tl.to(marqueeLeftRef.current, { xPercent: -50, ease: "none" }, 0);
-        tl.to(marqueeRightRef.current, { xPercent: 50, ease: "none" }, 0);
-
-        // 1. Scale Down & Dim (0% - 40%)
-        tl.fromTo(contentWrapperRef.current,
-            { scale: 1, borderRadius: "0", boxShadow: "0 0 0 rgba(0, 0, 0, 0)" },
-            { scale: 0.7, borderRadius: "1.5rem", boxShadow: "0 1.25rem 3.75rem rgba(0, 0, 0, 0.3)", ease: "power2.out", duration: 0.4 },
-            0
-        );
-
-        tl.fromTo(dimOverlayRef.current,
-            { opacity: 0 },
-            { opacity: 0.85, ease: "power2.out", duration: 0.4 },
-            0
-        );
-
-        // Animate NavBar text to white as background darkens (Manual Invert)
-        // Note: NavBar is outside the component scope, so we must query selector globally
-        const navFirstName = document.querySelector(".brand-firstname");
-        const navLastName = document.querySelector(".brand-lastname");
-
-        if (navFirstName) tl.to(navFirstName, { color: "#ffffff", duration: 0.4 }, 0);
-        if (navLastName) tl.to(navLastName, { color: "rgba(255, 255, 255, 0.4)", duration: 0.4 }, 0);
-
-        // 2. Signature Draw (0% - 40%)
-        if (signaturePathRef.current) {
-            const pathLength = signaturePathRef.current.getTotalLength();
-            tl.fromTo(signaturePathRef.current,
-                { strokeDashoffset: pathLength },
-                { strokeDashoffset: 0, ease: "power2.inOut", duration: 0.4 },
-                0
-            );
-        }
-
-        // 3. Hero Elements Fade Out (40% - 50%)
-        tl.to([portraitRef.current, f1CardRef.current, signaturePathRef.current, gigCardRef.current, techBoxRef.current], {
-            opacity: 0,
-            y: -50,
-            duration: 0.1,
-            ease: "power2.in"
-        }, 0.4);
-
-        // 3b. Fade out background marquee and content wrapper entirely
-        tl.to(".hero-marquee-bg", { opacity: 0, duration: 0.2 }, 0.45);
-        tl.to(contentWrapperRef.current, { opacity: 0, scale: 0.6, duration: 0.3 }, 0.5);
-
-        // --- WHOAMI SEQUENCE (50% - 100%) ---
-
-        // 4. WhoAmI Slides Up (50% - 70%)
-        tl.fromTo(whoAmIRef.current,
-            { y: "120vh", opacity: 0 },
-            { y: "0vh", opacity: 1, ease: "power3.out", duration: 0.3 },
-            0.5
-        );
-
-        // 5. Staggered Content Reveal (70% - 90%)
-        // Using direct className targeting scoped to ref
-        const targets = gsap.utils.toArray([".col-label", ".identity-title", ".status-indicator", ".location-tag", ".bio-para"]);
-
-        tl.fromTo(targets,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, stagger: 0.02, duration: 0.2, ease: "power2.out" },
-            0.7
-        );
-
-        // Keep pinned until end
-
-    }, { scope: containerRef });
-
-    const renderWithHighlights = (text: string) => {
-        const regex = new RegExp(`(${KEYWORDS.join('|')})`, 'gi');
-        const parts = text.split(regex);
-        return parts.map((part, index) => {
-            const isKeyword = KEYWORDS.some(k => k.toLowerCase() === part.toLowerCase());
-            if (isKeyword) {
-                return (
-                    <span key={index} className="keyword-highlight">
-                        <BubbleText text={part} className="font-bold" />
-                    </span>
-                );
-            }
-            return <span key={index}>{part}</span>;
-        });
-    };
-
-    return (
-        <div className="hero-boot-wrapper lando-style" ref={containerRef}>
-            {/* Background Marquee Text */}
-            <div className="hero-marquee-bg">
-                <div className="marquee-row left" ref={marqueeLeftRef}>
-                    YUGA BHARATHI J // SPICEZ_21 // FULL-STACK DEVELOPER // YUGA BHARATHI J // SPICEZ_21 // FULL-STACK DEVELOPER //
-                </div>
-                <div className="marquee-row right" ref={marqueeRightRef}>
-                    CREATIVE TECHNOLOGIST // BUG_HUNTER // DESIGNER // CREATIVE TECHNOLOGIST // BUG_HUNTER // DESIGNER //
-                </div>
-            </div>
-
-            {/* Scalable White Hero Card */}
-            <div className="hero-content-wrapper" ref={contentWrapperRef}>
-                <TopographicBackground />
-                <div className="hero-portrait-container" ref={portraitRef}>
-                    <HeroPortrait />
-                </div>
-                <div className="hero-signature-wrapper">
-                    <SignatureSVG ref={signaturePathRef} />
-                </div>
-
-                {/* Updated Elements */}
-                <div ref={f1CardRef} className="hero-info-animate">
-                    <F1Card />
-                </div>
-
-                <div ref={gigCardRef} className="hero-gig-card">
-                    <GigCard />
-                </div>
-
-                <div ref={techBoxRef} className="hero-tech-box">
-                    <TechnicalInfoBox />
-                </div>
-
-                <div className="hero-dim-overlay" ref={dimOverlayRef} />
-                <div className="hero-overlay-fade" />
-            </div>
-
-            {/* WhoAmI Section - integrated */}
-            <div className="whoami-section" ref={whoAmIRef}>
-                <SectionFrame id="whoami" label="WHOAMI" number="01">
-                    <div className="whoami-revamp">
-                        <div className="revamp-grid split-layout">
-                            {/* Column 1: Identity Profile */}
-                            <div className="revamp-col identity-col">
-                                <div className="col-label">IDENTITY_PROFILE</div>
-                                <h2 className="identity-title">SYSTEM_CORE</h2>
-                                <div className="status-indicator">
-                                    <span className="pulse-dot"></span>
-                                    AUTHENTICATED: YUGA_ROOT
-                                </div>
-                                <div className="location-tag">
-                                    <FaMapMarkerAlt className="icon" />
-                                    {aboutData.stats.location}
-                                </div>
-                                <a
-                                    href="/Resume/Resume.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hero-resume-btn"
-                                >
-                                    RESUME_V2.1
-                                </a>
-                            </div>
-
-                            {/* Column 2: Core Bio Log */}
-                            <div className="revamp-col bio-col">
-                                <div className="col-label">CORE_LOG</div>
-                                <div className="bio-content">
-                                    <p className="bio-para intro-para">
-                                        {renderWithHighlights(aboutData.intro)}
-                                    </p>
-                                    {aboutData.paragraphs.map((para, idx) => (
-                                        <p key={idx} className="bio-para">
-                                            {renderWithHighlights(para)}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+const HeroBootSequence = () => (
+        <section className="intro-hero" id="boot-sequence" aria-labelledby="hero-title">
+            <div className="intro-hero__topline"><span>YUGABHARATHI J</span><span>DEVELOPER · DESIGNER · BUILDER</span></div>
+            <div className="intro-hero__main">
+                <div className="intro-hero__visual" aria-label="A collage of Yugabharathi's creative work and interests">
+                    <span className="intro-hero__board-note">CURRENTLY IN 27 TABS <i aria-hidden="true">✳</i> MUSIC · RACE WEEK · SIDE QUESTS</span>
+                    <div className="intro-hero__portrait">
+                        <img src="/images/portrait/yuga.webp" alt="Yugabharathi outdoors at dusk" fetchPriority="high" />
                     </div>
-                </SectionFrame>
+                    <img className="intro-hero__sticker intro-hero__sticker--music" src="/images/stickers/cassette.webp" alt="Retro headphones and cassette player" />
+                    <img className="intro-hero__sticker intro-hero__sticker--racing" src="/images/stickers/f1-car.webp" alt="Red open-wheel racing car with a checkered flag" />
+                    <img className="intro-hero__sticker intro-hero__sticker--game" src="/images/stickers/retro-console.webp" alt="Translucent purple handheld game console" />
+                    <img className="intro-hero__sticker intro-hero__sticker--computer" src="/images/stickers/retro-computer.webp" alt="Vintage computer with a glowing code cursor" />
+                </div>
+                <div className="intro-hero__copy">
+                    <p className="intro-hero__eyebrow"><span /> DEVELOPER · DESIGNER · PROFESSIONAL TAB COLLECTOR</p>
+                    <h1 id="hero-title">I build with<br /><em>everything I love.</em></h1>
+                    <p className="intro-hero__summary">{aboutData.intro} {aboutData.paragraphs[0]}</p>
+                    <div className="intro-hero__actions">
+                        <a className="intro-hero__button" href="#projects">Explore my work <span aria-hidden="true">↘</span></a>
+                        <a className="intro-hero__text-link" href="/resume.pdf" target="_blank" rel="noopener noreferrer">View résumé ↗</a>
+                    </div>
+                    <div className="intro-hero__services"><span>UI / UX DESIGN</span><span>FULL STACK DEVELOPMENT</span><span>CREATIVE ASSETS</span></div>
+                    <div className="intro-hero__music"><SpotifyBadge /></div>
+                </div>
             </div>
-        </div>
-    );
-};
+            <div className="intro-hero__bottomline"><span>SCROLL TO DISCOVER</span><span className="intro-hero__scroll-mark">↓</span><span>SCROLL TO DISCOVER</span></div>
+        </section>
+);
+
+export const AboutEditorial = () => (
+    <section className="about-editorial" id="whoami" aria-labelledby="about-title">
+        <div className="about-editorial__label"><span>03</span><span>A LITTLE ABOUT ME</span></div>
+            <div className="about-editorial__body">
+                <div><p className="about-editorial__kicker">CURIOUS BY NATURE. INTENTIONAL BY DESIGN.</p><h2 id="about-title">Engineering meets<br /><em>creative instinct.</em></h2><p className="about-editorial__location">Based in {aboutData.stats.location}</p></div>
+                <div className="about-editorial__copy">{aboutData.paragraphs.slice(1).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+            </div>
+    </section>
+);
 
 export default HeroBootSequence;
