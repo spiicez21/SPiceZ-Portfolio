@@ -8,8 +8,8 @@ const BossesDefeated = () => {
     return (
         <SectionFrame
             id="bosses-defeated"
-            label="BOSSES DEFEATED"
-            number="05"
+            label="MILESTONES"
+            number="04"
         >
             <AnimateIn className="hackathons-grid" animation="fade-up" stagger={0.15}>
                 {hackathonsData.map((hack) => (

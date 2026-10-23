@@ -3,7 +3,7 @@
     position: relative;
     width: 100%;
     padding: 6rem 4rem 8rem;
-    background: linear-gradient(180deg, #1a1d14 0%, #111310 100%);
+    background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
     z-index: 1;
     overflow: hidden;
 }
@@ -11,7 +11,7 @@
 /* ── Header ── */
 .creative-header {
     margin-bottom: 4rem;
-    color: #b2ff05;
+    color: var(--accent);
 }
 
 .creative-title {
@@ -27,12 +27,12 @@
 
 .creative-number {
     font-size: 1.5rem;
-    color: rgba(178, 255, 5, 0.5);
+    color: rgb(var(--accent-rgb) / 0.5);
 }
 
 .creative-subtitle {
     font-size: 0.875rem;
-    color: rgba(178, 255, 5, 0.6);
+    color: rgb(var(--accent-rgb) / 0.6);
     margin-top: 0.5rem;
     letter-spacing: 0.15em;
 }
@@ -49,8 +49,8 @@
 /* ── Card ── */
 .creative-card {
     position: relative;
-    background: rgba(20, 23, 15, 0.8);
-    border: 1px solid rgba(178, 255, 5, 0.1);
+    background: rgb(24 24 24 / 0.8);
+    border: 1px solid rgb(var(--accent-rgb) / 0.1);
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
@@ -58,8 +58,8 @@
 }
 
 .creative-card:hover {
-    border-color: rgba(178, 255, 5, 0.4);
-    box-shadow: 0 16px 50px rgba(178, 255, 5, 0.1),
+    border-color: rgb(var(--accent-rgb) / 0.4);
+    box-shadow: 0 16px 50px rgb(var(--accent-rgb) / 0.1),
         0 6px 20px rgba(0, 0, 0, 0.4);
     transform: translateY(-4px);
 }
@@ -113,12 +113,12 @@
 
 .creative-card__category {
     font-size: 0.65rem;
-    color: #b2ff05;
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     flex-shrink: 0;
     padding: 0.15rem 0.5rem;
-    background: rgba(178, 255, 5, 0.1);
+    background: rgb(var(--accent-rgb) / 0.1);
     border-radius: 3px;
 }
 
@@ -131,8 +131,8 @@
 
 .creative-show-more__btn {
     background: transparent;
-    border: 1px solid rgba(178, 255, 5, 0.3);
-    color: #b2ff05;
+    border: 1px solid rgb(var(--accent-rgb) / 0.3);
+    color: var(--accent);
     font-size: 0.8rem;
     font-family: inherit;
     letter-spacing: 0.15em;
@@ -143,8 +143,8 @@
 }
 
 .creative-show-more__btn:hover {
-    background: rgba(178, 255, 5, 0.1);
-    border-color: rgba(178, 255, 5, 0.6);
+    background: rgb(var(--accent-rgb) / 0.1);
+    border-color: rgb(var(--accent-rgb) / 0.6);
 }
 
 /* ── Lightbox ── */
@@ -185,7 +185,7 @@
     max-height: 70vh;
     object-fit: contain;
     border-radius: 8px;
-    border: 1px solid rgba(178, 255, 5, 0.15);
+    border: 1px solid rgb(var(--accent-rgb) / 0.15);
     display: block;
 }
 
@@ -194,14 +194,14 @@
     top: 0.75rem;
     right: 0.75rem;
     background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(178, 255, 5, 0.3);
+    border: 1px solid rgb(var(--accent-rgb) / 0.3);
     border-radius: 50%;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #b2ff05;
+    color: var(--accent);
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
@@ -209,7 +209,7 @@
 }
 
 .creative-lightbox__close:hover {
-    background: rgba(178, 255, 5, 0.2);
+    background: rgb(var(--accent-rgb) / 0.2);
     transform: scale(1.1);
 }
 
@@ -220,18 +220,18 @@
 
 .creative-lightbox__meta h3 {
     font-size: 1.25rem;
-    color: #b2ff05;
+    color: var(--accent);
     margin: 0 0 0.5rem;
 }
 
 .creative-lightbox__badge {
     display: inline-block;
     font-size: 0.7rem;
-    color: #b2ff05;
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     padding: 0.2rem 0.6rem;
-    background: rgba(178, 255, 5, 0.15);
+    background: rgb(var(--accent-rgb) / 0.15);
     border-radius: 3px;
     margin-bottom: 0.75rem;
 }

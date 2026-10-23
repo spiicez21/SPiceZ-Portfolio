@@ -164,12 +164,12 @@
 
 .work-nav-hover-text .char {
     color: transparent;
-    -webkit-text-stroke: 0.125rem rgba(178, 255, 5, 0.9);
+    -webkit-text-stroke: 0.125rem rgb(var(--accent-rgb) / 0.9);
     -webkit-text-fill-color: transparent;
     font-family: inherit;
     font-weight: inherit;
     backface-visibility: hidden;
-    text-shadow: 0 0 1.25rem rgba(178, 255, 5, 0.3);
+    text-shadow: 0 0 1.25rem rgb(var(--accent-rgb) / 0.3);
 }
 
 @media (max-width: 1024px) {

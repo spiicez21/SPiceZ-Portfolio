@@ -13,7 +13,7 @@
 }
 
 .wip-item:hover {
-    border-color: rgba(178, 255, 5, 0.5);
+    border-color: rgb(var(--accent-rgb) / 0.5);
 }
 
 .wip-header {
@@ -36,9 +36,9 @@
 .wip-status {
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: rgba(178, 255, 5, 1);
+    color: rgb(var(--accent-rgb) / 1);
     padding: 0.25rem 0.75rem;
-    border: 0.0625rem solid rgba(178, 255, 5, 0.5);
+    border: 0.0625rem solid rgb(var(--accent-rgb) / 0.5);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -69,14 +69,14 @@
 
 .wip-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, rgba(178, 255, 5, 0.8), rgba(178, 255, 5, 1));
+    background: linear-gradient(90deg, rgb(var(--accent-rgb) / 0.8), rgb(var(--accent-rgb) / 1));
     transition: width 0.3s ease;
 }
 
 .progress-label {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: rgba(178, 255, 5, 0.9);
+    color: rgb(var(--accent-rgb) / 0.9);
     min-width: 3rem;
     text-align: right;
 }

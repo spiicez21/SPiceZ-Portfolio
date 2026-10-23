@@ -44,14 +44,14 @@
     font-family: var(--font-heading);
     font-weight: 900;
     font-size: 1.5rem;
-    color: #000;
+    color: #f4f1ed;
     text-transform: uppercase;
     letter-spacing: -0.02em;
     transition: font-size 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .brand-lastname {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(244, 241, 237, 0.48);
 }
 
 .navbar-brand-text:hover {
@@ -67,28 +67,29 @@
 .nav-action-btn {
     background: var(--accent);
     /* Neon Lime/Yellow like the Store button */
-    color: #000;
+    color: #fff;
     padding: 0.6rem 1.2rem;
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: 0.75rem;
     text-decoration: none;
-    border-radius: 0.25rem;
+    border-radius: 999px;
     letter-spacing: 0.05em;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .nav-action-btn:hover {
     transform: translateY(-0.125rem);
-    box-shadow: 0 0.3125rem 0.9375rem var(--accent);
+    box-shadow: 0 0.3125rem 0.9375rem rgb(var(--accent-rgb) / .2);
 }
 
 /* Secondary action: white pill (same trick as .mobile-toggle) so it stays
    legible over both the light hero and the dark sections below it, while
    leaving lime as the primary HIRE ME call. */
 .nav-action-btn--ghost {
-    background: #fff;
-    color: #000;
+    background: transparent;
+    color: #d4d0cb;
+    border: 1px solid rgba(255,255,255,.18);
     white-space: nowrap;
 }
 
@@ -112,14 +113,14 @@
 }
 
 .mobile-toggle {
-    background: #fff;
+    background: var(--accent);
     border: none;
     width: 2.75rem;
     height: 2.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.25rem;
+    border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -148,7 +149,7 @@
     display: block;
     width: 100%;
     height: 0.125rem;
-    background: #000;
+    background: #fff;
     transition: all 0.3s ease;
 }
 
@@ -167,7 +168,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(5, 5, 5, 0.98);
+    background: rgba(16, 16, 16, 0.98);
     /* Near fully opaque */
     /* backdrop-filter: blur(20px); - Removed for performance */
     z-index: 100001;
@@ -291,8 +292,8 @@
 .submenu-link {
     text-decoration: none;
     padding: 0.8rem 1.5rem;
-    background: rgba(178, 255, 5, 0.05);
-    border: 0.0625rem solid rgba(178, 255, 5, 0.2);
+    background: rgb(var(--accent-rgb) / 0.05);
+    border: 0.0625rem solid rgb(var(--accent-rgb) / 0.2);
     border-radius: 0.5rem;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
@@ -306,7 +307,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(178, 255, 5, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.1), transparent);
     transition: left 0.5s ease;
 }
 
@@ -315,7 +316,7 @@
 }
 
 .submenu-link:hover {
-    background: rgba(178, 255, 5, 0.15);
+    background: rgb(var(--accent-rgb) / 0.15);
     border-color: var(--accent);
     transform: translateX(-0.625rem);
 }

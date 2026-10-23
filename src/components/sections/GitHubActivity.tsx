@@ -46,7 +46,7 @@ const GitHubActivity = () => {
     return (
         <SectionFrame
             id="github-activity"
-            label="GITHUB ACTIVITY"
+            label="AROUND THE CODE"
             number="08"
         >
             <div className="github-content">

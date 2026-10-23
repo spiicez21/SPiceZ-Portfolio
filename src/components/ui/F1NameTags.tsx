@@ -36,7 +36,7 @@ const F1NameTags = () => {
                         className="driver-tag-animate"
                         style={{
                             borderLeft: '0.1875rem solid var(--accent)',
-                            background: 'linear-gradient(90deg, rgba(178, 255, 5, 0.05) 0%, transparent 100%)',
+                            background: 'linear-gradient(90deg, rgb(var(--accent-rgb) / 0.05) 0%, transparent 100%)',
                             padding: '0.75rem 1rem',
                             position: 'relative',
                             overflow: 'hidden',

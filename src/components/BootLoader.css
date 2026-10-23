@@ -23,7 +23,7 @@
 .loader-logo-svg {
     width: 7.5rem;
     height: auto;
-    filter: drop-shadow(0 0 0.9375rem rgba(178, 255, 5, 0.3));
+    filter: drop-shadow(0 0 0.9375rem rgb(var(--accent-rgb) / 0.3));
     animation: loader-glow 2s ease-in-out infinite;
 }
 
@@ -31,11 +31,11 @@
 
     0%,
     100% {
-        filter: drop-shadow(0 0 0.625rem rgba(178, 255, 5, 0.2));
+        filter: drop-shadow(0 0 0.625rem rgb(var(--accent-rgb) / 0.2));
     }
 
     50% {
-        filter: drop-shadow(0 0 1.25rem rgba(178, 255, 5, 0.4));
+        filter: drop-shadow(0 0 1.25rem rgb(var(--accent-rgb) / 0.4));
     }
 }
 

@@ -33,13 +33,13 @@ const CreativeShowcase = () => {
     };
 
     return (
-        <section className="creative-section">
+        <section className="creative-section" id="pixel-lab">
             <div className="creative-header">
                 <h2 className="creative-title">
-                    <span className="creative-number">05</span>
-                    PIXEL LAB
+                    <span className="creative-number">02</span>
+                    CREATIVE PLAYGROUND
                 </h2>
-                <p className="creative-subtitle">GRAPHICS · THUMBNAILS · LOGOS · POSTERS</p>
+                <p className="creative-subtitle">POSTERS · VISUAL SYSTEMS · IDEAS THAT ESCAPED THE NOTES APP</p>
             </div>
 
             <div className="creative-grid">

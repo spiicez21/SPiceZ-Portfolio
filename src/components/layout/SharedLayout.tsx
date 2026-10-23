@@ -21,7 +21,7 @@ const SharedLayout = ({ children }: SharedLayoutProps) => {
                 minHeight: '100vh',
                 height: '100%',
                 // Matches Portfolio.tsx gradient: Fades out completely by 30%
-                background: 'linear-gradient(to bottom, #2a2d1f 0%, transparent 30%)',
+                background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 30%)',
             }} />
 
             <main style={{ position: 'relative', zIndex: 1 }}>
