@@ -84,7 +84,7 @@
 }
 
 .project-icon-link:hover {
-    color: rgba(178, 255, 5, 0.9);
+    color: rgb(var(--accent-rgb) / 0.9);
 }
 
 .project-subtitle {
@@ -112,15 +112,15 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     padding: 0.15rem 0.5rem;
-    border: 0.0625rem solid rgba(178, 255, 5, 0.3);
+    border: 0.0625rem solid rgb(var(--accent-rgb) / 0.3);
     color: var(--ink);
-    background: rgba(178, 255, 5, 0.05);
+    background: rgb(var(--accent-rgb) / 0.05);
     transition: all 0.2s ease;
 }
 
 .tech-tag:hover {
-    border-color: rgba(178, 255, 5, 0.6);
-    background: rgba(178, 255, 5, 0.1);
+    border-color: rgb(var(--accent-rgb) / 0.6);
+    background: rgb(var(--accent-rgb) / 0.1);
 }
 
 .project-role {
@@ -133,6 +133,6 @@
 }
 
 .role-label {
-    color: rgba(178, 255, 5, 0.9);
+    color: rgb(var(--accent-rgb) / 0.9);
     font-weight: 700;
 }

@@ -18,7 +18,7 @@
     font-family: var(--font-mono);
     font-size: 0.9rem;
     font-weight: 600;
-    color: rgba(178, 255, 5, 0.8);
+    color: rgb(var(--accent-rgb) / 0.8);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin: 0;
@@ -66,7 +66,7 @@
 .tech-logo:hover .tech-icon-scattered {
     transform: scale(1.05);
     color: rgba(255, 255, 255, 0.95);
-    border-color: rgba(178, 255, 5, 0.3);
+    border-color: rgb(var(--accent-rgb) / 0.3);
 }
 
 /* Hover Card - Minimal Black & Green */
@@ -108,7 +108,7 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 400;
-    color: rgba(178, 255, 5, 0.6);
+    color: rgb(var(--accent-rgb) / 0.6);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }

@@ -4,7 +4,7 @@
 /* Clash Display - Small/Regular */
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Regular.woff2') format('woff2');
+  src: url('/fonts/clash-display/ClashDisplay-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Medium.woff2') format('woff2');
+  src: url('/fonts/clash-display/ClashDisplay-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: 'ClashDisplay';
-  src: url('/webfonts/ClashDIsplay/ClashDisplay-Semibold.woff2') format('woff2');
+  src: url('/fonts/clash-display/ClashDisplay-Semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -29,7 +29,7 @@
 /* Stardom - Bold/Headings */
 @font-face {
   font-family: 'Stardom';
-  src: url('/webfonts/Stardom/Stardom-Regular.woff2') format('woff2');
+  src: url('/fonts/stardom/Stardom-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -38,14 +38,24 @@
 /* Minimal Black Monotone Theme */
 :root {
   /* Minimal Palette */
-  --bg: #050505;
+  --bg: #101010;
   /* Slightly deeper black */
-  --bg-alt: #0a0a0a;
-  --ink: #ffffff;
-  --ink-muted: #888888;
-  --accent: #b2ff05;
-  /* High color neon lime */
-  --border: rgba(255, 255, 255, 0.1);
+  --bg-alt: #181818;
+  --ink: #f4f1ed;
+  --ink-muted: #96918b;
+  --accent: #e5483f;
+  --accent-hover: #f05248;
+  --accent-rgb: 229 72 63;
+  --ink-accent: var(--accent);
+  --ink-accent-rgb: 229, 72, 63;
+  --surface: #f0eeeb;
+  --ink-on-surface: #151413;
+  --ink-on-surface-muted: #5f5a55;
+  --ink-dim: #8d8985;
+  --ink-soft: #aaa6a1;
+  --ink-warm: #cbc7c2;
+  --border-strong: #403c39;
+  --border: rgba(255, 255, 255, 0.12);
 
   /* Typography */
   --font-regular: 'ClashDisplay', sans-serif;
@@ -56,10 +66,6 @@
   /* Spacing */
   --border-width: 0.0625rem;
   --section-padding: 6rem;
-}
-
-* {
-  cursor: none !important;
 }
 
 @media (max-width: 1024px) {
@@ -110,16 +116,6 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* Smoothen out layout shifts during resize and state changes */
-  transition: padding 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    margin 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    gap 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    top 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    left 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    right 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-    bottom 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 html {
@@ -129,7 +125,7 @@ html {
 body {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: var(--font-mono);
+  font-family: var(--font-regular);
   font-weight: 300;
   /* Slim Variant Default */
   line-height: 1.6;
@@ -173,7 +169,7 @@ h6 {
   line-height: 1.1;
   letter-spacing: -0.02em;
   /* Tighter for bold mono */
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 /* Links */
@@ -184,8 +180,12 @@ a {
 }
 
 a:hover {
-  opacity: 0.6;
+  opacity: 0.82;
 }
+
+button, input, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

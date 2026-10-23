@@ -64,8 +64,8 @@
 
 .repo-card:hover {
     transform: translateY(-0.25rem);
-    border-color: rgba(178, 255, 5, 0.5);
-    background: rgba(178, 255, 5, 0.05);
+    border-color: rgb(var(--accent-rgb) / 0.5);
+    background: rgb(var(--accent-rgb) / 0.05);
 }
 
 .repo-name {
@@ -99,10 +99,10 @@
 
 .repo-language {
     padding: 0.15rem 0.5rem;
-    background: rgba(178, 255, 5, 0.1);
-    border: 0.0625rem solid rgba(178, 255, 5, 0.3);
+    background: rgb(var(--accent-rgb) / 0.1);
+    border: 0.0625rem solid rgb(var(--accent-rgb) / 0.3);
     border-radius: 0.1875rem;
-    color: rgba(178, 255, 5, 0.9);
+    color: rgb(var(--accent-rgb) / 0.9);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -116,7 +116,7 @@
 .view-all-repos {
     font-family: var(--font-mono);
     font-size: 0.875rem;
-    color: rgba(178, 255, 5, 0.9);
+    color: rgb(var(--accent-rgb) / 0.9);
     text-decoration: none;
     padding: 1rem;
     border: 0.0625rem solid rgba(255, 255, 255, 0.1);
@@ -128,8 +128,8 @@
 }
 
 .view-all-repos:hover {
-    background: rgba(178, 255, 5, 0.1);
-    border-color: rgba(178, 255, 5, 0.5);
+    background: rgb(var(--accent-rgb) / 0.1);
+    border-color: rgb(var(--accent-rgb) / 0.5);
     transform: translateY(-0.125rem);
 }
 

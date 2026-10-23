@@ -62,7 +62,7 @@
 .cursor-dot.active {
     width: 3.75rem;
     height: 3.75rem;
-    background-color: rgba(178, 255, 5, 0.3);
+    background-color: rgb(var(--accent-rgb) / 0.3);
     border: 0.125rem solid var(--accent);
 }
 

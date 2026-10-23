@@ -43,8 +43,8 @@ const VerifiedCredentials = () => {
   return (
     <SectionFrame
       id="verified-credentials"
-      label="VERIFIED CREDENTIALS"
-      number="04"
+      label="WHAT I'VE LEARNED"
+      number="05"
     >
       <div ref={containerRef} className="certifications-list">
         {certificationsData.map((cert, index) => (

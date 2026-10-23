@@ -9,7 +9,7 @@ const containerStyle: React.CSSProperties = {
     backdropFilter: 'blur(10px)',
     padding: '1rem',
     borderRadius: '0.5rem',
-    border: '0.0625rem solid rgba(178, 255, 5, 0.3)', /* Neon accent border */
+    border: '0.0625rem solid rgb(var(--accent-rgb) / 0.3)', /* Neon accent border */
     display: 'flex',
     flexDirection: 'column',
     gap: '0.5rem',
@@ -26,7 +26,7 @@ const rowStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-    color: '#b2ff05', // Neon
+    color: 'var(--accent)', // Neon
     fontWeight: 600,
     textTransform: 'uppercase'
 };
@@ -50,7 +50,7 @@ const TechnicalInfoBox = memo(() => {
             <div style={rowStyle}>
                 <span style={labelStyle}>SYSTEM</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    ONLINE <FaWifi size={10} color="#00ff00" />
+                    ONLINE <FaWifi size={10} color="var(--accent)" />
                 </span>
             </div>
             <div style={{ ...rowStyle, borderBottom: 'none', paddingBottom: 0 }}>

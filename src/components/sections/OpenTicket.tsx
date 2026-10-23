@@ -55,7 +55,7 @@ const OpenTicket = () => {
     return (
         <SectionFrame
             id="open-ticket"
-            label="OPEN A TICKET"
+            label="SAY HELLO"
             number="09"
         >
             <div ref={containerRef} className="ticket-layout">
@@ -71,14 +71,14 @@ const OpenTicket = () => {
                     {/* Column 1: Format */}
                     <div className="ticket-system">
                         <div className="ticket-header">
-                            <span className="ticket-id">NEW TICKET // #001</span>
+                            <span className="ticket-id">A NOTE FROM YOU</span>
                             <div className="ticket-header-line"></div>
-                            <span className="ticket-status">STATUS: STANDBY</span>
+                            <span className="ticket-status">I’M ALL EARS</span>
                         </div>
 
                         <form onSubmit={handleSubmit} className="ticket-form">
                             <div className="form-field">
-                                <label htmlFor="name">AGENT NAME</label>
+                                    <label htmlFor="name">YOUR NAME</label>
                                 <input
                                     type="text"
                                     id="name"
@@ -86,11 +86,11 @@ const OpenTicket = () => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    placeholder="ENTER NAME"
+                                    placeholder="What should I call you?"
                                 />
                             </div>
                             <div className="form-field">
-                                <label htmlFor="email">RETURN FREQUENCY</label>
+                                    <label htmlFor="email">YOUR EMAIL</label>
                                 <input
                                     type="email"
                                     id="email"
@@ -98,12 +98,12 @@ const OpenTicket = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    placeholder="ENTER EMAIL"
+                                    placeholder="you@example.com"
                                 />
                             </div>
 
                             <div className="form-field">
-                                <label htmlFor="message">TRANSMISSION DATA</label>
+                                    <label htmlFor="message">WHAT’S ON YOUR MIND?</label>
                                 <textarea
                                     id="message"
                                     name="message"
@@ -111,7 +111,7 @@ const OpenTicket = () => {
                                     onChange={handleChange}
                                     required
                                     rows={4}
-                                    placeholder="ENTER MESSAGE CONTENT..."
+                                    placeholder="Tell me a little about it…"
                                 />
                             </div>
 
@@ -121,10 +121,10 @@ const OpenTicket = () => {
                                 disabled={status === 'sending' || status === 'success'}
                             >
                                 <span className="btn-content">
-                                    {status === 'sending' && <><Loader2 className="spin" size={16} /> TRANSMITTING</>}
-                                    {status === 'success' && <><Check size={16} /> SENT CONFIRMED</>}
-                                    {status === 'error' && <><AlertTriangle size={16} /> FAILED</>}
-                                    {status === 'idle' && <><Send size={16} /> SEND TICKET</>}
+                                    {status === 'sending' && <><Loader2 className="spin" size={16} /> SENDING</>}
+                                    {status === 'success' && <><Check size={16} /> MESSAGE SENT</>}
+                                    {status === 'error' && <><AlertTriangle size={16} /> TRY AGAIN</>}
+                                    {status === 'idle' && <><Send size={16} /> SEND MESSAGE</>}
                                 </span>
                                 <div className="btn-glitch"></div>
                             </button>

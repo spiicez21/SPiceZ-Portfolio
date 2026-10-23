@@ -1,52 +1,15 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import BootLoader from './components/BootLoader';
 import Portfolio from './routes/Portfolio';
 const DeployedBuildsRoute = lazy(() => import('./routes/DeployedBuildsRoute'));
 const PixelLabRoute = lazy(() => import('./routes/PixelLabRoute'));
 const InProgressRoute = lazy(() => import('./routes/InProgressRoute'));
 
 import { SmoothScrollProvider } from './context/SmoothScrollContext';
-import RetroGrid from './components/utils/RetroGrid';
-import CustomCursor from './components/ui/CustomCursor';
-
-// Custom cursor and the parallax grid are mouse-only decorations. On touch
-// devices they cost listeners and a full-viewport composited layer for nothing.
-const hasFinePointer = () =>
-  typeof window !== 'undefined' &&
-  typeof window.matchMedia === 'function' &&
-  window.matchMedia('(pointer: fine)').matches;
 
 function App() {
-  const [showBootLoader, setShowBootLoader] = useState(true);
-  const [pointerFine, setPointerFine] = useState(false);
-
-  useEffect(() => {
-    setPointerFine(hasFinePointer());
-  }, []);
-
-  useEffect(() => {
-    // Listen for boot sequence trigger
-    const handleBootTrigger = () => {
-      setShowBootLoader(true);
-    };
-
-    window.addEventListener('triggerBootSequence', handleBootTrigger);
-
-    return () => {
-      window.removeEventListener('triggerBootSequence', handleBootTrigger);
-    };
-  }, []);
-
-  const handleBootComplete = () => {
-    setShowBootLoader(false);
-  };
-
   return (
     <SmoothScrollProvider>
-      <RetroGrid opacity={0.05} />
-      {pointerFine && <CustomCursor />}
-      {showBootLoader && <BootLoader onComplete={handleBootComplete} />}
       <Router>
         <Routes>
           <Route path="/" element={<Portfolio />} />

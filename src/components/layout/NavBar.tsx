@@ -6,23 +6,12 @@ import { Minus } from 'lucide-react';
 import './NavBar.css';
 
 const navItems = [
-    { label: 'WHOAMI', href: '/#whoami' },
-    { label: 'STACK', href: '/#stack-trace' },
-    {
-        label: 'WORKS',
-        href: '/#work-navigation',
-        submenu: [
-            { label: 'DEPLOYED BUILDS', href: '/deployed-builds' },
-            { label: 'PIXEL LAB', href: '/pixel-lab' },
-            { label: 'IN PROGRESS', href: '/in-progress' }
-        ]
-    },
-    { label: 'CERTS', href: '/#verified-credentials' },
+    { label: 'WORK', href: '/#projects' },
+    { label: 'CREATIVE', href: '/#pixel-lab' },
+    { label: 'ABOUT', href: '/#whoami' },
+    { label: 'MILESTONES', href: '/#bosses-defeated' },
     { label: 'CONTACT', href: '/#open-ticket' },
 ];
-
-// Separate creative/design portfolio, hosted independently.
-const CREATIVE_PORTFOLIO_URL = 'https://spicez21.netlify.app';
 
 interface NavBarProps {
     className?: string;
@@ -31,7 +20,6 @@ interface NavBarProps {
 const NavBar = ({ className = '' }: NavBarProps) => {
     const navRef = useRef<HTMLElement>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [hoveredItem, setHoveredItem] = useState<number | null>(null);
     const lenis = useSmoothScroll();
     const navigate = useNavigate();
     const location = useLocation();
@@ -70,12 +58,10 @@ const NavBar = ({ className = '' }: NavBarProps) => {
         if (href === '#boot-sequence' || href === '/#boot-sequence') {
             if (location.pathname !== '/') {
                 navigate('/');
-                setTimeout(() => {
-                    window.dispatchEvent(new Event('triggerBootSequence'));
-                }, 100);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                window.dispatchEvent(new Event('triggerBootSequence'));
                 if (lenis) lenis.scrollTo(0);
+                else window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             return;
         }
@@ -127,25 +113,24 @@ const NavBar = ({ className = '' }: NavBarProps) => {
                 </a>
             </div>
 
+            <div className="nav-primary" aria-label="Main navigation">
+                <a href="/#projects" onClick={(e) => handleNavClick(e, '/#projects')}>Work</a>
+                <a href="/#pixel-lab" onClick={(e) => handleNavClick(e, '/#pixel-lab')}>Creative</a>
+                <a href="/#whoami" onClick={(e) => handleNavClick(e, '/#whoami')}>About</a>
+                <a href="/#bosses-defeated" onClick={(e) => handleNavClick(e, '/#bosses-defeated')}>Milestones</a>
+                <a href="/#open-ticket" onClick={(e) => handleNavClick(e, '/#open-ticket')}>Contact</a>
+            </div>
+
 
             {/* Right Module: Action & Menu */}
             <div className="nav-module nav-right">
                 <a
-                    href={CREATIVE_PORTFOLIO_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="nav-action-btn nav-action-btn--ghost"
-                >
-                    OTHER SIDE OF ME
-                </a>
-
-                <a
-                    href="https://linkedin.com"
+                    href="/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="nav-action-btn"
                 >
-                    HIRE ME
+                    RESUME
                 </a>
 
                 <button
@@ -171,8 +156,6 @@ const NavBar = ({ className = '' }: NavBarProps) => {
                         <div
                             key={idx}
                             className="nav-item-wrapper"
-                            onMouseEnter={() => setHoveredItem(idx)}
-                            onMouseLeave={() => setHoveredItem(null)}
                         >
                             <a
                                 href={item.href}
@@ -182,38 +165,8 @@ const NavBar = ({ className = '' }: NavBarProps) => {
                                 <span className="link-num">0{idx + 1}</span>
                                 <span className="link-text">{item.label}</span>
                             </a>
-                            {item.submenu && (
-                                <div className={`submenu ${hoveredItem === idx ? 'active' : ''}`}>
-                                    {item.submenu.map((subItem, subIdx) => (
-                                        <a
-                                            key={subIdx}
-                                            href={subItem.href}
-                                            className="submenu-link"
-                                            onClick={(e) => handleNavClick(e, subItem.href)}
-                                        >
-                                            <span className="submenu-text">{subItem.label}</span>
-                                        </a>
-                                    ))}
-                                </div>
-                            )}
                         </div>
                     ))}
-
-                    {/* External: the desktop button is hidden on small screens,
-                        so the link has to exist in the overlay too. */}
-                    <div className="nav-item-wrapper">
-                        <a
-                            href={CREATIVE_PORTFOLIO_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="overlay-link overlay-link--external"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            <span className="link-num">0{navItems.length + 1}</span>
-                            <span className="link-text">OTHER SIDE OF ME</span>
-                            <span className="link-external-mark" aria-hidden="true">&#8599;</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </nav>

@@ -19,18 +19,18 @@ const ProjectShowcase = () => {
         <section className="showcase" id="projects">
             <header className="showcase-header">
                 <h2 className="showcase-title">
-                    <span className="title-number">04</span>
-                    PROJECT SHOWCASE
+                    <span className="title-number">01</span>
+                    SELECTED WORK
                 </h2>
                 <p className="showcase-subtitle">
-                    DEPLOYED BUILDS &amp; CREATIVE WORKS
+                    WEB PROJECTS, TOOLS &amp; EXPERIMENTS
                     <span className="showcase-count">{items.length} TOTAL</span>
                 </p>
             </header>
 
             <div className="showcase-grid">
-                {visible.map((item) => (
-                    <article key={item.id} className="project-card">
+                {visible.map((item, index) => (
+                    <article key={item.id} className={`project-card${index === 0 ? ' project-card--feature' : ''}`}>
                         {item.thumbnailPublicId && (
                             <div className="card-image">
                                 <img

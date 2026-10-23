@@ -40,7 +40,7 @@ const GigCard = memo(() => {
             <div className="tech-row">
                 <span className="tech-label">COMMISSION</span>
                 <span className="tech-status">
-                    OPEN <FaCircle size={8} color="#b2ff05" className="pulse-icon" />
+                    OPEN <FaCircle size={8} color="var(--accent)" className="pulse-icon" />
                 </span>
             </div>
 

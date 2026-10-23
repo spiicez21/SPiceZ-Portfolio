@@ -50,7 +50,7 @@ const F1Telemetry = () => {
         const flash = (el: HTMLElement | null) => {
             if (el) {
                 gsap.fromTo(el,
-                    { backgroundColor: 'rgba(209, 0, 209, 0.8)', color: '#fff' },
+                    { backgroundColor: 'rgb(var(--accent-rgb) / 0.8)', color: '#fff' },
                     { backgroundColor: 'transparent', color: 'inherit', duration: 0.3, clearProps: 'all' }
                 );
             }
@@ -86,7 +86,7 @@ const F1Telemetry = () => {
         const activateTrack = (ref: React.RefObject<SVGPathElement | null>, duration: number) => {
             if (!ref.current) return;
             const len = ref.current.getTotalLength();
-            gsap.set(ref.current, { stroke: '#d100d1', opacity: 1, strokeDasharray: len, strokeDashoffset: len });
+            gsap.set(ref.current, { stroke: 'var(--accent)', opacity: 1, strokeDasharray: len, strokeDashoffset: len });
             gsap.to(ref.current, {
                 strokeDashoffset: 0,
                 duration: duration,
@@ -188,18 +188,18 @@ const F1Telemetry = () => {
                     {/* S1: Red -> Purple */}
                     <path ref={trackS1Ref} d="M32.7,797.6C42.4,697,53.5,596.4,61.8,495.7c2.7-29,5.5-58.3,7.5-87.3
                         c3.2-11.8-2.5-43,13.1-45.1c17.9-1.5,14.3-17.1,10.3-29.6c-3.3-10.9-6.5-22-8.5-33.3c-9-91.5,13-175.6,108-208.5
-                        c36.6-12.9,76.3-12.3,114.6-15" stroke="#d100d1" strokeWidth="40" fill="none" strokeLinecap="round" />
+                        c36.6-12.9,76.3-12.3,114.6-15" stroke="var(--accent)" strokeWidth="40" fill="none" strokeLinecap="round" />
 
                     {/* S2: Blue -> Purple */}
                     <path ref={trackS2Ref} d="M306.9,76.8c24.5-1.5,49.2-2.8,73.7-3.8c12.7-1.4,26.7,0.8,38.5-4.7
                         c6.2-4.1,8.1-11.7,13.1-16.9C448.1,41,468.2,41,485.4,33.6c18.2-5.8,36.3-12.5,54.5-18.8c13.1-4.2,26.5-9.5,40.4-7.5
-                        c39.3,8.5,35.2,47,38.5,78.4c0.2,28.7,15.9,67.5-14.1,86.4c-49.8,27.4-101.3,52.6-148.9,84.1c-54,40.8-103.6,87-155,131" stroke="#d100d1" strokeWidth="40" fill="none" strokeLinecap="round" />
+                        c39.3,8.5,35.2,47,38.5,78.4c0.2,28.7,15.9,67.5-14.1,86.4c-49.8,27.4-101.3,52.6-148.9,84.1c-54,40.8-103.6,87-155,131" stroke="var(--accent)" strokeWidth="40" fill="none" strokeLinecap="round" />
 
                     {/* S3: Yellow -> Purple */}
                     <path ref={trackS3Ref} d="M300.8,387.2c-17.8,15.2-35.3,30.9-53.1,46c-9,8.9-20.2,15.9-24.9,28.2
                         c-4.4,15.5,1.1,32.6-7,47.4c-5.5,11.5-15.8,19.8-22.5,30.5c-14.4,26.7-11.6,58.6-15,87.8c-3.9,57.2-9.8,114.3-16,171.4
                         c-4.5,47.6-9.7,95.2-14.6,142.7c-3.1,20.5-1.2,42.4-9.9,61.5c-11.3,20.2-38,27-58.7,17.4c-45.7-20.6-48.6-78.3-49.3-122.1
-                        c-0.3-33.5-0.7-67.2,2.8-100.5" stroke="#d100d1" strokeWidth="40" fill="none" strokeLinecap="round" />
+                        c-0.3-33.5-0.7-67.2,2.8-100.5" stroke="var(--accent)" strokeWidth="40" fill="none" strokeLinecap="round" />
                 </svg>
             </div>
 

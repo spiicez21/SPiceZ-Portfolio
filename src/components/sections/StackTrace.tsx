@@ -1,8 +1,5 @@
-import { type JSX, memo, useRef, useState } from 'react';
+import { type JSX, memo } from 'react';
 import SectionFrame from '../ui/SectionFrame';
-import { useGSAP } from '@gsap/react';
-import { gsap } from '../../lib/animations/gsapClient';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import techStackData from '../../content/techstack.json';
 import './StackTrace.css';
 import {
@@ -15,8 +12,6 @@ import {
 } from 'react-icons/si';
 import { FaAws } from 'react-icons/fa';
 import { VscVscode } from 'react-icons/vsc';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Define types
 type IconMapType = {
@@ -52,65 +47,22 @@ const iconMap: IconMapType = {
 
 
 const StackTrace = memo(() => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-
-    useGSAP(() => {
-        if (!containerRef.current) return;
-
-        // Animate logos on initial view with a single ScrollTrigger
-        const logos = containerRef.current.querySelectorAll('.tech-logo');
-
-        gsap.fromTo(logos,
-            {
-                scale: 0,
-                autoAlpha: 0,
-                rotation: -180
-            },
-            {
-                scale: 1,
-                autoAlpha: 1,
-                rotation: 0,
-                duration: 0.6,
-                stagger: 0.05,
-                ease: "back.out(1.7)",
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
-
-    }, { scope: containerRef });
-
     return (
         <SectionFrame
             id="stack-trace"
-            label="STACK TRACE"
-            number="03"
+            label="TOOLKIT"
+            number="05"
         >
-            <div className="stack-container" ref={containerRef}>
+            <div className="stack-container">
                 {techStackData.categories.map((category) => (
                     <div key={category.id} className="tech-category">
                         <h3 className="category-title">{category.label}</h3>
                         <div className="tech-grid">
-                            {category.items.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="tech-logo"
-                                    onMouseEnter={() => setHoveredTech(item)}
-                                    onMouseLeave={() => setHoveredTech(null)}
-                                >
-                                    <div className="tech-icon-scattered">
-                                        {iconMap[item]}
-                                    </div>
-
-                                    <div className={`hover-card ${hoveredTech === item ? 'active' : ''}`}>
-                                        <div className="hover-card-name">{item}</div>
-                                        <div className="hover-card-category">{category.label}</div>
-                                    </div>
-                                </div>
+                            {category.items.map((item) => (
+                                <span key={item} className="tech-pill">
+                                    <span className="tech-pill__icon" aria-hidden="true">{iconMap[item]}</span>
+                                    {item}
+                                </span>
                             ))}
                         </div>
                     </div>
