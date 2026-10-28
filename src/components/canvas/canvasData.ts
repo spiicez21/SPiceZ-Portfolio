@@ -156,6 +156,9 @@ export const interests: InterestCard[] = [
 ];
 
 export const journey = [
+    { year: 'Now', title: 'FiveM Developer', org: 'Smoke Scripts', tags: ['FiveM', 'Lua'], body: 'Building and maintaining FiveM resources: gameplay scripts, NUI interfaces and server-side logic.' },
+    { year: '2026', title: 'Creator, SPiceZ-Core & Project Redline', org: 'Open source · Racing', tags: ['FiveM', 'Branding'], body: 'Built a racing-only FiveM framework of 50+ modules, its brand kit, and the Redline server website on top of it.' },
+    { year: '2026', title: 'Freelance Full Stack Developer', org: 'JJ Tex', tags: ['E-commerce', 'Client'], body: 'Shipped a bilingual (English/Tamil) saree store with Razorpay payments and an admin panel.' },
     { year: '2026', title: 'Lead Developer, IDMP', org: 'FedEx · Enterprise R&D', tags: ['AI', 'Platform'], body: 'Designed and built an AI governance platform for external debt-collection agencies.' },
     { year: '2026', title: 'Open Source Contributor', org: 'SimpMusic', tags: ['Kotlin', 'OSS'], body: 'Shipped the cross-platform mini floating player in the v1.0.2 desktop release.' },
     { year: '2025', title: '1st Place, HackBuzz 2k25', org: 'Team ThinkForge', tags: ['Hackathon', 'LLM'], body: 'AI study planner backed by a local Ollama LLM. Built in one sleepless sprint.' },
