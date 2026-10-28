@@ -379,6 +379,26 @@ const Interests = () => (
     </section>
 );
 
+/* ───────────────────────── Experience ───────────────────────── */
+
+const Experience = () => (
+    <section className="cv-section" id="experience">
+        <SectionHead eyebrow="Currently clocked in" title="Work" muted="Experience" />
+        <article className="cv-card cv-exp">
+            <div className="cv-exp__top">
+                <div>
+                    <span className="cv-badge"><i /> Current role</span>
+                    <h3>FiveM Developer</h3>
+                    <p className="cv-exp__org">Smoke Scripts</p>
+                </div>
+                <span className="cv-exp__when">Present</span>
+            </div>
+            <p className="cv-exp__body">Building and maintaining FiveM resources at Smoke Scripts: gameplay scripts in Lua, in-game UIs in NUI, and the server-side logic that keeps them reliable.</p>
+            <div className="cv-tags"><span>FiveM</span><span>Lua</span><span>NUI</span><span>JavaScript</span></div>
+        </article>
+    </section>
+);
+
 /* ───────────────────────── Journey + Lab ───────────────────────── */
 
 const Journey = () => (
@@ -557,6 +577,7 @@ const CanvasHome = () => {
                 <Flex />
                 <About />
                 <Interests />
+                <Experience />
                 <Journey />
                 <Lab />
                 <Contact />

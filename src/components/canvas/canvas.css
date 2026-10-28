@@ -848,6 +848,15 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
 
 #interests .cv-marquee { width: auto; margin: 24px -24px -56px; }
 
+/* ───────── Experience ───────── */
+
+.cv-exp { display: grid; gap: 12px; padding: 22px; }
+.cv-exp__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.cv-exp h3 { margin: 12px 0 2px; font-size: 22px; letter-spacing: -.02em; }
+.cv-exp__org { margin: 0; color: var(--t2); font-weight: 600; }
+.cv-exp__when { color: var(--t3); font: 700 12px/1.6 'JetBrains Mono', monospace; }
+.cv-exp__body { margin: 0; color: var(--t2); font-size: 14px; text-wrap: pretty; }
+
 /* ───────── Journey ───────── */
 
 .cv-timeline { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; position: relative; }
