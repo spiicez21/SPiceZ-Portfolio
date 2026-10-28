@@ -166,5 +166,40 @@
         "description": "Custom thumbnail created for a freelance client campaign.",
         "imagePublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1755835694/19_nqoabr.png",
         "category": "Thumbnail"
+    },
+    {
+        "id": "branding-spz-core-banner",
+        "title": "SPiceZ-Core Banner",
+        "description": "Launch banner for SPiceZ-Core, the open-source racing core for FiveM.",
+        "imagePublicId": "/images/branding/spz-core-banner.webp",
+        "category": "Branding"
+    },
+    {
+        "id": "branding-spz-core-banner-light",
+        "title": "SPiceZ-Core Banner (Light)",
+        "description": "Light variant of the SPiceZ-Core banner from the official media kit.",
+        "imagePublicId": "/images/branding/spz-core-banner-light.webp",
+        "category": "Branding"
+    },
+    {
+        "id": "branding-spz-core-logo",
+        "title": "SPiceZ-Core Wordmark",
+        "description": "The SPiceZ wordmark built for the SPiceZ-Core brand kit.",
+        "imagePublicId": "/images/branding/spz-core-logo.webp",
+        "category": "Branding"
+    },
+    {
+        "id": "branding-spz-core-mark",
+        "title": "SPiceZ-Core Monogram",
+        "description": "Compact SPZ monogram for icons, avatars and in-game UI.",
+        "imagePublicId": "/images/branding/spz-core-mark.webp",
+        "category": "Branding"
+    },
+    {
+        "id": "branding-redline-logo",
+        "title": "Project Redline Logo",
+        "description": "Identity for the Project Redline racing server.",
+        "imagePublicId": "/images/branding/redline-logo.webp",
+        "category": "Branding"
     }
 ]

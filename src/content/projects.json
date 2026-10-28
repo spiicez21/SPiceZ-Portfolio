@@ -234,5 +234,63 @@
             "repo": "https://github.com/spiicez21/crescita"
         },
         "thumbnailPublicId": "https://res.cloudinary.com/dedmtl2ze/image/upload/v1770962962/Screenshot_2026-02-13_113605_zc1iuo.png"
+    },
+    {
+        "id": "project-13",
+        "title": "SPiceZ-Core",
+        "subtitle": "Open-source racing framework for FiveM · 2026",
+        "description": "A racing-only FiveM framework of 50+ standalone spz-* modules (races, progression, crews, leaderboards, replays, race UI) that talk only through events and exports, with a server-authoritative race state and one owner for the whole SQL schema.",
+        "tech": [
+            "Lua",
+            "FiveM",
+            "JavaScript (NUI)",
+            "SQL",
+            "ox_lib"
+        ],
+        "role": "Creator & Lead Developer",
+        "links": {
+            "repo": "https://github.com/SPiceZ21/spz-core"
+        },
+        "thumbnailPublicId": "/images/projects/spicez-core.webp"
+    },
+    {
+        "id": "project-14",
+        "title": "Project Redline",
+        "subtitle": "Racing server website on SPiceZ-Core · 2026",
+        "description": "Public site for the Redline racing server: live server status, championship standings, race archive, tracks, crews, seasons and classes, all backed by the data SPiceZ-Core records, with Discord login.",
+        "tech": [
+            "React",
+            "TypeScript",
+            "Vite",
+            "Node.js",
+            "Discord OAuth"
+        ],
+        "role": "Full Stack Developer & Designer",
+        "links": {
+            "demo": "https://prl.spicez.xyz",
+            "repo": "https://github.com/spiicez21/project-redline-site"
+        },
+        "thumbnailPublicId": "/images/projects/project-redline.webp"
+    },
+    {
+        "id": "project-15",
+        "title": "JJ Tex",
+        "subtitle": "Freelance · Indian fashion e-commerce · 2026",
+        "description": "A mobile-first store for sarees and clothing with English and Tamil support, an admin panel and Razorpay payments, built for a client as a freelance project.",
+        "tech": [
+            "Next.js 16",
+            "React 19",
+            "NestJS",
+            "Prisma",
+            "PostgreSQL",
+            "Redis",
+            "Razorpay",
+            "next-intl"
+        ],
+        "role": "Freelance Full Stack Developer",
+        "links": {
+            "demo": "https://jjtextiles.in/en"
+        },
+        "thumbnailPublicId": "/images/projects/jj-tex.webp"
     }
 ]
