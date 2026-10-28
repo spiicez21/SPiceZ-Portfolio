@@ -396,6 +396,18 @@ const Experience = () => (
             <p className="cv-exp__body">Building and maintaining FiveM resources at Smoke Scripts: gameplay scripts in Lua, in-game UIs in NUI, and the server-side logic that keeps them reliable.</p>
             <div className="cv-tags"><span>FiveM</span><span>Lua</span><span>NUI</span><span>JavaScript</span></div>
         </article>
+        <article className="cv-card cv-exp">
+            <div className="cv-exp__top">
+                <div>
+                    <span className="cv-badge"><i /> Ongoing</span>
+                    <h3>Freelance Developer &amp; Designer</h3>
+                    <p className="cv-exp__org">Self-employed</p>
+                </div>
+                <span className="cv-exp__when">Present</span>
+            </div>
+            <p className="cv-exp__body">Websites, e-commerce and brand work for clients, clubs and college events, from JJ Tex&apos;s saree store to posters, logos and thumbnails.</p>
+            <div className="cv-tags"><span>Next.js</span><span>React</span><span>Branding</span><span>Photoshop</span></div>
+        </article>
     </section>
 );
 

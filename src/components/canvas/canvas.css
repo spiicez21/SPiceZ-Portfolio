@@ -850,6 +850,7 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
 
 /* ───────── Experience ───────── */
 
+#experience .cv-exp + .cv-exp { margin-top: 12px; }
 .cv-exp { display: grid; gap: 12px; padding: 22px; }
 .cv-exp__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
 .cv-exp h3 { margin: 12px 0 2px; font-size: 22px; letter-spacing: -.02em; }
