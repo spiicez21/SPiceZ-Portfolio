@@ -11,7 +11,7 @@ const FooterBar = () => {
                 <div className="site-footer__top">
                     <a className="site-footer__wordmark" href="#boot-sequence" aria-label="Back to top">SPICEZ<span>.</span></a>
                     <p>Built with curiosity, code, and a very full playlist.</p>
-                    <a className="site-footer__email" href="mailto:yugab.bharathijai210@gmail.com">
+                    <a className="site-footer__email" href="mailto:yuga.bharathijai2106@gmail.com">
                         Let’s talk <ArrowUpRight size={16} />
                     </a>
                 </div>

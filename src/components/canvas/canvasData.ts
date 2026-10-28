@@ -63,7 +63,7 @@ export const profileDetails = [
     { label: 'Focus', value: 'Full-stack products & UI craft' },
     { label: 'Location', value: 'Erode, Tamil Nadu, India' },
     { label: 'Alias', value: 'SPiceZ' },
-    { label: 'Email', value: 'yugab.bharathijai210@gmail.com' },
+    { label: 'Email', value: 'yuga.bharathijai2106@gmail.com' },
 ];
 
 export type InterestCard = {
@@ -172,7 +172,7 @@ export const dockApps: { id: string; name: string; note: string; running?: boole
     { id: 'spotify', name: 'Spotify', note: 'never paused', running: true },
     { id: 'discord', name: 'Discord', note: 'team HQ', running: true },
     { id: 'steam', name: 'Steam', note: '"research"' },
-    { id: 'gmail', name: 'Gmail', note: 'say hi →', href: 'mailto:yugab.bharathijai210@gmail.com' },
+    { id: 'gmail', name: 'Gmail', note: 'say hi →', href: 'mailto:yuga.bharathijai2106@gmail.com' },
 ];
 
 // Footer line-up: the chibi grid split into single drivers, with Lewis (Ferrari) closing it out.
