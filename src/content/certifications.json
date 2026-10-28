@@ -5,7 +5,7 @@
         "issuer": "Oracle",
         "date": "2026",
         "link": "https://education.oracle.com/java-foundations/pexam_1Z0-811",
-        "Badge": ""
+        "Badge": "/images/certs/oracle-java-foundations.webp"
     },
     {
         "id": "cert-1",
