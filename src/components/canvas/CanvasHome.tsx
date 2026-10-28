@@ -479,7 +479,7 @@ const Lab = () => {
             <div className="cv-certs">
                 {certifications.map((c) => (
                     <a key={c.title} className="cv-card cv-cert" href={c.link.trim()} target="_blank" rel="noopener noreferrer">
-                        <img src={cld(c.Badge, 160)} alt="" loading="lazy" />
+                        {c.Badge ? <img src={cld(c.Badge, 160)} alt="" loading="lazy" /> : <span className="cv-cert__badge" aria-hidden="true">{c.issuer.slice(0, 2)}</span>}
                         <div><strong>{c.title}</strong><span>{c.issuer} · {c.date}</span></div>
                     </a>
                 ))}

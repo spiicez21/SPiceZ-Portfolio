@@ -1,5 +1,13 @@
 [
     {
+        "id": "cert-4",
+        "title": "Oracle Certified Foundations Associate, Java (1Z0-811)",
+        "issuer": "Oracle",
+        "date": "2026",
+        "link": "https://education.oracle.com/java-foundations/pexam_1Z0-811",
+        "Badge": ""
+    },
+    {
         "id": "cert-1",
         "title": "Oracle APEX Cloud Developer",
         "issuer": "Oracle",

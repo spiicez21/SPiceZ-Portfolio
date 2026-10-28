@@ -889,6 +889,8 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
 .cv-certs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
 .cv-cert { display: flex; align-items: center; gap: 10px; padding: 12px; }
 .cv-cert img { flex: none; width: 44px; height: 44px; object-fit: contain; }
+/* text badge for certs without a badge image yet */
+.cv-cert__badge { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: #c74634; color: #fff; font-size: 14px; font-weight: 800; }
 .cv-cert div { display: grid; min-width: 0; line-height: 1.35; }
 .cv-cert strong { font-size: 12.5px; }
 .cv-cert span { color: var(--t3); font-size: 11px; }
