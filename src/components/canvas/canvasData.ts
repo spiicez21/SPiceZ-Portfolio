@@ -104,13 +104,6 @@ export const interests: InterestCard[] = [
         accent: '#8b6fe8',
     },
     {
-        id: 'chess',
-        eyebrow: 'Chess',
-        title: 'Losing to Stockfish, professionally.',
-        body: 'Liked it enough to build SpiceZ-Chexx, a WebRTC chess platform with Stockfish analysis built in.',
-        accent: '#222222',
-    },
-    {
         id: 'tva',
         eyebrow: 'Marvel / Loki',
         title: 'For all time. Always.',
@@ -190,3 +183,5 @@ export const footerDrivers = [
     { id: 'williams', team: 'Williams' },
 ].map((d) => ({ src: `/images/footer/driver-${d.id}.webp`, alt: `Chibi ${d.team} driver` }))
     .concat({ src: '/images/footer/hamilton-chibi.webp', alt: 'Chibi Lewis Hamilton in Ferrari kit giving a thumbs up' });
+
+export const CREATIVE_PORTFOLIO = 'https://spicez21.netlify.app/';

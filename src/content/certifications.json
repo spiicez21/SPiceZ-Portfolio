@@ -1,5 +1,13 @@
 [
     {
+        "id": "cert-5",
+        "title": "AI Capabilities and Limitations",
+        "issuer": "Anthropic Academy",
+        "date": "2026",
+        "link": "https://academy.claude.com/verify/b374834efdcae67fe7affb237960a5c9",
+        "Badge": "/images/certs/anthropic-ai-capabilities.webp"
+    },
+    {
         "id": "cert-4",
         "title": "Oracle Certified Foundations Associate, Java (1Z0-811)",
         "issuer": "Oracle",

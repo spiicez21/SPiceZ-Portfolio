@@ -227,6 +227,10 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
   height: 32px;
   border-radius: 50%;
 }
+.cv-nav__creative { display: inline-flex; align-items: center; gap: 6px; flex: none; height: 32px; padding: 0 12px; border-radius: 999px; background: var(--t1); color: var(--bg) !important; font-size: 12.5px; font-weight: 700; transition: transform .2s var(--ease); }
+.cv-nav__creative:hover { transform: translateY(-1px); }
+@media (max-width: 720px) { .cv-nav__creative span { display: none; } .cv-nav__creative { padding: 0 10px; } }
+.cv-footer__creative { margin-bottom: 4px; }
 .cv-nav__theme { border: 0; background: var(--chip); color: var(--t1); cursor: pointer; }
 
 /* ───────── Hero ───────── */

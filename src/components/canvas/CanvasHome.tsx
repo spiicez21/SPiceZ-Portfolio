@@ -12,7 +12,7 @@ import StickerStage from './StickerStage';
 import SpotifyPlayer from './SpotifyPlayer';
 import LitPortrait from './LitPortrait';
 import SiteLoader from './SiteLoader';
-import { dishes, dockApps, footerDrivers, featuredCapabilities, interests, journey, partnerMarks, profileDetails, type InterestCard } from './canvasData';
+import { dishes, dockApps, footerDrivers, featuredCapabilities, interests, journey, partnerMarks, profileDetails, type InterestCard, CREATIVE_PORTFOLIO } from './canvasData';
 import './canvas.css';
 
 const GITHUB_USER = 'spiicez21';
@@ -103,6 +103,7 @@ const CanvasNav = ({ theme, onToggle }: { theme: 'light' | 'dark'; onToggle: () 
                     <li key={n.id}><a href={`#${n.id}`} onClick={go(n.id)}>{n.label}</a></li>
                 ))}
             </ul>
+            <a className="cv-nav__creative" href={CREATIVE_PORTFOLIO} target="_blank" rel="noopener noreferrer" title="My creative portfolio">✦ <span>Creative</span></a>
             <button className="cv-nav__theme" type="button" onClick={onToggle} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
                 {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
             </button>
@@ -290,18 +291,6 @@ const About = () => (
 
 /* ───────────────────────── Interests ───────────────────────── */
 
-const ChessBoard = () => {
-    // A frozen Scholar's-mate-ish position, purely decorative.
-    const pieces: Record<number, string> = { 4: '♚', 12: '♟', 21: '♞', 26: '♝', 37: '♕', 52: '♙', 60: '♔', 45: '♘' };
-    return (
-        <div className="cv-chess" aria-hidden="true">
-            {Array.from({ length: 64 }, (_, i) => (
-                <span key={i} className={(Math.floor(i / 8) + i) % 2 ? 'd' : ''}>{pieces[i]}</span>
-            ))}
-        </div>
-    );
-};
-
 const F1Lights = () => (
     <div className="cv-lights" aria-hidden="true">
         {[0, 1, 2, 3, 4].map((i) => <span key={i} style={{ animationDelay: `${i * 0.35}s` }} />)}
@@ -348,7 +337,6 @@ const InterestExtra = ({ card }: { card: InterestCard }) => {
     switch (card.id) {
         case 'f1': return <F1Lights />;
         case 'music': return <SpotifyPlayer />;
-        case 'chess': return <ChessBoard />;
         case 'food': return <FoodMenu />;
         case 'design':
             return (
@@ -601,6 +589,7 @@ const CanvasHome = () => {
                             <li key={d.src}><img src={d.src} alt={d.alt} height="52" loading="lazy" decoding="async" draggable={false} /></li>
                         ))}
                     </ul>
+                    <a className="cv-btn cv-footer__creative" href={CREATIVE_PORTFOLIO} target="_blank" rel="noopener noreferrer">✦ See my creative portfolio <ArrowUpRight size={15} /></a>
                     <p>© {new Date().getFullYear()} Yugabharathi J · SPiceZ. Designed & built with too many tabs open.</p>
                 </div>
             </footer>
