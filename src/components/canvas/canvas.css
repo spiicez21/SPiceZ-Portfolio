@@ -785,10 +785,10 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
 .cv-interest:hover .cv-mini-strip img { transform: rotate(0) translateY(-4px); }
 
 /* Food: a restaurant menu with a plate that spins in for the active dish */
-.cv-menu { display: grid; grid-template-columns: 1fr 230px; gap: 18px; align-items: end; margin-top: 14px; }
+.cv-menu { display: grid; grid-template-columns: 1fr 170px; gap: 14px; align-items: center; margin-top: 10px; }
 /* Desktop: the plate rises beside the intro copy instead of leaving a gap under it */
-.cv-menu__plate { margin-top: -150px !important; }
-.cv-menu__list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 18px; margin: 0; padding: 0; list-style: none; }
+
+.cv-menu__list { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0; padding: 0; list-style: none; }
 .cv-menu__list button {
   display: flex;
   align-items: center;
@@ -835,8 +835,8 @@ a.cv-card:hover, .cv-card.cv-interest:hover, .cv-timeline .cv-card:hover {
 }
 .cv-menu__plate img {
   position: relative;
-  width: 210px;
-  height: 160px;
+  width: 160px;
+  height: 120px;
   margin-top: 6px;
   object-fit: contain;
   filter: drop-shadow(0 14px 14px #00000033);

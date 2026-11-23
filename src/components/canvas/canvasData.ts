@@ -121,16 +121,6 @@ export const interests: InterestCard[] = [
         span: 'wide',
     },
     {
-        id: 'coffee',
-        eyebrow: 'Fuel',
-        title: 'Coffee is clearly involved.',
-        body: 'Good code is written with good coffee and great music. If something here helped you, the cup is on you.',
-        image: `${A}/filter-coffee.webp`,
-        accent: '#a16207',
-        span: 'wide',
-        link: { label: 'Buy me a coffee', href: 'https://buymeacoffee.com/yugabharathi21' },
-    },
-    {
         id: 'bat',
         eyebrow: 'Batman',
         title: 'Batbro energy.',
@@ -139,12 +129,21 @@ export const interests: InterestCard[] = [
         accent: '#4285f4',
     },
     {
+        id: 'coffee',
+        eyebrow: 'Fuel',
+        title: 'Coffee is clearly involved.',
+        body: 'Good code is written with good coffee and great music. If something here helped you, the cup is on you.',
+        image: `${A}/filter-coffee.webp`,
+        accent: '#a16207',
+        link: { label: 'Buy me a coffee', href: 'https://buymeacoffee.com/yugabharathi21' },
+    },
+    {
         id: 'food',
         eyebrow: 'Food',
         title: 'Will debug for biryani.',
         body: 'Tamil Nadu taste buds, so the bar is high: parotta at midnight, chicken 65 on demand, and a Sunday biryani that is basically a ritual.',
         accent: '#ea580c',
-        span: 'full',
+        span: 'wide',
     },
 ];
 
