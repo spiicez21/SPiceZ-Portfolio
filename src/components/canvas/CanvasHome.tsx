@@ -297,7 +297,7 @@ const F1Lights = () => (
     </div>
 );
 
-// Restaurant-menu take on the food card: hover a dish (or wait) to have it served.
+// One dish at a time: it spins in every few seconds; dots pick a dish directly.
 const FoodMenu = () => {
     const [active, setActive] = useState(0);
     const [paused, setPaused] = useState(false);
@@ -310,26 +310,15 @@ const FoodMenu = () => {
 
     const dish = dishes[active];
     return (
-        <div className="cv-menu" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-            <ol className="cv-menu__list">
+        <figure className="cv-dish" aria-live="polite" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+            <img key={dish.id} src={dish.src} alt={dish.name} loading="lazy" decoding="async" draggable={false} />
+            <figcaption><strong>{dish.name}</strong><span>{dish.note}</span></figcaption>
+            <div className="cv-dish__dots">
                 {dishes.map((d, i) => (
-                    <li key={d.id}>
-                        <button type="button" className={i === active ? 'is-active' : ''} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)}>
-                            <span className="cv-menu__name">{d.name}</span>
-                            <span className="cv-menu__dots" aria-hidden="true" />
-                            <span className="cv-menu__spice" aria-label={`Spice ${d.spice} of 5`}>
-                                {[1, 2, 3, 4, 5].map((n) => <i key={n} className={n <= d.spice ? 'on' : ''} />)}
-                            </span>
-                        </button>
-                    </li>
+                    <button key={d.id} type="button" className={i === active ? 'is-on' : ''} onClick={() => setActive(i)} aria-label={`Show ${d.name}`} />
                 ))}
-            </ol>
-            <figure className="cv-menu__plate" aria-live="polite">
-                <span className="cv-menu__badge">Now serving</span>
-                <img key={dish.id} src={dish.src} alt={dish.name} loading="lazy" decoding="async" draggable={false} />
-                <figcaption><strong>{dish.name}</strong><span>{dish.note}</span></figcaption>
-            </figure>
-        </div>
+            </div>
+        </figure>
     );
 };
 
